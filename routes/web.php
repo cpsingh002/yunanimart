@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Livewire\Frontend\HomeComponent;
 use App\Livewire\Frontend\AboutUsComponent;
 use App\Livewire\Frontend\ContactUsComponent;
@@ -43,7 +45,8 @@ Route::get('/order/id',OrderDetailsComponent::class)->name('order-details');
 Route::get('/shop',ShopComponent::class)->name('shop');
 Route::get('/product/slug',ProductDetailsComponent::class)->name('product-details');
 
-
+Route::post('/uregisteor',[RegisterController::class,'uregisteor'])->name('uregisteor');
+Route::post('/ulogin',[LoginController::class,'uloginauth'])->name('ulogin');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
