@@ -1,6 +1,15 @@
  <!-- sa-app__toolbar / end -->
  <!-- sa-app__body -->
  <div id="top" class="sa-app__body">
+    <style>
+        .regprice{
+            font-weight:300;
+            font-size: 13px !important;
+            color :#aaaaaa !important;
+            text-decoration: line-through;
+            padding-left:10px;
+        }
+    </style>
      <div class="mx-xxl-3 px-4 px-sm-5">
          <div class="py-5">
              <div class="row g-4 align-items-center">
@@ -36,7 +45,10 @@
                                  <th>Price</th>
                                  <th>Image</th>
                                  <th>Med Type</th>
-                                 <th>Tag</th>
+                                 <th>Quantity</th>
+                                 <th>Category</th>
+                                 <th>SubCategory</th>
+                                 <!-- <th>Tag</th> -->
                                  <th>Action</th>
                              </tr>
                          </thead>
@@ -47,16 +59,14 @@
                                  <td>{{$product->id}}</td>
                                  <td>{{$product->name}}</td>
                                  <td>{{$product->slug}}</td>
-                                 <td>{{$product->prices}}</td>
+                                 <td><del><span class="product-price regprice">${{$product->regular_price}}</span></del>{{$product->sale_price}}</td>
                                  <td><img src="{{asset('admin/product/feat')}}/{{$product->image}}" width="60" /></td>
-                                 <td>{{$product->medtype_id }}</td>
-
+                                 <td>{{$product->MedTypes->medtype}}</td>
+                                 <td>{{$product->quantity}}</td>
+                                 <td>{{$product->category->name}}</td>
+                                 <td>{{$product->subCategories->name}}</td>
                                  <td>
-                                     <a href="{{route('admin.editproduct',['pid'=>$product->id])}}"><i
-
-
-                                 
-                                             class="fa fa-edit "></i></a>
+                                     <a href="{{route('admin.editproduct',['product_slug'=>$product->slug])}}"><i class="fa fa-edit "></i></a>
                                      <a href="#" onclick="confirm('Are you sure, You want to delet this product') || event.stopImmediatePropagation()"
                                          wire:click.prevent="deleteCategory({{$product->id}})"><i class="fa fa-times  text-danger ml-2"></i></a>
                                  </td>

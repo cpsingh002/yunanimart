@@ -1,6 +1,4 @@
-<div>
-    {{-- Success is as dangerous as failure. --}}
-</div>
+
  <!-- sa-app__toolbar / end -->
  <!-- sa-app__body -->
  <div id="top" class="sa-app__body">
@@ -28,7 +26,9 @@
                              <div class="sa-entity-layout__main">
                                  <div class="card">
                                      <div class="card-body p-5">
-
+                                        @if(Session::has('message'))
+                                         <div class="alert alert-success" role="alert">{{Session::get('message')}}</div>
+                                         @endif
                                          <form class="form-horizontal" enctype="multipart/form-data"
                                              wire:submit.prevent="updateSlider">
                                              <div class="mb-5">
@@ -38,24 +38,7 @@
                                                  <label for="form-category/name" class="form-label">Title</label>
                                                  <input type="text" placeholder="Title" class="form-control"
                                                      wire:model="title" />
-                                                 @error('name') <p class="text-danger">{{$message}}</p> @enderror
-                                             </div>
-                                             <div class="mb-4">
-                                                 <label for="form-category/slug" class="form-label">Sub Title</label>
-                                                 <div class="input-group input-group--sa-slug">
-                                                     <input type="text" placeholder="Sub Title" class="form-control"
-                                                         wire:model="subtitle" />
-                                                     @error('slug') <p class="text-danger">{{$message}}</p> @enderror
-                                                 </div>
-                                             </div>
-
-                                             <div class="mb-4">
-                                                 <label for="form-category/slug" class="form-label">Price</label>
-                                                 <div class="input-group input-group--sa-slug">
-                                                     <input type="text" placeholder="Price" class="form-control"
-                                                         wire:model="price" />
-                                                     @error('slug') <p class="text-danger">{{$message}}</p> @enderror
-                                                 </div>
+                                                 @error('title') <p class="text-danger">{{$message}}</p> @enderror
                                              </div>
 
                                              <div class="mb-4">
@@ -70,16 +53,34 @@
                                              <div class="mb-4">
                                                  <label for="form-category/slug" class="form-label">Image</label>
                                                  <div class="input-group input-group--sa-slug">
-                                                     <input type="file" class="form-control" wire:model="newimage" />
-                                                     @if($newimage)
-                                                     <img src="{{$newimage->temporaryUrl()}}" width="120" />
-                                                     @else
-                                                     <img src="{{asset('assets/images/sliders')}}/{{$image}}"
-                                                         width="120" />
+                                                    <input type="file" class="form-control" wire:model="newimages" />
+                                                    @if($newimages)
+                                                        @foreach($images as $image)
+                                                            <img src="{{$image->temporaryUrl()}}" width="120" />
+                                                        @endforeach
+                                                    @else
+                                                        @foreach($images as $image)
+                                                            @if($image)
+                                                                <img src="{{asset('admin/slider')}}/{{$image}}" width="120"/>
+                                                            @endif
+                                                        @endforeach
                                                      @endif
+                                                     @error('newimages') <p class="text-danger">{{$message}}</p> @enderror
                                                  </div>
                                              </div>
+                                             <div class="mb-4">
+                                                 <label for="form-banner/image" class="form-label">For</label>
+                                                 <div class="input-group input-group--sa-slug">
 
+                                                    <select class="form-control" wire:model="for">
+                                                        <option value="home">For Home</option>
+                                                        @foreach($categorys as $category)
+                                                            <option value="{{$category->id}}"> For {{$category->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('for') <p class="text-danger">{{$message}}</p> @enderror
+                                                 </div>
+                                             </div>
 
                                              <div class="mb-4">
 

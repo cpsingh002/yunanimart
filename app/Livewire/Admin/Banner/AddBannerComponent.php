@@ -1,0 +1,53 @@
+<?php
+
+namespace App\Livewire\Admin\Banner;
+
+use Livewire\Component;
+use App\Models\Banner;
+use App\Models\Category;
+use Livewire\WithFileUploads;
+use Carbon\Carbon;
+
+class AddBannerComponent extends Component
+{
+    use WithFileUPloads;
+    public $title;
+    public $link;
+    public $images;
+    public $status;
+    public $for;
+
+     public  function mount()
+     {
+        $this->status = 1;
+        $this->for = 'home';
+     } 
+     public function addBanner()
+     {
+        $slider = new Banner();
+        $slider->title = $this->title;
+        $slider->link = $this->link;
+        $slider->status = $this->status;
+        $slider->for = $this->for;
+        if($this->images)
+        {
+            $imagesname = '';
+            foreach($this->images as $key=>$image)
+            {
+                $imgName = Carbon::now()->timestamp. $key.'.'.$image->extension();
+                $image->storeAs('banner',$imgName);
+                $imagesname = $imagesname.','.$imgName;
+            }
+            $slider->images = $imagesname;
+        }
+
+        $slider->save();
+        Session()->flash('message','Banner has been Created Successfully!');
+     }
+
+    public function render()
+    {
+        $categorys =  Category::all();
+        return view('livewire.admin.banner.add-banner-component',['categorys'=>$categorys])->layout('layouts.admin');
+    }
+}

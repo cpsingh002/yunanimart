@@ -3,11 +3,13 @@
 namespace App\Livewire\Admin\Slider;
 
 use Livewire\Component;
+use App\Models\Slider;
 
 class SliderComponent extends Component
 {
     public function render()
     {
-        return view('livewire.admin.slider.slider-component')->layout('layouts.admin');
+        $sliders = Slider::all();
+        return view('livewire.admin.slider.slider-component',['sliders'=>$sliders])->layout('layouts.admin');
     }
 }

@@ -34,8 +34,7 @@
                                  <th>Sub Slug</th>
                                  <th>Sub Icon</th>
                                  <th>Category</th>
-                                 <th>Brands</th>
-                                 <th>Attribute</th>
+                                 
                                  <th>Action</th>
                              </tr>
                          </thead>
@@ -50,22 +49,7 @@
                                  </td>
                                  <td><img src="{{asset('admin/category/icon')}}/{{$category->icon}}" width="60"></td>
                                  <td>{{$category->category->name}}</td>
-                                 <td>
-                                    <ul class="sclist">
-                                        @foreach($category->brands as $scategory)
-                                            <li><i class="fa fa-caret-right"></i>{{$scategory->name}}</li>
-                                            
-                                        @endforeach
-                                    </ul>
-                                </td>
-                                <td>
-                                    <ul class="sclist">
-                                        @foreach($category->attributes as $scategory)
-                                            <li><i class="fa fa-caret-right"></i>{{$scategory->attribute}}</li>
-                                            
-                                        @endforeach
-                                    </ul>
-                                </td>
+                                 
                                  <td>
                                      <a href="{{route('admin.editsubcategory',['scategory_slug'=>$category->slug])}}"><i class="fa fa-edit"></i></a>
                                      <a href="#" onclick="confirm('Are you sure, You want to delet this category') || event.stopImmediatePropagation()"

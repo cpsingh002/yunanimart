@@ -61,7 +61,7 @@ class EditCategoryComponent extends Component
         if($this->newicon)
         {
             $this->validateOnly($fields,[
-                'newicon'=>'required|mimes:svg,png',
+                'newicon'=>'required|mimes:jpeg,jpg,png',
             ]);
         }
         if($this->category_id)
@@ -87,8 +87,8 @@ class EditCategoryComponent extends Component
         }
         if($this->newicon)
         {
-            $this->validateOnly($fields,[
-                'newicon'=>'required|mimes:svg,png',
+            $this->validate([
+                'newicon'=>'required|mimes:jpeg,jpg,png',
             ]);
         }
         

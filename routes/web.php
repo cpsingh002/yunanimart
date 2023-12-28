@@ -45,8 +45,12 @@ Route::get('/order/id',OrderDetailsComponent::class)->name('order-details');
 Route::get('/shop',ShopComponent::class)->name('shop');
 Route::get('/product/slug',ProductDetailsComponent::class)->name('product-details');
 
-Route::post('/uregisteor',[RegisterController::class,'uregisteor'])->name('uregisteor');
+Route::post('/uregisteor',[RegisterController::class,'uregisteor'])->name('udregisteor');
 Route::post('/ulogin',[LoginController::class,'uloginauth'])->name('ulogin');
 Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/user/export', [App\Http\Controllers\HomeController::class, 'export']);
+Route::get('/user/import', [App\Http\Controllers\UserImportController::class, 'show']);
+Route::post('/user/import', [App\Http\Controllers\UserImportController::class, 'store']);

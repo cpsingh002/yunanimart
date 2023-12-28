@@ -1519,7 +1519,7 @@
             </div>
         </div>
     </div>
-   {{-- <div class="modal clean_modal" id="forgot_modal" tabindex="-1" aria-labelledby="forgot_modal" aria-hidden="true">
+   <div class="modal clean_modal" id="forgot_modal" tabindex="-1" aria-labelledby="forgot_modal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -1554,7 +1554,7 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div> 
     <div class="modal clean_modal clean_modal-lg" id="register_modal" tabindex="-1" aria-labelledby="register_modal"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -1567,9 +1567,9 @@
                         <div class="alert f-size-16" role="alert">
                         </div>
                     </div>
-                    <form  method="POST"  id="frmRegistar">
+                    <form method="POST"  action="#" id="frmRegistar">
                     @csrf
-                {{--    <div class="row">
+                    <div class="row">
                             <div class="col-12">
                                 <a href="#" class="btn btn-gray-border btn-full rounded btn-large text-capitalize mb-3">
                                     <img src="assets/img/facebook.png" alt="">
@@ -1583,7 +1583,7 @@
                             <div class="col-12 text-center">
                                 <p class="text-muted my-4">Or Register With</p>
                             </div>
-                        </div> --}}
+                        </div> 
                         <div class="form-group mb-3">
                             <!-- <label for="name" class="col-md-4 col-form-label fw-bold text-md-end">{{ __('Name') }}</label> -->
                             <input class="form-control" required name="name" placeholder="First Name"    type="text">
@@ -1600,11 +1600,11 @@
                         </div>
                         <div class="form-group mb-3">
                             <!-- <label for="password"   class="col-md-4 col-form-label fw-bold text-md-end">{{ __('Password') }}</label> -->
-                            <input id="password" type="password" class="form-control" name="password" required autocomplete="new-password">
+                            <input id="password" type="password" class="form-control" placeholder="password" name="password" required autocomplete="new-password">
                         </div>
                         <div class="form-group mb-3">
                             <!-- <label for="password-confirm"  class="col-md-4 col-form-label fw-bold text-md-end">{{ __('Confirm Password') }}</label>                          -->
-                            <input id="password-confirm" type="password" class="form-control"   name="password_confirmation" required autocomplete="new-password">
+                            <input id="password-confirm" type="password" class="form-control"  placeholder="password" name="password_confirmation" required autocomplete="new-password">
                             <div id="password_error" class="field_error text-danger"></div>
                         </div>
                         <div id="checkboxed_error" class="field_error text-danger"></div>
@@ -1612,6 +1612,7 @@
                         <div id="register_msg" class= "msg-show text-center text-danger"></div>
 
                         <button type="submit" class="btn btn-primary btn-full btn-medium rounded">{{ __('Register') }}</button>
+                        
                     </form>
                         <div class="form-group text-center small font-weight-bold mt-3">
                             By continuing you agree to our <a href="#"> Terms and conditions.</a>
@@ -1637,11 +1638,13 @@
 
     jQuery('#frmRegistar').submit(function(e){
     //alert(jQuery('#frmRegistar').serialize());
+    var daat = jQuery('#frmRegistar').serialize();
+    alert(daat);
         e.preventDefault();
         jQuery('.field_error').html('');
         jQuery.ajax({
-            url:'{{ route('uregisteor') }}',
-            data:jQuery('#frmRegistar').serialize(),
+            url:'{{ route('udregisteor') }}',
+            data: daat,
             type:'post',
             success:function(result){
                     if(result.status=="error"){
@@ -1657,7 +1660,8 @@
             }
         });
     });
-
+</script>
+<script>
 jQuery('#frmLogin').submit(function(e){
   jQuery('#login_msg').html("");
   e.preventDefault();

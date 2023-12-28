@@ -65,7 +65,7 @@
                                 <div class="col-md-4">
                                     <input type="file" placeholder="Category Icon" class="form-control input-md"  wire:model="newicon"/>
                                     @if($newicon)
-                                        <!-- <img src="{{$newicon>temporaryUrl()}}" width="120" /> -->
+                                        <img src="{{$newicon->temporaryUrl()}}" width="120" />
                                     @else
                                         <img src="{{asset('admin/category/icon')}}/{{$icon}}" width="120" />
                                     @endif

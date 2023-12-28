@@ -8,6 +8,9 @@ use App\Livewire\Admin\DashboardComponent;
 use App\Livewire\Admin\Slider\SliderComponent;
 use App\Livewire\Admin\Slider\AddSliderComponent;
 use App\Livewire\Admin\Slider\EditSliderComponent;
+use App\Livewire\Admin\Banner\BannerComponent;
+use App\Livewire\Admin\Banner\AddBannerComponent;
+use App\Livewire\Admin\Banner\EditBannerComponent;
 use App\Livewire\Admin\Category\CategoryComponent;
 use App\Livewire\Admin\Category\AddCategoryComponent;
 use App\Livewire\Admin\Category\EditCategoryComponent;
@@ -28,12 +31,25 @@ use App\Livewire\Admin\Product\AddProductComponent;
 use App\Livewire\Admin\Product\EditProductComponent;
 use App\Livewire\Admin\User\UserComponent;
 
+use App\Livewire\Admin\Product2\Product2Component;
+use App\Livewire\Admin\Product2\AddProduct2Component;
+use App\Livewire\Admin\Product2\EditProduct2Component;
 
+use App\Livewire\Admin\Tax\TaxComponent;
+use App\Livewire\Admin\Tax\AddTaxComponent;
+use App\Livewire\Admin\Tax\EditTaxComponent;
+
+use App\Livewire\Admin\Coupon\CouponComponent;
+use App\Livewire\Admin\Coupon\AddCouponComponent;
+use App\Livewire\Admin\Coupon\EditCouponComponent;
 
 Route::get('/dashboard',DashboardComponent::class)->name('admin.dashboard');
 Route::get('/sliders',SliderComponent::class)->name('admin.sliders');
 Route::get('/slider/add',AddSliderComponent::class)->name('admin.addslider');
-Route::get('/slider/edit/{bid}',EditSliderComponent::class)->name('admin.editslider');
+Route::get('/slider/edit/{sid}',EditSliderComponent::class)->name('admin.editslider');
+Route::get('/banners',BannerComponent::class)->name('admin.banners');
+Route::get('/banner/add',AddBannerComponent::class)->name('admin.addbanner');
+Route::get('/banner/edit/{bid}',EditBannerComponent::class)->name('admin.editbanner');
 Route::get('/categories',CategoryComponent::class)->name('admin.categories');
 Route::get('/category/add',AddCategoryComponent::class)->name('admin.addcategory');
 Route::get('/category/edit/{category_slug}',EditCategoryComponent::class)->name('admin.editcategory');
@@ -55,6 +71,19 @@ Route::get('/attributes/edit/{att_id}',EditAttributeComponent::class)->name('adm
 
 Route::get('/products',ProductComponent::class)->name('admin.products');
 Route::get('/product/add',AddProductComponent::class)->name('admin.addproduct');
-Route::get('/product/edit/{pid}',EditProductComponent::class)->name('admin.editproduct');
+Route::get('/product/edit/{product_slug}',EditProductComponent::class)->name('admin.editproduct');
 
 Route::get('/admin/users',UserComponent::class)->name('admin.users');
+
+Route::get('/products2',Product2Component::class)->name('admin.products2');
+Route::get('/product2/add',AddProduct2Component::class)->name('admin.addproduct2');
+Route::get('/product2/edit/{product_slug}',EditProduct2Component::class)->name('admin.editproduct2');
+
+
+Route::get('/taxs',TaxComponent::class)->name('admin.taxs');
+Route::get('/tax/add',AddTaxComponent::class)->name('admin.addtax');
+Route::get('/tax/edit/{bid}',EditTaxComponent::class)->name('admin.edittax');
+
+Route::get('/coupons',CouponComponent::class)->name('admin.coupons');
+Route::get('/coupon/add',AddCouponComponent::class)->name('admin.addcoupon');
+Route::get('/coupon/edit/{bid}',EditCouponComponent::class)->name('admin.editcoupon');

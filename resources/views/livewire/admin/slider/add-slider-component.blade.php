@@ -37,26 +37,7 @@
                                                  <label for="form-banner/name" class="form-label">Title</label>
                                                  <input type="text" placeholder="Title" class="form-control"
                                                      wire:model="title" />
-                                                 @error('name') <p class="text-danger">{{$message}}</p> @enderror
-                                             </div>
-                                             <div class="mb-4">
-                                                 <label for="form-banner/sub-title" class="form-label">Sub Title</label>
-                                                 <div class="input-group input-group--sa-slug">
-                                                     <input type="text" placeholder="Sub Title" class="form-control"
-                                                         wire:model="subtitle" />
-                                                     @error('slug') <p class="text-danger">{{$message}}</p> @enderror
-                                                 </div>
-                                             </div>
-                                             <div class="mb-4">
-                                                 <div>
-                                                     <label for="form-banner/price" class="form-label">Price</label>
-
-                                                     <div class="input-group input-group--sa-slug">
-                                                         <input type="text" placeholder="Price" class="form-control"
-                                                             wire:model="price" />
-                                                         @error('slug') <p class="text-danger">{{$message}}</p>@enderror
-                                                     </div>
-                                                 </div>
+                                                 @error('title') <p class="text-danger">{{$message}}</p> @enderror
                                              </div>
 
                                              <div class="mb-4">
@@ -64,7 +45,7 @@
                                                  <div class="input-group input-group--sa-slug">
                                                      <input type="text" placeholder="Link" class="form-control"
                                                          wire:model="link" />
-                                                     @error('icon') <p class="text-danger">{{$message}}</p> @enderror
+                                                     @error('link') <p class="text-danger">{{$message}}</p> @enderror
                                                  </div>
                                              </div>
 
@@ -72,10 +53,26 @@
                                                  <label for="form-banner/image" class="form-label">Image</label>
                                                  <div class="input-group input-group--sa-slug">
 
-                                                     <input type="file" class="input-file" wire:model="image" />
-                                                     @if($image)
-                                                     <img src="{{$image->temporaryUrl()}}" width="120" />
-                                                     @endif
+                                                     <input type="file" class="input-file" wire:model="images" multiple/>
+                                                     @if($images)
+                                                            @foreach($images as $image)
+                                                                <img src="{{$image->temporaryUrl()}}" width="120" />
+                                                            @endforeach
+                                                        @endif
+                                                        @error('images') <p class="text-danger">{{$message}}</p> @enderror
+                                                 </div>
+                                             </div>
+                                             <div class="mb-4">
+                                                 <label for="form-banner/image" class="form-label">For</label>
+                                                 <div class="input-group input-group--sa-slug">
+
+                                                    <select class="form-control" wire:model="for">
+                                                        <option value="home">For Home</option>
+                                                        @foreach($categorys as $category)
+                                                            <option value="{{$category->id}}"> For {{$category->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('for') <p class="text-danger">{{$message}}</p> @enderror
                                                  </div>
                                              </div>
 
@@ -93,6 +90,8 @@
                                              <div class="mb-4 text-center">
                                                  <button type="submit" class="btn btn-primary">Submit</button>
                                              </div>
+
+                                             
 
                                          </form>
 

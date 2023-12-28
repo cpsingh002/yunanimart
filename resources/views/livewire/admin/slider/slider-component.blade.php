@@ -30,30 +30,34 @@
                      <table class="sa-datatables-init" data-order="[[ 1, &quot;asc&quot; ]]" data-sa-search-input="#table-search" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
                          <thead>
                              <tr>
-                                 <th>Id</th>
-                                 <th>Image</th>
-                                 <th>Title</th>
-                                 <th>Subtitle</th>
-                                 <th>Price</th>
-                                 <th>Link</th>
-                                 <th>Status</th>
-                                 <th>Date</th>
-                                 <th>Action</th>
+                                <th>Id</th>
+                                <th>Title</th>
+                                <th>Link</th>
+                                <th>Image</th>
+                                <th>For</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Action</th>
                              </tr>
                          </thead>
                          <tbody>
                              @foreach($sliders as $slider)
                              <tr>
                                         <td>{{$slider->id}}</td>
-                                        <td><img src="{{asset('assets/images/sliders')}}/{{$slider->image}}" width="60" /></td>
                                         <td>{{$slider->title}}</td>
-                                        <td>{{$slider->subtitle}}</td>
-                                        <td>{{$slider->price}}</td>
-                                        <td>{{$slider->link}}</td>
+                                        <td><a href ="{{$slider->link}}">{{$slider->link}}</a></td>
+                                        <td>@if($slider->images)
+                                                @php $images = explode(",",$slider->images); @endphp
+                                                @foreach($images as $image)
+                                                    @if($image)  <img src="{{asset('admin/slider')}}/{{$image}}" width="60" />  @endif
+                                                @endforeach
+                                            @endif
+                                        </td>
+                                        <td>{{$slider->for}}</td>
                                         <td>{{$slider->status==1 ? 'Active':'Inactive'}}</td>
                                         <td>{{$slider->created_at}}</td>
                                         <td>
-                                        <a href="{{route('admin.editbanner',['bid'=> $slider->id])}}"><i class="fa fa-edit fa-2x"></i></a>
+                                        <a href="{{route('admin.editslider',['sid'=> $slider->id])}}"><i class="fa fa-edit fa-2x"></i></a>
                                                 <a href="#" onclick="confirm('Are you sure, You want to delet this slider') || event.stopImmediatePropagation()" wire:click.prevent="deleteSlider({{$slider->id}})" style="margin-left:10px;"><i class="fa fa-times fa-2x text-danger"></i></a>
                                         </td>
                                     </tr>

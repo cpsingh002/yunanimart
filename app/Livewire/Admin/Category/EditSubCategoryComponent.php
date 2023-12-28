@@ -96,10 +96,10 @@ class EditSubCategoryComponent extends Component
                 $scategory->icon = $imageNamei;
             }
             if($this->newimage){
-                unlink('admin/category'.'/'.$scategory_id->categorythum);
+             //   unlink('admin/category'.'/'.$scategory_id->categorythum);
                 $imageName= Carbon::now()->timestamp.'.'.$this->newimage->extension();
                 $this->newimage->storeAs('category',$imageName);
-                $scategory_id->categorythum = $imageName;
+                $scategory->categorythum = $imageName;
             }
             $scategory->save();
             

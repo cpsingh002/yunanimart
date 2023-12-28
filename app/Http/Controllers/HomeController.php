@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+//use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\UserExport; 
+use Maatwebsite\Excel\Excel;
 class HomeController extends Controller
 {
     /**
@@ -11,10 +13,10 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     /**
      * Show the application dashboard.
@@ -24,5 +26,14 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+    public function export( Excel $excel)
+    {
+        //return Excel::download(new UserExport, 'users.xlsx');
+       // return (new UserExport)->download('users.xlsx');
+       //return new UserExport;
+       // return $excel->download(new UserExport, 'users.xlsx');
+        return $excel->download(new UserExport, 'users.csv',Excel::CSV);
+      // return $excel->download(new UserExport, 'users.pdf',Excel::DOMPDF);
     }
 }
