@@ -47,6 +47,8 @@ Route::get('/product/slug',ProductDetailsComponent::class)->name('product-detail
 
 Route::post('/uregisteor',[RegisterController::class,'uregisteor'])->name('udregisteor');
 Route::post('/ulogin',[LoginController::class,'uloginauth'])->name('ulogin');
+Route::get('/adminlogin',[LoginController::class,'adminlogin']);
+Route::post('/adminlogin',[LoginController::class,'adminloginauth'])->name('adminlogin');
 Auth::routes();
 Auth::routes(['verify' => true]);
 

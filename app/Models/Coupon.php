@@ -9,6 +9,12 @@ class Coupon extends Model
 {
     use HasFactory;
     protected $table = "coupons";
+     protected $fillable = [
+        'coupon_name',
+        'code',
+        'type',
+        'value'
+     ];
     
     public function category()
     {

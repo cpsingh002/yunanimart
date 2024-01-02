@@ -77,7 +77,7 @@ class LoginController extends Controller
 
     public function adminloginauth(Request $request)
     {
-        dd($request);
+       // dd($request);
         $this->validateLogin($request);
 
         if ($this->attemptLogin($request)) {

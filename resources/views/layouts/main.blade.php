@@ -43,7 +43,7 @@
             <div class="top-header">
                 <div class="row align-items-center">
                     <div class="col-auto">
-                        <a href="index.html">
+                        <a href="{{route('index')}}">
                             <img src="{{asset('assets/img/logo.png')}}" alt="logo" class="header-logo">
                         </a>
                     </div>

@@ -42,6 +42,12 @@ use App\Livewire\Admin\Tax\EditTaxComponent;
 use App\Livewire\Admin\Coupon\CouponComponent;
 use App\Livewire\Admin\Coupon\AddCouponComponent;
 use App\Livewire\Admin\Coupon\EditCouponComponent;
+use App\Livewire\Admin\Coupon\Coupon2Component;
+
+ use App\Livewire\Admin\Prescription\PrescriptionComponent;
+
+
+Route::get('post', Coupon2Component::class);
 
 Route::get('/dashboard',DashboardComponent::class)->name('admin.dashboard');
 Route::get('/sliders',SliderComponent::class)->name('admin.sliders');
@@ -86,4 +92,6 @@ Route::get('/tax/edit/{bid}',EditTaxComponent::class)->name('admin.edittax');
 
 Route::get('/coupons',CouponComponent::class)->name('admin.coupons');
 Route::get('/coupon/add',AddCouponComponent::class)->name('admin.addcoupon');
-Route::get('/coupon/edit/{bid}',EditCouponComponent::class)->name('admin.editcoupon');
+Route::get('/coupon/edit/{cid}',EditCouponComponent::class)->name('admin.editcoupon');
+
+Route::get('/prescriptions',PrescriptionComponent::class)->name('admin.prescription');

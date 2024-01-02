@@ -5,18 +5,26 @@
                 <div class="row">
                     <div class="col-lg-5 mb-5 mb-md-0">
                         <div class="border p-4 upload_prescription">
-                            <form method="post" enctype="multipart/form-data" class="ng-pristine ng-valid">
+                            @if (session()->has('message'))
+                                <div class="alert alert-success text-center">{{ session('message') }}</div>
+                            @endif
+                            <form  class="ng-pristine ng-valid" enctype="multipart/form-data"  wire:submit.prevent="UploadPresc">
+                                @csrf
                                 <div class="form-group">
+                                @error('prescription') <p class="text-danger">{{$message}}</p> @enderror
                                     <label><strong>Upload Prescription</strong></label>
                                     <p class="mb-3"><small>Please attach a prescription to proceed</small></p>
                                     <div class="custom-file">
-                                        <input type="text" name="files[]" multiple=""
-                                            class="custom-file-input form-control" id="customFile">
-                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                        <input type="file"  wire:model="prescription"
+                                            class="custom-file-input form-control" id="customFile" required>
+                                            
+                                        
+                                        
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <button type="button" name="upload" value="upload" id="upload"
+                                    <button type="submit" 
                                         class="btn btn-block btn-primary">Continue <i
                                             class="fa fa-fw fa-caret-right"></i>
                                     </button>
