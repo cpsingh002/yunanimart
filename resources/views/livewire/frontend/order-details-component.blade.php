@@ -43,21 +43,19 @@
                                                     <div class="avater btn-soft-primary">DS</div>
                                                 </div>
                                                 <div class="col-auto">
-                                                    <h6 class="d-block font-weight-bold mb-0">Deep saha</h6>
-                                                    <small class="text-muted">yourmail@email.com</small>
+                                                    <h6 class="d-block font-weight-bold mb-0">{{Auth::user()->name}}</h6>
+                                                    <small class="text-muted">{{Auth::user()->email}}</small>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <ul class="list-unstyled mb-0">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="account.html"><i class="fa fa-user"></i> My Account</a>
+                                            <a class="nav-link" href="{{route('user.account')}}"><i class="fa fa-user"></i> My Account</a>
                                         </li>
+                                       
                                         <li class="nav-item">
-                                            <a class="nav-link" href="change-password.html"><i class="fa fa-lock"></i> Password</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="address.html"><i class="fa fa-address-book"></i> Address</a>
+                                            <a class="nav-link" href="{{route('user.address')}}"><i class="fa fa-address-book"></i> Address</a>
                                         </li>
                                         <li class="nav-item active">
                                             <a class="nav-link" href="{{route('orders')}}"><i class="fa fa-shopping-cart"></i> Order</a>
@@ -90,31 +88,61 @@
                             </div>
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="cart_product border-0">
-                                        <div class="cart_item px-0">
-                                            <div class="cart_item_image">
-                                                <img src="{{asset('assets/img/product/product-3.png')}}" alt="shop">
-                                            </div>
-                                            <div class="c-item-body">
-                                                <div class="cart_item_title mb-2">
-                                                    <h4>1mg Salmon Omega 3 Fish Oil Capsule</h4>
-                                                    <p class="small mb-0 text-muted">bottle of 60 capsules</p>
-                                                </div>
-                                                <div class="cart_item_price">
-                                                    <div class="product-price">
-                                                        <span>
-                                                            <strong>₹499 </strong>
-                                                            <del>₹1,000</del>
-                                                            <small class="product-discountPercentage">(50% OFF)</small>
-                                                        </span>
+                                    <div class="row">
+                                        @foreach($orderitems as $orderitem)
+                                            <div class="cart_product border-0">
+                                                <div class="cart_item px-0">
+                                                    <div class="cart_item_image">
+                                                        <img src="{{asset('admin/product/feat')}}/{{$orderitem->product->image}}" alt="shop">
                                                     </div>
-                                                    <div class="cart_product_remove">
-                                                        <a href="#"><i class="ti-truck"></i> Return Item</a>
+                                                    <div class="c-item-body">
+                                                        <div class="cart_item_title mb-2">
+                                                            <h4>{{$orderitem->product->name}}</h4>
+                                                            <p class="small mb-0 text-muted">{{$orderitem->product->varaint_detail}}</p>
+                                                        </div>
+                                                        <div class="cart_item_price">
+                                                            <div class="product-price">
+                                                                <span>
+                                                                    <strong>₹{{$orderitem->price}} </strong>
+                                                                    <del>₹1,000</del>
+                                                                    <small class="product-discountPercentage">({{$orderitem->quantity}} items)</small>
+                                                                </span>
+                                                            </div>
+                                                            <div class="cart_product_remove">
+                                                                <a href="#"><i class="ti-truck"></i> Return Item</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                        <div class="cart_product border-0">
+                                            <div class="cart_item px-0">
+                                                <div class="cart_item_image">
+                                                    <img src="{{asset('assets/img/product/product-3.png')}}" alt="shop">
+                                                </div>
+                                                <div class="c-item-body">
+                                                    <div class="cart_item_title mb-2">
+                                                        <h4>1mg Salmon Omega 3 Fish Oil Capsule</h4>
+                                                        <p class="small mb-0 text-muted">bottle of 60 capsules</p>
+                                                    </div>
+                                                    <div class="cart_item_price">
+                                                        <div class="product-price">
+                                                            <span>
+                                                                <strong>₹499 </strong>
+                                                                <del>₹1,000</del>
+                                                                <small class="product-discountPercentage">(50% OFF)</small>
+                                                            </span>
+                                                        </div>
+                                                        <div class="cart_product_remove">
+                                                            <a href="#"><i class="ti-truck"></i> Return Item</a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    
                                     <div class="row mt-4">
                                         <div class="col-lg-12">
                                             <div class="border p-3 mb-4">
@@ -124,7 +152,7 @@
                                                         <i class="ti-map-alt text-secondary mr-2"></i>
                                                     </div>
                                                     <div class="col">
-                                                        <p class="text-muted small mb-2"> <strong>Delevery Address:</strong> Cavendish Street, Cartmel, Grange-Over-Sands, Cumbria, LA11 6PZ</p>
+                                                        <p class="text-muted small mb-2"> <strong>Delevery Address:</strong> {{$order->line1}}, {{$order->line2}},{{$order->zipcode}}</p>
                                                     </div>
                                                 </div>
                                                 <div class="row no-gutters">
@@ -132,7 +160,7 @@
                                                         <i class="ti-mobile text-secondary mr-2"></i>
                                                     </div>
                                                     <div class="col">
-                                                        <p class="text-muted small mb-0"><strong>Phone Number:</strong> 1234567890</p>
+                                                        <p class="text-muted small mb-0"><strong>Phone Number:</strong> {{$order->mobile}}</p>
                                                     </div>
                                                 </div>
                                                 <div class="row no-gutters">
@@ -148,7 +176,7 @@
                                                         <i class="ti-calendar text-secondary mr-2"></i>
                                                     </div>
                                                     <div class="col">
-                                                        <p class="text-muted small mb-2"><strong>Order Receive On:</strong> 24 May 2021</p>
+                                                        <p class="text-muted small mb-2"><strong>Order Receive On:</strong> {{$order->created_at->format('d M Y')}}</p>
                                                     </div>
                                                 </div>
                                             </div>

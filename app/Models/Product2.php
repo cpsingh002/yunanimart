@@ -26,4 +26,9 @@ class Product2 extends Model
     {
         return $this->hasMany(AttributeValue::class,'product_id');
     }
+    
+    public function taxslab()
+    {
+        return $this->belongsTo(Tax::class,'tax_id');
+    }
 }

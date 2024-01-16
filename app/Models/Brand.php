@@ -9,4 +9,9 @@ class Brand extends Model
 {
     use HasFactory;
     protected $table= "brands";
+    
+    public function productcount()
+    {
+        return $this->hasMany(Product::class,'brand_id');
+    }
 }

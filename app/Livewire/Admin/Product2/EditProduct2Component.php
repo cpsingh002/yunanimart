@@ -10,6 +10,7 @@ use App\Models\MedType;
 use App\Models\Attribute;
 use App\Models\Attributevalue2;
 use App\Models\Brand;
+use App\Models\Tax; 
 use App\Models\ProductVariant;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -45,6 +46,8 @@ class EditProduct2Component extends Component
     public $is_child;
     public $is_young;
     public $status;
+    public $tax_id;
+    Public $freecancellation;
     public $productvariant;
     public $skus=[];
     public $mrps=[];
@@ -88,6 +91,8 @@ class EditProduct2Component extends Component
         $this->is_baby = $product->is_baby;
         $this->is_child = $product->is_child;
         $this->is_young = $product->is_young;
+        $this->tax_id = $product->tax_id;
+        $this->freecancellation = $product->freecancellation;
         $this->product_id = $product->id;
        // $this->inputs = $product->attributeValues->where('product_id',$product->id)->unique('attribute_id')->pluck('attribute_id');
        // $this->attribute_arr = $product->attributeValues->where('product_id',$product->id)->unique('attribute_id')->pluck('attribute_id');
@@ -154,7 +159,9 @@ class EditProduct2Component extends Component
             'is_baby'=>'required',
             'is_child'=>'required',
             'is_young'=>'required',
-            'slug' => 'required|unique:product2s,slug,'.$this->product_id
+            'tax_id' =>'required',
+            'freecancellation' =>'required',
+            'slug' => 'required|unique:product2s,slug,'.$this->product_id.'',
         ]);
         if($this->newimage)
         {
@@ -172,6 +179,7 @@ class EditProduct2Component extends Component
 
     public function updateProduct()
     {
+        //dd((($this->regular_price - $this->sale_price)/$this->regular_price)*100);
         //dd($this->newqtyes);
         $this->validate([
             'name' => 'required',
@@ -196,7 +204,9 @@ class EditProduct2Component extends Component
             'is_baby'=>'required',
             'is_child'=>'required',
             'is_young'=>'required',
-            'slug' => 'required|unique:product2s,slug,'.$this->product_id
+            'tax_id' =>'required',
+            'freecancellation' =>'required', 
+            'slug' => 'required|unique:product2s,slug,'.$this->product_id.'',
         ]);
 
         if($this->newimage)
@@ -267,6 +277,10 @@ class EditProduct2Component extends Component
         $product->is_baby = $this->is_baby;
         $product->is_child = $this->is_child;
         $product->is_young = $this->is_young;
+        $product->tax_id = $this->tax_id;
+        $product->freecancellation = $this->freecancellation;
+        $product->discount_value = (($this->regular_price - $this->sale_price)/$this->regular_price)*100;
+        
         $product->save();
 
         if($this->newquantity){
@@ -288,7 +302,7 @@ class EditProduct2Component extends Component
             $product_varaint->slug = $this->slug.'-'.$tdata->varaint_detail;
             $product_varaint->short_description =  $this->short_description;
             $product_varaint->description = $this->description;
-            $product_varaint->regular_price= $this->mrps[$key];;
+            $product_varaint->regular_price= $this->mrps[$key];
             $product_varaint->sale_price = $this->pris[$key];
             $product_varaint->bulk_quantity= $this->bulkqtys[$key];
             $product_varaint->bulk_rate = $this->bulkrates[$key];
@@ -312,6 +326,9 @@ class EditProduct2Component extends Component
             $product_varaint->is_baby = $this->is_baby;
             $product_varaint->is_child = $this->is_child;
             $product_varaint->is_young = $this->is_young;
+            $product_varaint->tax_id = $this->tax_id;
+            $product_varaint->freecancellation = $this->freecancellation;
+            $product_varaint->discount_value = (($this->mrps[$key] - $this->pris[$key])/$this->mrps[$key])*100;
             $product_varaint->save();
 
             
@@ -340,9 +357,10 @@ class EditProduct2Component extends Component
         $attributes = Attribute::all();
         $brands = Brand::all();
         $medtypes = MedType::all();
+        $taxs = Tax::all();
 
         return view('livewire.admin.product2.edit-product2-component',[
-            'categories'=>$categories,'scategories'=>$scategories,'attributes'=>$attributes,'brands'=>$brands,'medtypes'=>$medtypes
+            'categories'=>$categories,'scategories'=>$scategories,'attributes'=>$attributes,'brands'=>$brands,'medtypes'=>$medtypes,'taxs'=>$taxs
         ])->layout('layouts.admin');
     }
 }

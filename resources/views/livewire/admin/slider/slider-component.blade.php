@@ -9,6 +9,7 @@
 
                      </nav>
                      <h1 class="h3 m-0">All Slider</h1>
+                     <span>Slider size 1519*370</span>
                  </div>
                  <div class="col-auto d-flex">
                      <a href="{{route('admin.addslider')}}" class="btn btn-primary">Add Slider</a>

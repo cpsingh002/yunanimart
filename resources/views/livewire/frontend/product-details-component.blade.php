@@ -4,49 +4,38 @@
             <div class="row justify-content-between">
                 <div class="col-lg-4">
                     
-                    <div class="product-details-slider-area">
+                    <div class="product-details-slider-area" wire:ignore>
                         <div class="big-image-wrapper">
                             <div class="product-details-big-image-slider-wrapper slider-for" data-autoplay="false"
                                 data-nav="false">
                                 <div class="single-image">
-                                    <img src="{{asset('assets/img/product/product-1.png')}}" alt="slider">
+                                    <img src="{{asset('admin/product/feat')}}/{{$product->image}}" alt="slider">
                                 </div>
-                                <div class="single-image">
-                                    <img src="{{asset('assets/img/product/product-2.png')}}" alt="slider">
-                                </div>
-                                <div class="single-image">
-                                    <img src="{{asset('assets/img/product/product-3.png')}}" alt="slider">
-                                </div>
-                                <div class="single-image">
-                                    <img src="{{asset('assets/img/product/product-4.png')}}" alt="slider">
-                                </div>
-                                <div class="single-image">
-                                    <img src="{{asset('assets/img/product/product-5.png')}}" alt="slider">
-                                </div>
-                                <div class="single-image">
-                                    <img src="{{asset('assets/img/product/product-6.png')}}" alt="slider">
-                                </div>
+                                @php
+                                    $images = explode(",",$product->images);
+                                @endphp
+                                @foreach($images as $image)
+                                    @if($image)
+                                        <div class="single-image">
+                                            <img src="{{asset('admin/product')}}/{{$image}}" alt="slider">
+                                        </div>
+                                    @endif
+                                @endforeach
+                                
                             </div>
                             <div class="slider-nav product-details-small-image-slider-wrapper" data-slides-to-show="3"
                                 data-autoplay="false" data-slick-center-mode="true" data-nav="false">
                                 <div class="single-image">
-                                    <img src="{{asset('assets/img/product/product-1.png')}}" alt="slider">
+                                    <img src="{{asset('admin/product/feat')}}/{{$product->image}}" alt="slider">
                                 </div>
-                                <div class="single-image">
-                                    <img src="{{asset('assets/img/product/product-2.png')}}" alt="slider">
-                                </div>
-                                <div class="single-image">
-                                    <img src="{{asset('assets/img/product/product-3.png')}}" alt="slider">
-                                </div>
-                                <div class="single-image">
-                                    <img src="{{asset('assets/img/product/product-4.png')}}" alt="slider">
-                                </div>
-                                <div class="single-image">
-                                    <img src="{{asset('assets/img/product/product-5.png')}}" alt="slider">
-                                </div>
-                                <div class="single-image">
-                                    <img src="{{asset('assets/img/product/product-6.png')}}" alt="slider">
-                                </div>
+                                @foreach($images as $image)
+                                    @if($image)
+                                        <div class="single-image">
+                                            <img src="{{asset('admin/product')}}/{{$image}}" alt="slider">
+                                        </div>
+                                    @endif
+                                @endforeach
+                                
                             </div>
                         </div>
                     </div>
@@ -56,8 +45,8 @@
                     <div class="row pl-lg-3">
                         <div class="col-lg-7">
                             <div class="single-product-content-description">
-                                <p class="single-info">Brands <a href="category.html">BrandName</a> </p>
-                                <h4 class="product-title">BrandName Beginner's Protein, 2.2 lb, Cookies and Cream</h4>
+                                <p class="single-info">Brands <a href="category.html">{{$product->brand_id}}</a> </p>
+                                <h4 class="product-title">{{$product->name}}</h4>
                                 <div class="rating">
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
@@ -66,63 +55,75 @@
                                     <i class="fa fa-star-o"></i>
                                     <span class="review-count ml-3">4.5 (2,213)</span>
                                 </div>
-                                <p class="single-grid-product__price"><span class="discounted-price">₹999</span> <span
-                                        class="main-price discounted">₹1699</span></p>
+                                <p class="single-grid-product__price"><span class="discounted-price">₹{{$product->sale_price}}</span> <span
+                                        class="main-price discounted">₹{{$product->regular_price}}</span></p>
 
                                 <div class="single-info">
-                                    <span class="d-block text-muted mb-2"><strong>SKU :</strong> MB5415</span>
-                                    <span class="d-block text-muted mb-2"><strong>Category :</strong> Sports
-                                        Nutrition</span>
+                                    <span class="d-block text-muted mb-2"><strong>SKU :</strong> {{$product->SKU}}</span>
+                                    <span class="d-block text-muted mb-2"><strong>Category :</strong> {{$product->category_id}}</span>
 
-                                    <span class="d-block text-muted mb-2"><strong>Availability :</strong> In
-                                        Stock</span>
+                                    <span class="d-block text-muted mb-2"><strong>Availability :</strong> {{$product->stock_status}}</span>
                                 </div>
-
-                                <div class="varient mt-4">
-                                    <h6 class="font-weight-bold text-dark mb-3">Product Varient</h6>
-                                    <div class="row box-checkbox">
+                                @if(isset($varaiants[0]))
+                                    <div class="varient mt-4">
+                                        <h6 class="font-weight-bold text-dark mb-3">Product Varient</h6>
+                                        <div class="row box-checkbox">
                                         <label tabindex="0">
-                                            <input tabindex="-1" type="checkbox" checked name="" />
-                                            <div class="icon-box">
-                                                <div class="label">399g</div>
-                                                <span class="value">₹599</span>
-                                            </div>
-                                        </label>
-                                        <label tabindex="0">
-                                            <input tabindex="-1" type="checkbox" name="" />
-                                            <div class="icon-box">
-                                                <div class="label">997g</div>
-                                                <span class="value">₹999</span>
-                                            </div>
-                                        </label>
-                                        <label tabindex="0">
-                                            <input tabindex="-1" type="checkbox" name="" />
-                                            <div class="icon-box">
-                                                <div class="label">1.2kg</div>
-                                                <span class="value">₹1599</span>
-                                            </div>
-                                        </label>
+                                                <input tabindex="-1" type="checkbox" checked name="" />
+                                                <div class="icon-box">
+                                                    <div class="label">{{$product->varaint_detail}}</div>
+                                                    <span class="value">₹{{$product->sale_price}}</span>
+                                                </div>
+                                            </label>
+                
+                                            @foreach($varaiants as $av)
+                                                @if($av->id == $product->id)
+                                                @else
+                                                    <a href = "{{route('product-details',['slug'=>$av->slug])}}">
+                                                        <label tabindex="0">
+                                                            
+                                                            <div class="icon-box">
+                                                                <div class="label">{{$av->varaint_detail}}</div>
+                                                                <span class="value">₹{{$av->sale_price}}</span>
+                                                            </div>
+                                                        </label>
+                                                    </a>
+                                                @endif
+                                            @endforeach
+                                            
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
 
                                 <div class="product-actions my-4 justify-content-between">
                                     <!-- Quantity -->
                                     <div class="qty-input btn">
-                                        <i class="less">-</i>
-                                        <input type="text" value="2" />
-                                        <i class="more">+</i>
+                                        <i class="less quntiti" >-</i>
+                                        <input type="text"  name="quntiti" id= "quntiti"  wire:model="quntiti"/>
+                                        <i class="more quntiti">+</i>
                                     </div>
                                     <!-- End Quantity -->
+                                    @if(Session::has('message'))
+                                         <div class="alert alert-success" role="alert">{{Session::get('message')}}</div>
+                                    @endif
+                                   
                                     <div class="product-buttons ml-0 ml-md-3 mt-4 mt-md-0 text-md-left text-center">
-                                        <a class="btn btn-rounded btn-soft-primary mr-2" href="wishlist.html"> <i
+                                        @if($wish)
+                                        <a class="btn btn-rounded btn-soft-primary mr-2" href="#" wire:click.prevent="removeFromWishlist({{$product->id}})"> <i
+                                                class="fa fa-heart"></i> remove To Wishlist</a>
+                                            
+                                        @else
+                                        <a class="btn btn-rounded btn-soft-primary mr-2" href="#" wire:click.prevent="addToWishlist({{$product->id}},{{$product->sale_price}})"> <i
                                                 class="fa fa-heart"></i> Add To Wishlist</a>
-                                        <a class="btn btn-rounded btn-primary" href="cart.html"> <i
+                                        @endif
+                                        
+                                        <a class="btn btn-rounded btn-primary" href="#" wire:click.prevent="AddtoCart({{$product->id}},{{$product->sale_price}})"> <i
                                                 class="fa fa-shopping-cart"></i> Add To Cart</a>
                                     </div>
 
                                 </div>
                                 <div class="mb-4">
-                                    <a href="checkout.html"
+                                    <a href="{{route('check-out')}}"
                                         class="btn btn-block btn-primary btn-pill transition-3d-hover">Buy
                                         Now</a>
                                 </div>
@@ -131,6 +132,7 @@
                         <div class="col-lg-5 mt-4 mt-lg-0">
                             <div class="bg-light p-3">
                                 <h6>Delivery Options</h6>
+                                @if($product->freecancellation)
                                 <div class="media align-items-center">
                                     <span class="mr-2">
                                         <i class="ti-check text-primary small"></i>
@@ -139,6 +141,7 @@
                                         <span class="font-weight-bold mr-1">Free Shipping</span>
                                     </div>
                                 </div>
+                                @endif
                                 <div class="media align-items-center">
                                     <span class="mr-2">
                                         <i class="ti-check text-primary small"></i>
@@ -158,13 +161,7 @@
                             </div>
                             <div class="mt-4">
                                 <h6 class="font-weight-bold text-dark">Products highlights</h6>
-                                <ul class="pl-3">
-                                    <li>Comprise of WPC</li>
-                                    <li>Helps in Muscle Building</li>
-                                    <li>Generally Consumed With Water</li>
-                                    <li>Helps to strengthen the immune system </li>
-                                    <li>Supports healthy functioning of the cardiovascular system</li>
-                                </ul>
+                                {!! $product->short_description !!}
                             </div>
                             <div class="mt-4">
                                 <h6 class="font-weight-bold text-dark">Share on</h6>
@@ -213,19 +210,7 @@
                 <div class="row">
                     <div class="col-12">
                         <h3 class="entry-product-section-heading">Description</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A tenetur culpa
-                            quis aut, ex totam fugit nam consequuntur corporis deserunt quos
-                            molestias temporibus sit aliquam, provident molestiae modi, rem
-                            pariatur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum voluptates
-                            sunt tempore exer cum labore, delectus asperiores molestias saepe
-                            consequatur totam sed.</p>
-                        <p>Pellentesque aliquet, sem eget laoreet ultrices, ipsum metus feugiat sem, quis
-                            fermentum turpis eros eget velit. Donec ac tempus ante. Fusce ultricies massa
-                            massa. Fusce aliquam, purus eget sagittis vulputate, sapien libero hendrerit
-                            est, sed commodo augue nisi non neque. Lorem ipsum dolor sit amet, consectetur
-                            adipiscing elit. Sed tempor, lorem et placerat vestibulum, metus nisi posuere
-                            nisl, in accumsan elit odio quis mi. Cras neque metus, consequat et blandit et,
-                            luctus a nunc. Etiam gravida vehicula tellus, in imperdiet ligula euismod eget.
+                        <p>{!! $product->description !!}
                         </p>
                         <h3 class="entry-product-section-heading">Additional information</h3>
                         <div class="product-info-sec">
@@ -336,8 +321,8 @@
                 </div>
             </div>
         </div>
-        </div>
-        {{--
+        
+        
         <div class="single-row-slider-area pt-7">
             <div class="container-fluid">
                 <div class="row">
@@ -530,6 +515,27 @@
                     </div>
                 </div>
             </div>
-        </div> --}}
+        </div> 
     </section>
 </div>
+
+@push('scripts')
+    <script>
+        
+            $('#quntiti').on('change',function(ev){
+                //alert('gfhfgh');
+                var data = $('#quntiti').val();
+                //alert(data);
+                @this.set('quntiti',data);
+            });
+
+            $('.quntiti').on('click',function(ev){
+                //alert('gfhfgh');
+                var data = $('#quntiti').val();
+               // alert(data);
+                @this.set('quntiti',data);
+            });
+        
+        
+    </script>
+@endpush

@@ -129,6 +129,27 @@
                                                         @enderror
                                                     </div>
                                                     <div class="mb-4">
+                                                        <label class="form-label">Tax SLab</label>
+                                                        <select class="form-control" wire:model="tax_id">
+                                                            <option value="">Select Tax Slab</option>
+                                                            @foreach($taxs as $tax)
+                                                            <option value="{{$tax->id}}">{{$tax->tax_name}} {{$tax->value}}%</option>
+                                                            @endforeach
+                                                            
+                                                        </select>
+                                                        @error('tax_id') <p class="text-danger">{{$message}}</p>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="mb-4">
+                                                        <label class="form-label">Free Delivery</label>
+                                                        <select class="form-control" wire:model="freecancellation">
+                                                            <option value="0">No</option>
+                                                            <option value="1">Yes</option>
+                                                        </select>
+                                                        @error('freecancellation') <p class="text-danger">{{$message}}</p>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="mb-4">
                                                         <label class="form-label">Quantity</label>
                                                         <input type ="text" placeholder="10" class ="form-control input-md" wire:model="quantity"/>
                                                         @error('quantity') <p class="text-danger">{{$message}}</p> @enderror

@@ -43,21 +43,19 @@
                                                     <div class="avater btn-soft-primary">DS</div>
                                                 </div>
                                                 <div class="col-auto">
-                                                    <h6 class="d-block font-weight-bold mb-0">Deep saha</h6>
-                                                    <small class="text-muted">yourmail@email.com</small>
+                                                    <h6 class="d-block font-weight-bold mb-0">{{Auth::user()->name}}</h6>
+                                                    <small class="text-muted">{{Auth::user()->email}}</small>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <ul class="list-unstyled mb-0">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="account.html"><i class="fa fa-user"></i> My Account</a>
+                                            <a class="nav-link" href="{{route('user.account')}}"><i class="fa fa-user"></i> My Account</a>
                                         </li>
+                                       
                                         <li class="nav-item">
-                                            <a class="nav-link" href="change-password.html"><i class="fa fa-lock"></i> Password</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="address.html"><i class="fa fa-address-book"></i> Address</a>
+                                            <a class="nav-link" href="{{route('user.address')}}"><i class="fa fa-address-book"></i> Address</a>
                                         </li>
                                         <li class="nav-item active">
                                             <a class="nav-link" href="{{route('orders')}}"><i class="fa fa-shopping-cart"></i> Order</a>
@@ -100,26 +98,28 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @foreach($orders as $order)
                                             <tr>
-                                                <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="{{route('order-details')}}" data-bs-toggle="modal">34VB5540K83</a></td>
-                                                <td class="py-3">May 21, 2019</td>
+                                                <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="{{route('order-details',['id'=>$order->id])}}" data-bs-toggle="modal">{{$order->id}}</a></td>
+                                                <td class="py-3">{{$order->created_at->format('M d Y')}}</td>
                                                 <td class="py-3"><span class="badge bg-soft-info m-0">In Progress</span></td>
-                                                <td class="py-3">$358.75</td>
+                                                <td class="py-3">${{$order->total}}</td>
                                             </tr>
+                                            @endforeach
                                             <tr>
-                                                <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="{{route('order-details')}}" data-bs-toggle="modal">78A643CD409</a></td>
+                                                <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="{{route('order-details',['id'=>$order->id])}}" data-bs-toggle="modal">78A643CD409</a></td>
                                                 <td class="py-3">December 09, 2018</td>
                                                 <td class="py-3"><span class="badge bg-soft-danger m-0">Canceled</span></td>
                                                 <td class="py-3"><span>$760.50</span></td>
                                             </tr>
                                             <tr>
-                                                <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="{{route('order-details')}}" data-bs-toggle="modal">112P45A90V2</a></td>
+                                                <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="{{route('order-details',['id'=>$order->id])}}" data-bs-toggle="modal">112P45A90V2</a></td>
                                                 <td class="py-3">October 15, 2018</td>
                                                 <td class="py-3"><span class="badge bg-soft-warning m-0">Delayed</span></td>
                                                 <td class="py-3">$1,264.00</td>
                                             </tr>
                                             <tr>
-                                                <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="{{route('order-details')}}" data-bs-toggle="modal">28BA67U0981</a></td>
+                                                <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="{{route('order-details',['id'=>$order->id])}}" data-bs-toggle="modal">28BA67U0981</a></td>
                                                 <td class="py-3">July 19, 2018</td>
                                                 <td class="py-3"><span class="badge bg-soft-success m-0">Delivered</span></td>
                                                 <td class="py-3">$198.35</td>
@@ -131,7 +131,7 @@
                                                 <td class="py-3">$2,133.90</td>
                                             </tr>
                                             <tr>
-                                                <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="{{route('order-details')}}" data-bs-toggle="modal">47H76G09F33</a></td>
+                                                <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="{{route('order-details',['id'=>$order->id])}}" data-bs-toggle="modal">47H76G09F33</a></td>
                                                 <td class="py-3">March 30, 2018</td>
                                                 <td class="py-3"><span class="badge bg-soft-success m-0">Delivered</span></td>
                                                 <td class="py-3">$86.40</td>

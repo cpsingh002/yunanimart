@@ -9,6 +9,7 @@ use App\Models\SubCategory;
 use App\Models\MedType;
 use App\Models\Attribute;
 use App\Models\AttributeValue2;
+use App\Models\Tax; 
 use App\Models\Brand;
 use App\Models\ProductVariant;
 use Illuminate\Support\Facades\Auth;
@@ -44,6 +45,8 @@ class AddProduct2Component extends Component
     public $is_child;
     public $is_young;
     public $status;
+    public $tax_id;
+    Public $freecancellation;
 
     public $attr;
     public $inputs = [];
@@ -177,6 +180,8 @@ class AddProduct2Component extends Component
             'is_baby'=>'required',
             'is_child'=>'required',
             'is_young'=>'required',
+            'tax_id' =>'required',
+            'freecancellation' =>'required' 
         ]);
     }
 
@@ -187,8 +192,9 @@ class AddProduct2Component extends Component
         $attributes = Attribute::all();
         $brands = Brand::all();
         $medtypes = MedType::all();
+        $taxs = Tax::all();
         return view('livewire.admin.product2.add-product2-component',[
-            'categories'=>$categories,'scategories'=>$scategories,'attributes'=>$attributes,'brands'=>$brands,'medtypes'=>$medtypes
+            'categories'=>$categories,'scategories'=>$scategories,'attributes'=>$attributes,'brands'=>$brands,'medtypes'=>$medtypes,'taxs'=>$taxs
         ])->layout('layouts.admin');
     }
 
@@ -218,6 +224,8 @@ class AddProduct2Component extends Component
             'is_baby'=>'required',
             'is_child'=>'required',
             'is_young'=>'required',
+            'tax_id' =>'required',
+            'freecancellation' =>'required'
         ]);
 
         $product =new Product2();
@@ -261,6 +269,9 @@ class AddProduct2Component extends Component
         $product->is_baby = $this->is_baby;
         $product->is_child = $this->is_child;
         $product->is_young = $this->is_young;
+        $product->tax_id = $this->tax_id;
+        $product->freecancellation = $this->freecancellation;
+        $product->discount_value = (($this->regular_price - $this->sale_price)/$this->regular_price)*100;
         $product->status = '1';
         $product->add_by = '1'; //Auth::user()->id;
         $product->save();
@@ -310,6 +321,9 @@ class AddProduct2Component extends Component
             $product_varaint->is_baby = $this->is_baby;
             $product_varaint->is_child = $this->is_child;
             $product_varaint->is_young = $this->is_young;
+            $product_varaint->tax_id = $this->tax_id;
+            $product_varaint->freecancellation = $this->freecancellation;
+            $product_varaint->discount_value = (($this->mrps[$key] - $this->pris[$key])/$this->mrps[$key])*100;
             $product_varaint->status = '1';
             $product_varaint->add_by = '1'; //Auth::user()->id;
             $product_varaint->varaint_detail = $tdata;

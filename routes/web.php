@@ -16,6 +16,12 @@ use App\Livewire\Frontend\OrdersComponent;
 use App\livewire\Frontend\OrderDetailsComponent;
 use App\Livewire\Frontend\ShopComponent;
 use App\Livewire\Frontend\ProductDetailsComponent;
+use App\Livewire\Frontend\CategorySearchComponent;
+
+
+use App\livewire\User\AccountComponent;
+use App\livewire\User\AddressComponent;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,19 +42,28 @@ Route::get('/about-us',AboutUsComponent::class)->name('about-us');
 Route::get('/contact-us',ContactUsComponent::class)->name('contact-us');
 Route::get('/blogs',BlogComponent::class)->name('blogs');
 Route::get('/blog/slug',BlogDetailsComponent::class)->name('blog-details');
-Route::get('/upload-prescription',UploadPrescriptionComponent::class)->name('upload-prescription');
+
 Route::get('/wishlist',WishlistComponent::class)->name('wishlist');
 Route::get('/cart',CartComponent::class)->name('cart');
 Route::get('/check-out',CheckOutComponent::class)->name('check-out');
-Route::get('/orders',OrdersComponent::class)->name('orders');
-Route::get('/order/id',OrderDetailsComponent::class)->name('order-details');
-Route::get('/shop',ShopComponent::class)->name('shop');
-Route::get('/product/slug',ProductDetailsComponent::class)->name('product-details');
 
+
+Route::get('/shop',ShopComponent::class)->name('shop');
+Route::get('/product/{category_slug}/{scategory_slug?}',CategorySearchComponent::class)->name('product.category');
+Route::get('/product-detail/{slug}',ProductDetailsComponent::class)->name('product-details');
 Route::post('/uregisteor',[RegisterController::class,'uregisteor'])->name('udregisteor');
 Route::post('/ulogin',[LoginController::class,'uloginauth'])->name('ulogin');
 Route::get('/adminlogin',[LoginController::class,'adminlogin']);
 Route::post('/adminlogin',[LoginController::class,'adminloginauth'])->name('adminlogin');
+
+Route::middleware(['auth:sanctum','verified'])->group(function(){
+    Route::get('/upload-prescription',UploadPrescriptionComponent::class)->name('upload-prescription');
+    Route::get('user/account',AccountComponent::class)->name('user.account');
+    Route::get('user/address',AddressComponent::class)->name('user.address');
+    Route::get('user/orders',OrdersComponent::class)->name('orders');
+    Route::get('/order/{id}',OrderDetailsComponent::class)->name('order-details');
+    
+});
 Auth::routes();
 Auth::routes(['verify' => true]);
 

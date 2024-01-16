@@ -8,6 +8,9 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Wishlist;
+use App\Models\Cart;
+use Session;
 
 class LoginController extends Controller
 {
@@ -42,7 +45,7 @@ class LoginController extends Controller
     }
     public function uloginauth(Request $request)
     {
-        dd($request);
+        //dd($request);
         $valid=Validator::make($request->all(),[
             
             'email'=>'required',
@@ -62,6 +65,9 @@ class LoginController extends Controller
             if ($request->hasSession()) {
                 $request->session()->put('auth.password_confirmed_at', time());
             }
+            $this->movewishlist($request);
+            $this->movecart($request);
+
             return response()->json(['status'=>'success','msg'=>'msg']);
         }else{
                 return response()->json(['status'=>'error','msg'=>'Email and password are not matched']);
@@ -88,6 +94,48 @@ class LoginController extends Controller
             //return $this->sendLoginResponse($request);
             return redirect('admin/brands');
         }
+    }
+
+    public function movewishlist($request)
+    {
+        if (Session::has('wishlist')){
+            foreach (Session::get('wishlist') as $id=>$cart){
+
+             $carModel = new Wishlist();
+             $carModel['user_id'] = Auth::user()->id;
+             $carModel['product_id'] = $cart['product_id'];
+             $carModel['product_name'] = $cart['product_name'];
+             $carModel['product_image'] = $cart['product_image'];
+             $carModel['quantity'] = $cart['quantity'];
+             $carModel['price'] = $cart['price'];
+             $carModel->save();
+            }
+            Session::forget('wishlist');
+            return;
+        }
+
+        return;
+    }
+
+    public function movecart($request)
+    {
+        if (Session::has('cart')){
+            foreach (Session::get('cart') as $id=>$cart){
+
+             $carModel = new Cart();
+             $carModel['user_id'] = Auth::user()->id;
+             $carModel['product_id'] = $cart['product_id'];
+             $carModel['product_name'] = $cart['product_name'];
+             $carModel['product_image'] = $cart['product_image'];
+             $carModel['quantity'] = $cart['quantity'];
+             $carModel['price'] = $cart['price'];
+             $carModel->save();
+            }
+            Session::forget('cart');
+            return;
+        }
+
+        return;
     }
     
 }

@@ -26,4 +26,10 @@ class Product extends Model
     {
         return $this->hasMany(AttributeValue::class,'product_id');
     }
+
+    public function productvaraint()
+    {
+        return $this->hasMany(ProductVariant::class,'product_id');
+    }
+   
 }
