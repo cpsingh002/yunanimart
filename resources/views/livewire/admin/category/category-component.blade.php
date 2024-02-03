@@ -37,6 +37,8 @@
                                  <th>Slug</th>
                                  <th>Icon</th>
                                  <th>SubCategory</th>
+                                 <th>Is Home</th>
+                                 <th>Status</th>
                                  <th>Action</th>
                              </tr>
                          </thead>
@@ -54,19 +56,27 @@
                                  </td>
                                  <td>
                                      <ul class="sclist">
-                                         @foreach($category->subCategories as $scategory)
+                                         @foreach($category->subCategories as $key => $scategory)
+                                         @if($key == 4)
+                                            <a href="{{route('admin.subcategories')}}">View more...</a>
+                                            @break
+                                        @endif
                                          <li><i class="fa fa-caret-right"></i>{{$scategory->name}}
                                              <a href="{{route('admin.editsubcategory',['scategory_slug'=>$scategory->slug])}}"
                                                  class="slink"><i class="fa fa-edit"></i></a>
-                                             <a href="#" onclick="confirm('Are you sure, You want to delet this sub-category') || event.stopImmediatePropagation()"
+                                             <a href="#" onclick="confirm('Are you sure, You want to delete this sub-category') || event.stopImmediatePropagation()"
                                                  wire:click.prevent="deleteSubCategory({{$scategory->id}})" class="slink"><i class="fa fa-times text-danger"></i></a>
                                          </li>
                                          @endforeach
                                      </ul>
                                  </td>
+                                 <td>@if($category->is_home == 1) Yes @else No @endif</td>
+                                 <td>@if($category->status == 1)<a href="#" onclick="confirm('Are you sure, You want to Deactive this category') || event.stopImmediatePropagation()" wire:click.prevent='DeactiveCategory({{$category->id}})'> Active </a> 
+                                @else <a href="#" onclick="confirm('Are you sure, You want to Active this category') || event.stopImmediatePropagation()" wire:click.prevent='ActiveCategory({{$category->id}})'>Deactive </a>
+                                @endif</td>
                                  <td>
                                      <a href="{{route('admin.editcategory',['category_slug'=>$category->slug])}}"><i class="fa fa-edit"></i></a>
-                                     <a href="#" onclick="confirm('Are you sure, You want to delet this category') || event.stopImmediatePropagation()"
+                                     <a href="#" onclick="confirm('Are you sure, You want to delete this category') || event.stopImmediatePropagation()"
                                          wire:click.prevent="deleteCategory({{$category->id}})"><i class="fa fa-times ml-1 text-danger"></i></a>
                                  </td>
                              </tr>

@@ -66,7 +66,7 @@
                                                      <input type="file" placeholder="Category Icon" class="form-control"
                                                          wire:model="icon" />
                                                          @if($icon)
-                                                     <!-- <img src="{{$icon->temporaryUrl()}}" width="120" /> -->
+                                                      <img src="{{$icon->temporaryUrl()}}" width="120" /> 
                                                      @endif
                                                      
                                                      @error('icon') <p class="text-danger">{{$message}}</p> @enderror
@@ -82,6 +82,20 @@
                                                      <img src="{{$categorythum->temporaryUrl()}}" width="120" />
                                                      @endif
                                                      @error('categorythum') <p class="text-danger">{{$message}}</p>
+                                                     @enderror
+                                                 </div>
+                                             </div>
+                                             <div class="mb-4">
+                                                 <div>
+                                                     <label for="form-category/parent-category" class="form-label">For Home
+                                                         </label>
+
+                                                     <select class="form-select" wire:model="is_home">
+                                                         <option value>Select</option>
+                                                         <option value="1">Yes</option>
+                                                         <option value="0">No</option>
+                                                     </select>
+                                                     @error('is_home') <p class="text-danger">{{$message}}</p>
                                                      @enderror
                                                  </div>
                                              </div>

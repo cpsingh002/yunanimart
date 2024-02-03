@@ -1,4 +1,10 @@
+
 <div>
+    <style>
+    .pros{
+        font-size:25px;
+    }
+</style>
     <section class="section-padding mt-4">
         <div class="container-fluid">
             <div class="row justify-content-between">
@@ -45,22 +51,32 @@
                     <div class="row pl-lg-3">
                         <div class="col-lg-7">
                             <div class="single-product-content-description">
-                                <p class="single-info">Brands <a href="category.html">{{$product->brand_id}}</a> </p>
+                                <p class="single-info">Brand: <a href="{{route('brand-products',['brand_slug'=>$product->brand->brand_slug])}}">{{$product->brand->brand_name}}</a> </p>
                                 <h4 class="product-title">{{$product->name}}</h4>
                                 <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-half-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <span class="review-count ml-3">4.5 (2,213)</span>
+                                    @php
+                                    $ratingAvg=$product->reviews->avg('rating') 
+                                    @endphp
+                                    @foreach(range(1,5) as $i)
+                                            @if($ratingAvg > 0)
+                                                @if($ratingAvg > 0.5)
+                                                <i class="fa fa-star"></i>
+                                                @else
+                                                    <i class="fa fa-star-half-o"></i>
+                                                @endif
+                                            @else
+                                                <i class="fa fa-star-o"></i>
+                                            @endif 
+                                            @php $ratingAvg--; @endphp
+                                    @endforeach
+                                    <span class="review-count ml-3">{{number_format($product->reviews->avg('rating'),1)}} ({{$product->reviews->count()}})</span>
                                 </div>
                                 <p class="single-grid-product__price"><span class="discounted-price">₹{{$product->sale_price}}</span> <span
                                         class="main-price discounted">₹{{$product->regular_price}}</span></p>
 
                                 <div class="single-info">
                                     <span class="d-block text-muted mb-2"><strong>SKU :</strong> {{$product->SKU}}</span>
-                                    <span class="d-block text-muted mb-2"><strong>Category :</strong> {{$product->category_id}}</span>
+                                    <span class="d-block text-muted mb-2"><strong>Category :</strong><a href="{{route('product.category',['category_slug'=>$product->category->slug])}}">{{$product->category->name}}</a></span>
 
                                     <span class="d-block text-muted mb-2"><strong>Availability :</strong> {{$product->stock_status}}</span>
                                 </div>
@@ -122,8 +138,9 @@
                                     </div>
 
                                 </div>
+                                
                                 <div class="mb-4">
-                                    <a href="{{route('check-out')}}"
+                                    <a wire:click.prevent="checkout({{$product->id}},{{$product->sale_price}})"
                                         class="btn btn-block btn-primary btn-pill transition-3d-hover">Buy
                                         Now</a>
                                 </div>
@@ -236,87 +253,87 @@
                             </table>
                         </div>
                         <h2 class="entry-product-section-heading"> Reviews </h2>
-                        <div class="row justify-content-between">
-                            <div class="col-lg-12">
-                                <div class="review_content">
-                                    <div class="mb-1">
-                                        <div class="rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-half-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <span class="review-count ml-3">4.5 (2,213)</span>
-                                        </div>
-                                        <em>Published 54 minutes ago</em>
-                                    </div>
-                                    <h4>"Commpletely satisfied"</h4>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus
-                                        autem, distinctio hic omnis molestiae, perspiciatis deserunt labore nisi
-                                        exercitationem non laudantium </p>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="review_content">
-                                    <div class="mb-1">
-                                        <div class="rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-half-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <span class="review-count ml-3">4.5 (2,213)</span>
-                                        </div>
-                                        <em>Published 1 day ago</em>
-                                    </div>
-                                    <h4>"Always the best"</h4>
-                                    <p>dolor reiciendis repellat accusantium exercitationem placeat consequatur,
-                                        labore laboriosam perferendis in inventore magnam excepturi.</p>
-                                </div>
-                            </div>
+                        <h5>Avg. Rating</h5>
+                        @php
+                            $ratingAvg=$product->reviews->avg('rating') 
+                        @endphp
+                        @foreach(range(1,5) as $i)
+                        <div class="rating pros">
+                            <span class="fa-stack" style="width:1em">
+
+                                @if($ratingAvg > 0)
+                                    @if($ratingAvg > 0.5)
+                                    <i class="fa fa-star"></i>
+                                    @else
+                                        <i class="fa fa-star-half-o"></i>
+                                    @endif
+                                @else
+                                    <i class="fa fa-star-o"></i>
+                                @endif 
+                                @php $ratingAvg--; @endphp
+                            </span>
                         </div>
-                        
+                        @endforeach <span>({{$product->reviews->count()}})</span>
                         <div class="row justify-content-between">
-                            <div class="col-lg-12">
+                             <div class="col-lg-12">
                                 <div class="review_content">
+                                    @foreach($reviews as $review)
                                     <div class="mb-1">
-                                        <div class="rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-half-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <span class="review-count ml-3">4.5 (2,213)</span>
-                                        </div>
+                                    @foreach(range(1,5) as $i)
+                                    <div class="rating">
+                                        <span class="fa-stack" style="width:1em">
+
+                                            @if($review->rating > 0)
+                                                @if($review->rating > 0.5)
+                                                <i class="fa fa-star"></i>
+                                                @else
+                                                    <i class="fa fa-star-half-o"></i>
+                                                @endif
+                                            @else
+                                                <i class="fa fa-star-o"></i>
+                                            @endif
+                                            @php $review->rating--; @endphp
+                                        </span>
+                                    </div>
+                                    @endforeach
+                                    
                                         <em>Published 54 minutes ago</em>
                                     </div>
-                                    <h4>"Commpletely satisfied"</h4>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus
-                                        autem, distinctio hic omnis molestiae, perspiciatis deserunt labore nisi
-                                        exercitationem non laudantium </p>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="review_content">
-                                    <div class="mb-1">
-                                        <div class="rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-half-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <span class="review-count ml-3">4.5 (2,213)</span>
-                                        </div>
-                                        <em>Published 1 day ago</em>
-                                    </div>
-                                    <h4>"Always the best"</h4>
-                                    <p>dolor reiciendis repellat accusantium exercitationem placeat consequatur,
-                                        labore laboriosam perferendis in inventore magnam excepturi.</p>
+                                    @php
+                                        $images = explode(",",$review->images);
+                                    @endphp
+                                    @foreach($images as $image)
+                                        @if($image)
+                                            <div class="single-image">
+                                                <img src="{{asset('admin/review')}}/{{$image}}" width="120" alt="slider">
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                    <p>{{$review->message}}</p>
+                                    <p>{{$review->user->name}}</p>
+                                    @endforeach
+                                    
                                 </div>
                             </div>
                         </div>
                         <p class="text-right"><a href="leave-review.html" class="btn btn-primary">Leave a
                                 review</a></p>
+                                
+                                <h2 class="entry-product-section-heading"> Questions and Answers </h2>
+                        <p class="text-right">
+                            <a class="btn btn-rounded btn-soft-primary mr-2" wire:click.prevent="askQuestion({{$product->id}})" href="#">Ask Question</a>
+                        </p>
+
+                        @foreach($questions as $question)
+                        <div class="mb-5">
+                            <h4 class="mb-0 fs-exact-18">{{$question->id}}.{{$question->question}}</h4>
+                        </div>
+                        @foreach($question->answers as $answer)
+                        <div class="mb-4">
+                        <p> {{$answer->id}}.{{$answer->answer}}</p>
+                        </div>
+                        @endforeach
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -517,9 +534,54 @@
             </div>
         </div> 
     </section>
+    <div wire:ignore.self class="modal fade" id="questionModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+        
+            <div class="modal-header">
+                
+                <h4 class="modal-title fs-5" id="staticBackdropLabel">Question</h4>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @if(Session::has('message'))
+                    <div class="alert alert-success" role="alert">{{Session::get('message')}}</div>
+                @endif
+                <div class="mb-4">
+                    <label for="form-banner/name" class="form-label">Product name: </label>
+                    <input type="text" class="form-control"
+                        wire:model="pname" disabled value="{{$product->name}}" />
+                </div>
+                <div class="mb-4">
+                    <label for="form-review/message" class="form-label">Question: </label>
+                    <textarea type="text" class="form-control"
+                        wire:model="question" name='question' ></textarea>
+                        @error('question') <p class="text-danger">{{$message}}</p> @enderror
+                </div>        
+            </div>
+        
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" wire:click.prevent="storeQuestion">Submit</button>
+        </div>
+        </div>
+    </div>
+</div>
 </div>
 
 @push('scripts')
+<script>
+    document.addEventListener('livewire:init', () => {
+       Livewire.on('openquestionModal', (event) => {
+        $('#questionModal').modal('show');
+       });
+    });
+    window.addEventListener('show-edit-post-modal', event => {
+         $('#login_modal').modal('show');
+    });
+</script>
     <script>
         
             $('#quntiti').on('change',function(ev){

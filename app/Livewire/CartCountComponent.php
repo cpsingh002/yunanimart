@@ -21,6 +21,7 @@ class CartCountComponent extends Component
     public function render(Request $request)
     {       
        
+       $this->cartcount = 0;
         if(Auth::check())
         {
             $this->cartlist = Cart::where('user_id',Auth::user()->id)->get();

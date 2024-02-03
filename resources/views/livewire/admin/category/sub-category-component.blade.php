@@ -6,7 +6,7 @@
                      <nav class="mb-2" aria-label="breadcrumb">
 
                      </nav>
-                     <h1 class="h3 m-0">Categories</h1>
+                     <h1 class="h3 m-0">Sub Categories</h1>
                  </div>
                  <div class="col-auto d-flex">
                      <a href="{{route('admin.addsubcategory')}}" class="btn btn-primary">Add Sub Category</a>
@@ -34,7 +34,8 @@
                                  <th>Sub Slug</th>
                                  <th>Sub Icon</th>
                                  <th>Category</th>
-                                 
+                                 <th>Is Home</th>
+                                 <th>Status</th>
                                  <th>Action</th>
                              </tr>
                          </thead>
@@ -49,11 +50,14 @@
                                  </td>
                                  <td><img src="{{asset('admin/category/icon')}}/{{$category->icon}}" width="60"></td>
                                  <td>{{$category->category->name}}</td>
-                                 
+                                 <td>@if($category->is_home == 1) Yes @else No @endif</td>
+                                 <td>@if($category->statuts == 1)<a href="#" onclick="confirm('Are you sure, You want to Deactive this subcategory') || event.stopImmediatePropagation()" wire:click.prevent='DeactiveSubCategory({{$category->id}})'> Active </a> 
+                                @else <a href="#" onclick="confirm('Are you sure, You want to Active this subcategory') || event.stopImmediatePropagation()" wire:click.prevent='ActiveSubCategory({{$category->id}})'>Deactive </a>
+                                @endif</td>
                                  <td>
                                      <a href="{{route('admin.editsubcategory',['scategory_slug'=>$category->slug])}}"><i class="fa fa-edit"></i></a>
-                                     <a href="#" onclick="confirm('Are you sure, You want to delet this category') || event.stopImmediatePropagation()"
-                                         wire:click.prevent="deleteCategory({{$category->id}})"><i class="fa fa-times ml-1 text-danger"></i></a>
+                                     <a href="#" onclick="confirm('Are you sure, You want to delete this subcategory') || event.stopImmediatePropagation()"
+                                         wire:click.prevent="deleteSubCategory({{$category->id}})"><i class="fa fa-times ml-1 text-danger"></i></a>
                                  </td>
                              </tr>
                              @endforeach

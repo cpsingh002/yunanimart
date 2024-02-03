@@ -46,12 +46,14 @@
                                         <td>{{$prescription->user->name}}</td>
 
                                         <td><a href="{{asset('admin/prescription')}}/{{$prescription->prescription_file}}" target="_blank"><img src="{{asset('admin/prescription')}}/{{$prescription->prescription_file}}" width="60" /></a></td>
-                                        <td>{{$prescription->status==1 ? 'Active':'Inactive'}}</td>
+                                        <td>@if($prescription->status == 1)<a href="#" onclick="confirm('Are you sure, You want to Deactive this prescription') || event.stopImmediatePropagation()" wire:click.prevent='DeactivePrescription({{$prescription->id}})'> Active </a> 
+                                        @else <a href="#" onclick="confirm('Are you sure, You want to Active this prescription') || event.stopImmediatePropagation()" wire:click.prevent='ActivePrescription({{$prescription->id}})'>Deactive </a>
+                                        @endif</td>
                                         <td>{{$prescription->created_at}}</td>
                                         <td>{{$prescription->current_status}}</td>
                                         <td>
-                                        <a href="{{route('admin.editcoupon',['cid'=> $prescription->id])}}"><i class="fa fa-edit fa-2x"></i></a>
-                                                <a href="#" onclick="confirm('Are you sure, You want to delet this slider') || event.stopImmediatePropagation()" wire:click.prevent="deleteCoupon({{$prescription->id}})" style="margin-left:10px;"><i class="fa fa-times fa-2x text-danger"></i></a>
+                                        <a href="{{route('admin.editcoupon',['cid'=> $prescription->id])}}"><i class="fa fa-edit"></i></a>
+                                                <a href="#" onclick="confirm('Are you sure, You want to delete this prescription') || event.stopImmediatePropagation()" wire:click.prevent="deleteCoupon({{$prescription->id}})" style="margin-left:10px;"><i class="fa fa-times text-danger"></i></a>
                                         </td>
                                     </tr>
                              @endforeach

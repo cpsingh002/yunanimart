@@ -1,5 +1,3 @@
- <!-- sa-app__toolbar / end -->
- <!-- sa-app__body -->
  <div id="top" class="sa-app__body">
      <div class="mx-sm-2 px-2 px-sm-3 px-xxl-4 pb-6">
          <div class="container">
@@ -39,7 +37,6 @@
                                                      wire:model="tax_name" />
                                                  @error('tax_name') <p class="text-danger">{{$message}}</p> @enderror
                                              </div>
-
                                              <div class="mb-4">
                                                  <label for="form-banner/image" class="form-label">Type</label>
                                                  <div class="input-group input-group--sa-slug">
@@ -57,7 +54,6 @@
                                                      wire:model="value" />
                                                  @error('value') <p class="text-danger">{{$message}}</p> @enderror
                                              </div>
-
                                              <div class="mb-4">
                                                  <label for="form-banner/image" class="form-label">Status</label>
                                                  <div class="input-group input-group--sa-slug">
@@ -68,22 +64,13 @@
                                                      </select>
                                                  </div>
                                              </div>
-
                                              <div class="mb-4 text-center">
                                                  <button type="submit" class="btn btn-primary">Upadte</button>
                                              </div>
-
-                                             
-
                                          </form>
-
                                      </div>
                                  </div>
-
-
-
                              </div>
-
                          </div>
                      </div>
                  </div>
@@ -92,5 +79,3 @@
          </div>
      </div>
  </div>
- <!-- sa-app__body / end -->
- <!-- sa-app__footer -->

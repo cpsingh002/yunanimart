@@ -17,7 +17,7 @@ class AddCategoryComponent extends Component
     public $category_id;
     public $icon;
     public $categorythum;
-
+    public $is_home;
 
     public function generateslug()
     {
@@ -27,14 +27,16 @@ class AddCategoryComponent extends Component
     {
         $this->validateOnly($fields,[
             'name'=>'required',
-            'slug'=>'required|unique:categories'
+            'slug'=>'required|unique:categories',
+            'is_home'=>'required'
         ]);
     }
     public function storeCategory()
     {
         $this->validate([
             'name'=>'required',
-            'slug' => 'required|unique:categories'
+            'slug' => 'required|unique:categories',
+            'is_home'=>'required'
         ]);
         
         if($this->category_id){
@@ -43,6 +45,7 @@ class AddCategoryComponent extends Component
             $scategory_id->slug = $this->slug;
             $scategory_id->category_id = $this->category_id;
             $scategory_id->icon = $this->icon;
+            $scategory_id->is_home = $this->is_home;
             if($this->icon){
                 $imageNamei= Carbon::now()->timestamp.'.'.$this->icon->extension();
                 $this->icon->storeAs('category/icon',$imageNamei);
@@ -59,6 +62,7 @@ class AddCategoryComponent extends Component
             $category = new Category();
             $category->name = $this->name;
             $category->slug = $this->slug;
+            $category->is_home = $this->is_home;
             if($this->icon){
                 $imageNamei= Carbon::now()->timestamp.'.'.$this->icon->extension();
                 $this->icon->storeAs('category/icon',$imageNamei);

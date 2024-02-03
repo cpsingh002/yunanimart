@@ -46,12 +46,22 @@
                                         </a>
                                         <div class="product-info">
                                             <div class="product-rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <div class="review-count">4.5 (2,213)</div>
+                                                @php
+                                                $ratingAvg=$product->reviews->avg('rating') 
+                                                @endphp
+                                                @foreach(range(1,5) as $i)
+                                                        @if($ratingAvg > 0)
+                                                            @if($ratingAvg > 0.5)
+                                                            <i class="fa fa-star"></i>
+                                                            @else
+                                                                <i class="fa fa-star-half-o"></i>
+                                                            @endif
+                                                        @else
+                                                            <i class="fa fa-star-o"></i>
+                                                        @endif 
+                                                        @php $ratingAvg--; @endphp
+                                                @endforeach
+                                                <div class="review-count">{{number_format($product->reviews->avg('rating'),1)}} ({{$product->reviews->count()}})</div>
                                             </div>
                                             <h3>
                                                 <a href="{{route('product-details',['slug'=>$product->slug])}}"> {{$product->name}}</a>
@@ -59,7 +69,7 @@
                                             <div class="product-value">
                                                 <div class="d-flex">
                                                     <small class="regular-price">MRP <del>₹{{$product->regular_price}}</del></small>
-                                                    <div class="off-price">53% off</div>
+                                                    <div class="off-price">{{$product->discount_value}}% off</div>
                                                 </div>
                                                 <div class="current-price">₹{{$product->sale_price}}</div>
                                             </div>
@@ -78,7 +88,7 @@
                                     @foreach($categorys as $category)
                                         <li
                                             class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                                            <span class="fs-xs text-muted"><a href="{{route('product.category',['category_slug'=>$category->slug,'scategory_slug'=>$category->slug])}}">{{$category->name}}</a></span>
+                                            <span class="fs-xs text-muted"><a href="{{route('product.category',['category_slug'=>$CATegory->slug,'scategory_slug'=>$category->slug])}}">{{$category->name}}</a></span>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -93,7 +103,7 @@
                                         <li
                                             class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="brand-1">
+                                                <input class="form-check-input" type="checkbox" id="brand-1" wire:model="brandtype" value="{{$brand->id}}"  wire:click="brandseletc">
                                                 <label class="form-check-label widget-filter-item-text" for="brand-1">{{$brand->brand_name}}
                                                     one</label>
                                             </div><span class="fs-xs text-muted">{{$brand->productcount->count()}}</span>

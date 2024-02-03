@@ -13,14 +13,18 @@ use App\Livewire\Frontend\WishlistComponent;
 use App\Livewire\Frontend\CartComponent;
 use App\Livewire\Frontend\CheckOutComponent;
 use App\Livewire\Frontend\OrdersComponent;
-use App\livewire\Frontend\OrderDetailsComponent;
+use App\Livewire\Frontend\OrderDetailsComponent;
 use App\Livewire\Frontend\ShopComponent;
 use App\Livewire\Frontend\ProductDetailsComponent;
 use App\Livewire\Frontend\CategorySearchComponent;
+use App\Livewire\Frontend\BrandComponent;
+use App\Livewire\Frontend\BrandSearchComponent;
+use App\Livewire\ThankyouComponent;
 
+use App\Livewire\User\AccountComponent;
+use App\Livewire\User\AddressComponent;
 
-use App\livewire\User\AccountComponent;
-use App\livewire\User\AddressComponent;
+use App\Livewire\Frontend\SearchComponent;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,10 +37,10 @@ use App\livewire\User\AddressComponent;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/', HomeComponent::class);
 Route::get('/index', HomeComponent::class)->name('index');
 Route::get('/about-us',AboutUsComponent::class)->name('about-us');
 Route::get('/contact-us',ContactUsComponent::class)->name('contact-us');
@@ -47,6 +51,11 @@ Route::get('/wishlist',WishlistComponent::class)->name('wishlist');
 Route::get('/cart',CartComponent::class)->name('cart');
 Route::get('/check-out',CheckOutComponent::class)->name('check-out');
 
+Route::get('/thankyou',ThankyouComponent::class)->name('thankyou');
+
+Route::get('/prodcut/brands',BrandComponent::class)->name('product.brands');
+Route::get('/products/{brand_slug}',BrandSearchComponent::class)->name('brand-products');
+
 
 Route::get('/shop',ShopComponent::class)->name('shop');
 Route::get('/product/{category_slug}/{scategory_slug?}',CategorySearchComponent::class)->name('product.category');
@@ -56,12 +65,14 @@ Route::post('/ulogin',[LoginController::class,'uloginauth'])->name('ulogin');
 Route::get('/adminlogin',[LoginController::class,'adminlogin']);
 Route::post('/adminlogin',[LoginController::class,'adminloginauth'])->name('adminlogin');
 
+Route::get('/search', SearchComponent::class)->name('searchs');
+
 Route::middleware(['auth:sanctum','verified'])->group(function(){
     Route::get('/upload-prescription',UploadPrescriptionComponent::class)->name('upload-prescription');
-    Route::get('user/account',AccountComponent::class)->name('user.account');
-    Route::get('user/address',AddressComponent::class)->name('user.address');
-    Route::get('user/orders',OrdersComponent::class)->name('orders');
-    Route::get('/order/{id}',OrderDetailsComponent::class)->name('order-details');
+    Route::get('/user/account', AccountComponent::class)->name('user.account');
+    Route::get('/user/address', AddressComponent::class)->name('user.address');
+    Route::get('/user/orders',OrdersComponent::class)->name('orders');
+    Route::get('/order/{id}', OrderDetailsComponent::class)->name('order-details');
     
 });
 Auth::routes();

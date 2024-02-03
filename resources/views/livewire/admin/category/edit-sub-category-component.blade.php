@@ -9,10 +9,10 @@
                          <nav class="mb-2" aria-label="breadcrumb">
 
                          </nav>
-                         <h1 class="h3 m-0">Edit Category</h1>
+                         <h1 class="h3 m-0">Edit Sub Category</h1>
                      </div>
                      <div class="col-auto d-flex">
-                         <a href="{{route('admin.categories')}}" class="btn btn-primary">All Category</a>
+                         <a href="{{route('admin.subcategories')}}" class="btn btn-primary">All Sub Category</a>
                      </div>
 
                  </div>
@@ -58,33 +58,45 @@
                                                          <option value="{{$category->id}}">{{$category->name}}</option>
                                                          @endforeach
                                                      </select>
+                                                     @error('category_id') <p class="text-danger">{{$message}}</p> @enderror
                                                  </div>
                                              </div>
                                              <div class="form-group">
-                                <label class="col-md-4 control-label">Category Icon</label>
-                                <div class="col-md-4">
-                                    <input type="file" placeholder="Category Icon" class="form-control input-md"  wire:model="newicon"/>
-                                    @if($newicon)
-                                        <img src="{{$newicon->temporaryUrl()}}" width="120" />
-                                    @else
-                                        <img src="{{asset('admin/category/icon')}}/{{$icon}}" width="120" />
-                                    @endif
-                                    @error('newicon') <p class="text-danger">{{$message}}</p> @enderror
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Category Thumb</label>
-                                <div class="col-md-4">
-                                    <input type ="file" class ="input-file" wire:model="newimage"/>
-                                    @if($newimage)
-                                        <img src="{{$newimage->temporaryUrl()}}" width="120" />
-                                    @else
-                                        <img src="{{asset('admin/category')}}/{{$categorythum}}" width="120" />
-                                    @endif
-                                    @error('newimage') <p class="text-danger">{{$message}}</p> @enderror
-                                </div>
-                            </div>
+                                                <label class="col-md-4 control-label">Category Icon</label>
+                                                <div class="col-md-4">
+                                                    <input type="file" placeholder="Category Icon" class="form-control input-md"  wire:model="newicon"/>
+                                                    @if($newicon)
+                                                        <img src="{{$newicon->temporaryUrl()}}" width="120" />
+                                                    @else
+                                                        <img src="{{asset('admin/category/icon')}}/{{$icon}}" width="120" />
+                                                    @endif
+                                                    @error('newicon') <p class="text-danger">{{$message}}</p> @enderror
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">Category Thumb</label>
+                                                <div class="col-md-4">
+                                                    <input type ="file" class ="input-file" wire:model="newimage"/>
+                                                    @if($newimage)
+                                                        <img src="{{$newimage->temporaryUrl()}}" width="120" />
+                                                    @else
+                                                        <img src="{{asset('admin/category')}}/{{$categorythum}}" width="120" />
+                                                    @endif
+                                                    @error('newimage') <p class="text-danger">{{$message}}</p> @enderror
+                                                </div>
+                                            </div>
 
+                                             <div class="mb-4">
+                                                 <div>
+                                                     <label for="form-category/parent-category" class="form-label">For Home
+                                                         </label>
+
+                                                     <select class="form-select" wire:model="is_home">
+                                                         <option value="1">Yes</option>
+                                                         <option value="0">No</option>
+                                                     </select>
+                                                 </div>
+                                             </div>
 
                                              <div class="mb-4 text-center">
                                                  <button type="submit" class="btn btn-primary">Update</button>

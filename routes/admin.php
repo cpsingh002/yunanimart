@@ -45,7 +45,19 @@ use App\Livewire\Admin\Coupon\EditCouponComponent;
 use App\Livewire\Admin\Coupon\Coupon2Component;
 
  use App\Livewire\Admin\Prescription\PrescriptionComponent;
+ 
+use App\Livewire\Admin\Order\OrderComponent;
+use App\Livewire\Admin\Order\OrderDetailComponent;
 
+
+use App\Livewire\Admin\Questions\QuestionComponent;
+use App\Livewire\Admin\Questions\AllAnswersComponent;
+use App\Livewire\Admin\Questions\QuestionAnswerComponent;
+ 
+use App\Livewire\Admin\Reviews\ReviewsComponent;
+use App\Http\Controllers\ReviewController;
+
+use App\Livewire\Admin\Contact\ContactFormComponent;
 
 Route::get('post', Coupon2Component::class);
 Route::middleware(['auth:sanctum','verified','authadmin'])->group(function(){
@@ -75,9 +87,9 @@ Route::middleware(['auth:sanctum','verified','authadmin'])->group(function(){
     Route::get('/attributes/add',AddAttributeComponent::class)->name('admin.addattribute');
     Route::get('/attributes/edit/{att_id}',EditAttributeComponent::class)->name('admin.editattribute');
 
-    Route::get('/products',ProductComponent::class)->name('admin.products');
-    Route::get('/product/add',AddProductComponent::class)->name('admin.addproduct');
-    Route::get('/product/edit/{product_slug}',EditProductComponent::class)->name('admin.editproduct');
+    // Route::get('/products',ProductComponent::class)->name('admin.products');
+    // Route::get('/product/add',AddProductComponent::class)->name('admin.addproduct');
+    // Route::get('/product/edit/{product_slug}',EditProductComponent::class)->name('admin.editproduct');
 
     Route::get('/admin/users',UserComponent::class)->name('admin.users');
 
@@ -95,4 +107,20 @@ Route::middleware(['auth:sanctum','verified','authadmin'])->group(function(){
     Route::get('/coupon/edit/{cid}',EditCouponComponent::class)->name('admin.editcoupon');
 
     Route::get('/prescriptions',PrescriptionComponent::class)->name('admin.prescription');
+    
+    Route::get('/reviews',ReviewsComponent::class)->name('admin.reviews');
+
+    Route::get('/orders',OrderComponent::class)->name('admin.orders');
+    Route::get('/order/detail/{id}',OrderDetailComponent::class)->name('admin.order-detail');
+    
+    Route::get('/questions',QuestionComponent::class)->name('admin.questions');
+    Route::get('/questionanswers',QuestionAnswerComponent::class)->name('admin.question-answers');
+    Route::get('/answers/{id}',AllAnswersComponent::class)->name('admin.all-answers');
+    
+    Route::get('/cotact',ContactFormComponent::class)->name('admin.contact-form');
+    
+    Route::get('/reviews/active',[ReviewController::class, 'activeReviews'])->name('admin.active-reviews');
+    Route::get('/reviews/deactive',[ReviewController::class, 'deactiveReviews'])->name('admin.deactive-reviews');
+    Route::get('/reviews/active/{id}',[ReviewController::class, 'changeActive'])->name('admin.change-active');
+    Route::get('/reviews/deactive/{id}',[ReviewController::class, 'changeDeactive'])->name('admin.change-deactive');
 });

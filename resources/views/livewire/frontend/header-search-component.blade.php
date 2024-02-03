@@ -1,6 +1,6 @@
 <div class="col">
     <div class="header-search">
-        <form action="#">
+        <form action="{{route('searchs')}}">
             <input class="form-control custom-search" name="search" value="{{$searchj}}"  placeholder="Search for Medicines and Health Products" type="text"  wire:model ="searchj" wire:keyup="productcheck">
         </form>
         <div class="search-content" >

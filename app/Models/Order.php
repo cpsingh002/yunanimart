@@ -22,4 +22,13 @@ class Order extends Model
     public function transaction(){
         return $this->hasOne(Transaction::class);
     }
+     public function country()
+    {
+        return $this->belongsTo(Country::class,'country_id');
+    }
+    public function city()
+    {
+        return $this->belongsTo(City::class,'state_id');
+    }
+
 }

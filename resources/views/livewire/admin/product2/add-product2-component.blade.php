@@ -31,15 +31,32 @@
                                             <div class="mb-3">
                                                 <h2 class="mb-0 fs-exact-18">Basic information</h2>
                                             </div>
-
+    `                                       
                                             <div class="row">
                                                 <div class="sa-example__body py-0">
+                                                   {{-- <div>
+                                                        <div class="col-12 col-md-9">
+                                                            <div class="page-title-box float-end mt-3 mt-md-0 mt-xl-0  d-flex">
+                                                                <label class="me-2 mt-1 search-input">Search:</label>
+                                                                <input type="text" id="myInput" name="name" onkeyup="myFunction()">
+                                                            </div>
+                                                        </div>
+                                                        <div id="myUL">
+                                                        
+                                                        @foreach($brandhjs as $brand)
+                                                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1 search-box">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" id="brand-1" wire:model="brandtype" value="{{$brand->id}}"  wire:click="brandseletc">
+                                                                    <label class="form-check-label widget-filter-item-text" for="brand-1">{{$brand->brand_name}} </label>
+                                                                </div>
+                                                            </li>
+                                                        @endforeach
+                                                        </div>
+                                                    </div> --}}
                                                     <div class="mb-4">
                                                         <label class="form-label">Med Name</label>
-                                                        <input type="text" placeholder="Title"
-                                                            class="form-control" wire:model="name" wire:keyup="generateSlug" />
-                                                        @error('name') <p class="text-danger">{{$message}}</p>
-                                                        @enderror
+                                                        <input type="text" placeholder="Title"  class="form-control" wire:model="name" wire:keyup="generateSlug" />
+                                                        @error('name') <p class="text-danger">{{$message}}</p>   @enderror
                                                     </div>
                                                     <div class="mb-4">
                                                         <label for="form-category/slug" class="form-label">Product Slug</label>
@@ -143,6 +160,7 @@
                                                     <div class="mb-4">
                                                         <label class="form-label">Free Delivery</label>
                                                         <select class="form-control" wire:model="freecancellation">
+                                                            <option  value="">Select</option>
                                                             <option value="0">No</option>
                                                             <option value="1">Yes</option>
                                                         </select>
@@ -220,6 +238,7 @@
                                                                 <label class="form-label">Prescription Required</label>
                                                                 <div class="input-group input-group--sa-slug">
                                                                     <select class="form-select mt-3" wire:model="prescription">
+                                                                        <option  value="">Select</option>
                                                                         <option  value="1">Yes</option>
                                                                         <option value="0">No</option>
                                                                     </select>
@@ -232,6 +251,7 @@
                                                                 <label class="form-label">Age Limit</label>
                                                                 <div class="input-group input-group--sa-slug">
                                                                     <select class="form-select mt-3" wire:model="age_limit">
+                                                                        <option  value="">Select</option>
                                                                         <option value="1">Yes</option>
                                                                         <option value="0">No</option>
                                                                     </select>
@@ -255,6 +275,7 @@
                                                                 <label class="form-label">For Baby</label>
                                                                 <div class="input-group input-group--sa-slug">
                                                                     <select class="form-select mt-3" wire:model="is_baby">
+                                                                        <option  value="">Select</option>
                                                                         <option  value="1">Yes</option>
                                                                         <option value="0">No</option>
                                                                     </select>
@@ -279,6 +300,7 @@
                                                                 <label class="form-label">For Young</label>
                                                                 <div class="input-group input-group--sa-slug">
                                                                     <select class="form-select mt-3" wire:model="is_young">
+                                                                        <option  value="">Select</option>
                                                                         <option value="1">Yes</option>
                                                                         <option value="0">No</option>
                                                                     </select>
@@ -328,32 +350,38 @@
                                                     
                                                     <div class="form-group">
                                                         <label class="col-md-4 control-label">Product Attribute</label>
-                                                        <div class="col-md-4">
-                                                            <select class="form-control" wire:model="attr">
-                                                                <option value="0">Select Product Attributes</option>
-                                                                @foreach($attributes as $attribute)
-                                                                    <option value="{{$attribute->id}}">{{$attribute->name}}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-md-1">
-                                                            <button type="button" class="btn btn-info" wire:click.prevent="add">Add</button>
+                                                        
+                                                        <div class="row">
+                                                            <div class="col-md-10">
+                                                                <select class="form-control" wire:model="attr">
+                                                                    <option value="0">Select Product Attributes</option>
+                                                                    @foreach($attributes as $attribute)
+                                                                        <option value="{{$attribute->id}}">{{$attribute->name}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <button type="button" class="btn btn-info" wire:click.prevent="add">Add</button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     @foreach($inputs as $key => $value)
                                                         <div class="form-group">
                                                             <label class="col-md-4 control-label">{{$attributes->where('id',$attribute_arr[$key])->first()->name}}</label>
-                                                            <div class="col-md-4">
-                                                                <input type ="text" placeholder="{{$attributes->where('id',$attribute_arr[$key])->first()->name}}" class="form-control input-md" wire:model="attribute_values.{{$value}}" wire:keyup="done"/>
-                                                            </div>
-                                                            <div class="col-md-1">
-                                                                <button type="button" class="btn btn-info" wire:click.prevent="done">Done</button>
-                                                            </div>
-                                                            <div class="col-md-1">
-                                                                <button type="button" class="btn btn-danger btn-sm" wire:click.prevent="remove({{$key}},{{$attributes->where('id',$attribute_arr[$key])->first()->id}})">Remove</button>
+                                                            <div class="row">
+                                                                <div class="col-md-8">
+                                                                    <input type ="text" placeholder="{{$attributes->where('id',$attribute_arr[$key])->first()->name}}" class="form-control input-md" wire:model="attribute_values.{{$value}}" wire:keyup="done"/>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <button type="button" class="btn btn-info" wire:click.prevent="done">Done</button>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <button type="button" class="btn btn-danger" wire:click.prevent="remove({{$key}},{{$attributes->where('id',$attribute_arr[$key])->first()->id}})">Remove</button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     @endforeach
+                                                    @if(isset($para[0]))
                                                     <div class="col-md-12">
                                                         <div class="panel panel-default">
                                                             <div class="panel-heading">
@@ -361,59 +389,57 @@
                                                             </div>
                                                         <div>
                                                         <div class="card" id="product_attr">
-                                                            <div class="card-body" style="padding:15px;">
+                                                            <div class="card-body px-0 py-3">
                                                                 
-                                                                    @foreach($para as $key1 => $tdata)
-                                                                        <div class="form-group">
-                                                                            <div class="row">
-                                                                                <div class="col-md-2 text-center">
-                                                                                    <label for="size_id" class="control-label mb-1"> Variant</label>
-                                                                                    <p>{{$tdata}}</p>
-                                                                                </div>
-                                                                                <div class="col-md-2">
-                                                                                    <label for="sku" class="control-label mb-1"> SKU</label>
-                                                                                    <input id="sku"  type="text" class="form-control"  wire:model="skus.{{$key1}}" required>
-                                                                                </div>
-                                                                                <div class="col-md-1">
-                                                                                    <label for="mrp" class="control-label mb-1"> MRP</label>
-                                                                                    <input id="mrp" name="mrps[]" type="text" class="form-control"  wire:model="mrps.{{$key1}}" required>
-                                                                                </div>
-                                                                                <div class="col-md-1">
-                                                                                    <label for="price" class="control-label mb-1"> Price</label>
-                                                                                    <input id="price" name="pris[]" type="text" class="form-control"  wire:model="pris.{{$key1}}" required>
-                                                                                </div>
-                                                                                <div class="col-md-2">
-                                                                                    <label for="qty" class="control-label mb-1"> Bulk Qty</label>
-                                                                                    <input id="qty" name="bulkqtys[]" type="text" class="form-control"  wire:model="bulkqtys.{{$key1}}" required>
-                                                                                </div>
-                                                                                <div class="col-md-2">
-                                                                                    <label for="qty" class="control-label mb-1"> Bulk Rate</label>
-                                                                                    <input id="qty" name="bulkrates[]" type="text" class="form-control"  wire:model="bulkrates.{{$key1}}" required>
-                                                                                </div>
-                                                                                <div class="col-md-1">
-                                                                                    <label for="qty" class="control-label mb-1"> Qty</label>
-                                                                                    <input id="qty" name="qtyes[]" type="text" class="form-control"  wire:model="qtyes.{{$key1}}" required>
-                                                                                </div>
-                                                                                
+                                                                @foreach($para as $key1 => $tdata)
+                                                                    <div class="form-group">
+                                                                        <div class="row">
+                                                                            <div class="col-md-2 px-1 text-center">
+                                                                                <label for="size_id" class="control-label mb-1"> Variant</label>
+                                                                                <p>{{$tdata}}</p>
                                                                             </div>
+                                                                            <div class="col-md-2 px-1">
+                                                                                <label for="sku" class="control-label mb-1"> SKU</label>
+                                                                                <input id="sku"  type="text" class="form-control p-1"  wire:model="skus.{{$key1}}" required>
+                                                                            </div>
+                                                                            <div class="col-md-1 px-1">
+                                                                                <label for="mrp" class="control-label mb-1"> MRP</label>
+                                                                                <input id="mrp" name="mrps[]" type="text" class="form-control p-1"  wire:model="mrps.{{$key1}}" required>
+                                                                            </div>
+                                                                            <div class="col-md-1 px-1">
+                                                                                <label for="price" class="control-label mb-1"> Price</label>
+                                                                                <input id="price" name="pris[]" type="text" class="form-control p-1"  wire:model="pris.{{$key1}}" required>
+                                                                            </div>
+                                                                            <div class="col-md-2 px-1">
+                                                                                <label for="qty" class="control-label mb-1"> Bulk Qty</label>
+                                                                                <input id="qty" name="bulkqtys[]" type="text" class="form-control p-1"  wire:model="bulkqtys.{{$key1}}" required>
+                                                                            </div>
+                                                                            <div class="col-md-2 px-1">
+                                                                                <label for="qty" class="control-label mb-1"> Bulk Rate</label>
+                                                                                <input id="qty" name="bulkrates[]" type="text" class="form-control p-1"  wire:model="bulkrates.{{$key1}}" required>
+                                                                            </div>
+                                                                            <div class="col-md-1 px-1">
+                                                                                <label for="qty" class="control-label mb-1"> Qty</label>
+                                                                                <input id="qty" name="qtyes[]" type="text" class="form-control p-1"  wire:model="qtyes.{{$key1}}" required>
+                                                                            </div>
+                                                                            
                                                                         </div>
-                                                                        
-                                                                    @endforeach
+                                                                    </div>
+                                                                @endforeach
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    @endif
                                 
-
-
-
-
-                                                    <div class="mb-4 text-center">
+                                                    <div class="mb-4 mt-4 text-center">
                                                         <button type="submit"
                                                             class="btn btn-primary">Submit</button>
                                                     </div>
                                                             
                                                 </div>
 
+                                            </div>
+                                                </div>
                                             </div>
                                         </form>
                                         @if(Session::has('message'))
@@ -439,6 +465,41 @@
 <!-- sa-app__footer -->
 
 @push('scripts')
+
+<script>
+
+// function myFunction() {
+//   alert("You pressed a key inside the input field");
+// }
+
+function myFunction(){
+   
+    var value = $("#myInput").val();
+     var str = value || '';
+     // var result = str.toLowerCase();
+
+//   alert(str);
+        
+  $('#myUL .search-box').each(function(){
+    // var lcval = $(this).text();
+    var lcval = $(this).text().toLowerCase();
+    
+    
+    var searchValue = value.toLowerCase(); // Convert the search value to lowercase
+    if(lcval.indexOf(searchValue) > -1){
+        // if(lcval.indexOf(value)>-1){
+        
+      $(this).show();
+    } else {
+      $(this).hide();
+      
+    }
+  });
+};
+     
+
+      
+</script>
 <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
 <script>
     ClassicEditor.create( document.querySelector( '#short_description' ) )

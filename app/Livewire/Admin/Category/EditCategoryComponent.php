@@ -22,6 +22,7 @@ class EditCategoryComponent extends Component
     public $categorythum;
     public $newimage;
     public $newicon;
+    public $is_home;
 
     public function mount($category_slug)
     {
@@ -34,7 +35,7 @@ class EditCategoryComponent extends Component
             $this->slug = $category->slug;
             $this->icon = $category->icon;
             $this->categorythum = $category->categorythum;
-        
+            $this->is_home=$category->is_home;
     }
 
 
@@ -95,14 +96,15 @@ class EditCategoryComponent extends Component
             $category = Category::find($this->category_id);
             $category->name = $this->name;
             $category->slug = $this->slug;
+            $category->is_home=$this->is_home;
             if($this->newicon){
-                //unlink('admin/category/icon'.'/'.$scategory->icon);
+              //  unlink('admin/category/icon'.'/'.$category->icon);
                 $imageNamei= Carbon::now()->timestamp.'.'.$this->newicon->extension();
                 $this->newicon->storeAs('category/icon',$imageNamei);
                 $category->icon = $imageNamei;
             }
             if($this->newimage){
-               // unlink('admin/category'.'/'.$category->categorythum);
+               unlink('admin/category'.'/'.$category->categorythum);
                 $imageName= Carbon::now()->timestamp.'.'.$this->newimage->extension();
                 $this->newimage->storeAs('category',$imageName);
                 $category->categorythum = $imageName;

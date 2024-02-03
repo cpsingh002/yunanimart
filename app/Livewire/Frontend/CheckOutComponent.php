@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderMail;
 use Exception;
 use Stripe;
+use Carbon\Carbon; 
 
 
 class CheckOutComponent extends Component
@@ -196,6 +197,7 @@ class CheckOutComponent extends Component
         $order->state_id=$ship->state_id;
         $order->country_id=$ship->country_id;
         $order->zipcode=$ship->zipcode;
+        $order->order_number=Carbon::now()->timestamp;
         $order->status = 'ordered';
         $order->save();
         $carts = Cart::where('user_id', Auth::user()->id)->get();
@@ -212,7 +214,7 @@ class CheckOutComponent extends Component
         $this->resetCart();
         $this->sendOrderConfirmationMail($order);
 
-            dd('asad');
+            // dd('asad');
        }else{
         dd('address not found');
        }
@@ -348,6 +350,6 @@ dd($this->cvc, $this->card_no,$this->card_name,$this->exp_year,$this->exp_month)
     }
     public function sendOrderConfirmationMail($order)
     {
-        Mail::to($order->email)->send(new OrderMail($ordr));
+        Mail::to(Auth::user()->email)->send(new OrderMail($order));
     }
 }

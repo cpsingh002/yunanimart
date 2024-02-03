@@ -428,12 +428,22 @@
                             </a>
                             <div class="product-info">
                                 <div class="product-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-half-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <div class="review-count">4.5 (2,213)</div>
+                                    @php
+                                    $ratingAvg=$product->reviews->avg('rating') 
+                                    @endphp
+                                    @foreach(range(1,5) as $i)
+                                            @if($ratingAvg > 0)
+                                                @if($ratingAvg > 0.5)
+                                                <i class="fa fa-star"></i>
+                                                @else
+                                                    <i class="fa fa-star-half-o"></i>
+                                                @endif
+                                            @else
+                                                <i class="fa fa-star-o"></i>
+                                            @endif 
+                                            @php $ratingAvg--; @endphp
+                                    @endforeach
+                                    <div class="review-count">{{number_format($product->reviews->avg('rating'),1)}}  ({{$product->reviews->count()}})</div>
                                 </div>
                                 <h3>
                                     <a href="{{route('product-details',['slug'=>$product->slug])}}"> {{$product->name}}</a>
@@ -463,14 +473,14 @@
                         <h5 class="product-heading">Popular brands</h5>
                     </div>
                     <div class="col-auto text-md-right">
-                        <a href="{{route('shop')}}" class="btn btn-primary btn-sm product-heading-btn">See All</a>
+                        <a href="{{route('product.brands')}}" class="btn btn-primary btn-sm product-heading-btn">See All</a>
                     </div>
                 </div>
                 <div class="slider arrow-light slider-gap" data-slides-to-show="8" data-autoplay="true" data-nav="true"
                     data-dots="false">
                     @foreach($brands as $brand)
                         <div class="product-brand">
-                            <a href="{{route('shop')}}" class="product-img">
+                            <a href="{{route('brand-products',['brand_slug'=>$brand->brand_slug])}}" class="product-img">
                                 <img src="{{asset('admin/brand')}}/{{$brand->brand_image}}" class="category-img" alt="" width="200" height="200">
                             </a>
                             <!-- <a href="category.html" class="product-info">
@@ -478,7 +488,7 @@
                             </a> -->
                         </div>
                     @endforeach
-                    <div class="product-brand">
+                   {{-- <div class="product-brand">
                         <a href="{{route('shop')}}" class="product-img">
                             <img src="{{asset('assets/img/brand/brand-2.png')}}" class="category-img" alt="">
                         </a>
@@ -541,23 +551,20 @@
                         <!-- <a href="{{route('shop')}}" class="product-info">
                             Healthcare Devices
                         </a> -->
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
     </div>
-
-
-
-     <div class="py-5">
+ <div class="py-5">
         <div class="container-fluid theme-container">
             <div class="row mb-4">
                 <div class="col">
                     <h5 class="product-heading">Best of Personal Care</h5>
                 </div>
-                <!-- <div class="col-auto text-md-right">
-                    <a href="category.html" class="btn btn-primary btn-sm product-heading-btn">See All</a>
-                </div> -->
+                 <div class="col-auto text-md-right">
+                    <a href="{{route('shop')}}" class="btn btn-primary btn-sm product-heading-btn">See All</a>
+                </div> 
             </div>
             <div class="slider  arrow-light slider-gap" data-slides-to-show="4" data-autoplay="true" data-nav="true"
                 data-dots="false">
@@ -570,8 +577,127 @@
                 @endforeach
                 
             </div>
+            <div class="slider  arrow-light slider-gap" data-slides-to-show="6" data-autoplay="true" data-nav="true"
+                data-dots="false">
+                @foreach($products as $product)
+                    <div class="product">
+                        <a href="{{route('product-details',['slug'=>$product->slug])}}" class="product-img">
+                            <img src="{{asset('admin/product/feat')}}/{{$product->image}}" class="" alt="{{$product->slug}}" width="500" height="967">
+                        </a>
+                        <div class="product-info">
+                            <div class="product-rating">
+                                @php
+                                    $ratingAvg=$product->reviews->avg('rating') 
+                                    @endphp
+                                    @foreach(range(1,5) as $i)
+                                            @if($ratingAvg > 0)
+                                                @if($ratingAvg > 0.5)
+                                                <i class="fa fa-star"></i>
+                                                @else
+                                                    <i class="fa fa-star-half-o"></i>
+                                                @endif
+                                            @else
+                                                <i class="fa fa-star-o"></i>
+                                            @endif 
+                                            @php $ratingAvg--; @endphp
+                                    @endforeach
+                                    <div class="review-count">{{$product->reviews->avg('rating')}}  ({{$product->reviews->count()}})</div>
+                            </div>
+                            <h3>
+                                <a href="{{route('product-details',['slug'=>$product->slug])}}"> {{$product->name}}</a>
+                            </h3>
+                            <div class="product-value">
+                                <div class="d-flex">
+                                    <small class="regular-price">MRP <del>₹{{$product->regular_price}}</del></small>
+                                    <div class="off-price">53% off</div>
+                                </div>
+                                <div class="current-price">₹{{$product->sale_price}}</div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+                
+            </div>
         </div>
     </div>
+
+
+    @foreach($category_banner as $categorys )
+@php $category=$this->c_details($categorys) @endphp
+    <div class="py-5">
+        <div class="container-fluid theme-container">
+            <div class="row mb-4">
+                <div class="col">
+                    <h5 class="product-heading">Best of {{$category->name}}</h5>
+                </div>
+                 <div class="col-auto text-md-right">
+                    <a href="{{route('shop')}}" class="btn btn-primary btn-sm product-heading-btn">See All</a>
+                </div> 
+            </div>
+            <div class="slider  arrow-light slider-gap" data-slides-to-show="4" data-autoplay="true" data-nav="true"
+                data-dots="false">
+                @foreach($category->banner as $banner)
+                <div class="product">
+                        <a href="{{$banner->link}}" class="product-img-add">
+                            <img src="{{asset('admin/banner')}}/{{$banner->images}}" class="" alt="">
+                        </a>
+                    </div>
+                @endforeach
+                
+            </div>
+            <div class="slider  arrow-light slider-gap" data-slides-to-show="6" data-autoplay="true" data-nav="true"
+                data-dots="false">
+                @foreach($category->productcount->take(8) as $product)
+                    <div class="product">
+                        <a href="{{route('product-details',['slug'=>$product->slug])}}" class="product-img">
+                            <img src="{{asset('admin/product/feat')}}/{{$product->image}}" class="" alt="{{$product->slug}}" width="500" height="967">
+                        </a>
+                        <div class="product-info">
+                            <div class="product-rating">
+                                @php
+                                if(isset($product->reviews)){
+                                    $ratingAvg=$product->reviews->avg('rating');
+                                    $rA=$ratingAvg;
+                                    $ratingCount=$product->reviews->count();
+                                }else{
+                                    $ratingAvg=0;
+                                    $ratingCount=0;
+                                }
+                                @endphp
+                                
+                                    @foreach(range(1,5) as $i)
+                                            @if($ratingAvg > 0)
+                                                @if($ratingAvg > 0.5)
+                                                <i class="fa fa-star"></i>
+                                                @else
+                                                    <i class="fa fa-star-half-o"></i>
+                                                @endif
+                                            @else
+                                                <i class="fa fa-star-o"></i>
+                                            @endif 
+                                            @php $ratingAvg--; @endphp
+                                    @endforeach
+                                    <div class="review-count">{{$rA}}  ({{$ratingCount}})</div>
+                            </div>
+                            <h3>
+                                <a href="{{route('product-details',['slug'=>$product->slug])}}"> {{$product->name}}</a>
+                            </h3>
+                            <div class="product-value">
+                                <div class="d-flex">
+                                    <small class="regular-price">MRP <del>₹{{$product->regular_price}}</del></small>
+                                    <div class="off-price">53% off</div>
+                                </div>
+                                <div class="current-price">₹{{$product->sale_price}}</div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+                
+            </div>
+        </div>
+    </div>
+
+@endforeach
 
 
 
@@ -583,7 +709,7 @@
                     <h5 class="product-heading">Flash deals</h5>
                 </div>
                 <div class="col-auto text-md-right">
-                    <a href="category.html" class="btn btn-primary btn-sm product-heading-btn">See All</a>
+                    <a href="{{route('shop')}}" class="btn btn-primary btn-sm product-heading-btn">See All</a>
                 </div>
             </div>
             <div class="slider  arrow-light slider-gap" data-slides-to-show="6" data-autoplay="true" data-nav="true"
@@ -595,12 +721,22 @@
                         </a>
                         <div class="product-info">
                             <div class="product-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-half-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <div class="review-count">4.5 (2,213)</div>
+                                @php
+                                    $ratingAvg=$product->reviews->avg('rating') 
+                                    @endphp
+                                    @foreach(range(1,5) as $i)
+                                            @if($ratingAvg > 0)
+                                                @if($ratingAvg > 0.5)
+                                                <i class="fa fa-star"></i>
+                                                @else
+                                                    <i class="fa fa-star-half-o"></i>
+                                                @endif
+                                            @else
+                                                <i class="fa fa-star-o"></i>
+                                            @endif 
+                                            @php $ratingAvg--; @endphp
+                                    @endforeach
+                                    <div class="review-count">{{number_format($product->reviews->avg('rating'),1)}}  ({{$product->reviews->count()}})</div>
                             </div>
                             <h3>
                                 <a href="{{route('product-details',['slug'=>$product->slug])}}"> {{$product->name}}</a>

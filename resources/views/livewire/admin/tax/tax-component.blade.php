@@ -44,14 +44,15 @@
                              <tr>
                                         <td>{{$tax->id}}</td>
                                         <td>{{$tax->tax_name}}</td>
-                                        <td><a href ="{{$slider->link}}">{{$slider->link}}</a></td>
-                                        <td>{{$tax->value == 1 ? 'Percantage': 'FLat'}}</td>
+                                        <td>{{$tax->type == 1 ? 'Percantage': 'FLat'}}</td>
                                         <td>{{$tax->value}}</td>
-                                        <td>{{$tax->status==1 ? 'Active':'Inactive'}}</td>
+                                        <td>@if($tax->status == 1)<a href="#" onclick="confirm('Are you sure, You want to Deactive this Tax') || event.stopImmediatePropagation()" wire:click.prevent='DeactiveTax({{$tax->id}})'> Active </a> 
+                                        @else <a href="#" onclick="confirm('Are you sure, You want to Active this Tax') || event.stopImmediatePropagation()"  wire:click.prevent='ActiveTax({{$tax->id}})'>Deactive </a>
+                                        @endif</td>
                                         <td>{{$tax->created_at}}</td>
                                         <td>
-                                        <a href="{{route('admin.edittax',['bid'=> $tax->id])}}"><i class="fa fa-edit fa-2x"></i></a>
-                                                <a href="#" onclick="confirm('Are you sure, You want to delet this slider') || event.stopImmediatePropagation()" wire:click.prevent="deleteTax({{$tax->id}})" style="margin-left:10px;"><i class="fa fa-times fa-2x text-danger"></i></a>
+                                        <a href="{{route('admin.edittax',['bid'=> $tax->id])}}"><i class="fa fa-edit"></i></a>
+                                                <a href="#" onclick="confirm('Are you sure, You want to delete this Tax') || event.stopImmediatePropagation()" wire:click.prevent="deleteTax({{$tax->id}})" style="margin-left:10px;"><i class="fa fa-times text-danger"></i></a>
                                         </td>
                                     </tr>
                              @endforeach

@@ -16,15 +16,33 @@ class SubCategoryComponent extends Component
         $category->delete();
         session()->flash('message','Category has been deleted successfully!');
     }
+     public function DeactiveSubCategory($id)
+    {
+        $category = SubCategory::find($id);
+        $category->statuts=0;
+        $category->save();
+        session()->flash('message','SubCategory has been Deactive successfully!');
+        $this->js('window.location.reload()');
+    }
+    public function ActiveSubCategory($id)
+    {
+        $category = SubCategory::find($id);
+        $category->statuts=1;
+        $category->save();
+        session()->flash('message','SubCategory has been Active successfully!');
+        $this->js('window.location.reload()');
+    }
     public function deleteSubCategory($id)
     {
         $category = SubCategory::find($id);
-        $category->delete();
+        $category->statuts=3;
+        $category->save();
         session()->flash('message','Sub-Category has been deleted successfully!');
+        $this->js('window.location.reload()');
     }
     public function render()
     {
-        $categories=SubCategory::paginate(5);
+        $categories=SubCategory::where('statuts','!=',3)->get();
         //dd($categories);
         return view('livewire.admin.category.sub-category-component',['categories'=>$categories])->layout('layouts.admin');
     }

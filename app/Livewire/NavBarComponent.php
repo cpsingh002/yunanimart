@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\models\Category;
+use App\Models\Category;
 use App\Models\SubCategory;
 
 class NavBarComponent extends Component

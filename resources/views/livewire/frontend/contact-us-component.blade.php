@@ -38,7 +38,10 @@
                 <div class="row pt-5 pt-md-7">
                     <div class="col-lg-8 mx-auto">
                         <div class="contact-form">
-                            <form id="ajax-form" action="#" method="POST" class="form">
+                            @if(Session::has('message'))
+                                 <div class="alert alert-success" role="alert">{{Session::get('message')}}</div>
+                            @endif
+                            <form id="contact-form" action="#" wire:submit.prevent="addContactform" class="form">
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="text-left m-b20">
@@ -49,25 +52,35 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <input class="form-control" placeholder="Name *" name="name" type="text">
+                                            <input class="form-control" placeholder="Name *" wire:model="name" type="text">
+                                            @error('name') <p class="text-danger">{{$message}}</p>
+                                        @enderror
                                         </div>
                                         <div class="form-group">
-                                            <input class="form-control" placeholder="Email *" name="email" type="text">
+                                            <input class="form-control" placeholder="Email *" wire:model="email" type="text">
+                                            @error('email') <p class="text-danger">{{$message}}</p>
+                                        @enderror
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <input class="form-control" placeholder="Subject" name="subject" type="text">
+                                            <input class="form-control" id='subject' placeholder="Subject" wire:model="subject" type="text">
+                                            @error('subject') <p class="text-danger">{{$message}}</p>
+                                        @enderror
                                         </div>
                                         <div class="form-group">
-                                            <input class="form-control" placeholder="Phone" name="phone" type="text">
+                                            <input class="form-control" placeholder="Phone" wire:model="phone" type="text">
+                                            @error('phone') <p class="text-danger">{{$message}}</p>
+                                        @enderror
                                         </div>
                                     </div>
 
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                            <textarea class="form-control " rows="4" name="message" placeholder="Text Here"></textarea>
+                                            <textarea class="form-control " rows="4" wire:model="message" placeholder="Text Here"></textarea>
+                                            @error('message') <p class="text-danger">{{$message}}</p>
+                                        @enderror
                                         </div>
                                     </div>
 

@@ -44,11 +44,13 @@
                                 <td>{{$medtype->id}}</td>
                                 <td>{{$medtype->medtype}}</td>
                                 <td>{{$medtype->description}}</td>
-                                <td>@if($medtype->status == 1) Active @else Deactive @endif</td>
+                                <td>@if($medtype->status == 1)<a href="#" onclick="confirm('Are you sure, You want to Deactive this Medtype') || event.stopImmediatePropagation()" wire:click.prevent='DeactiveMedType({{$medtype->id}})'> Active </a> 
+                                @else <a href="#" onclick="confirm('Are you sure, You want to Active this Medtype') || event.stopImmediatePropagation()" wire:click.prevent='ActiveMedType({{$medtype->id}})'>Deactive </a>
+                                @endif</td>
                                 <td>{{$medtype->created_at}}</td>                                 
                                 <td>
-                                    <a href="{{route('admin.editmedtype',['m_id'=>$medtype->id])}}"><i class="fa fa-edit fa-2x"></i></a>
-                                    <a href="#" onclick="confirm('Are you sure, You want to delet this Medtype') || event.stopImmediatePropagation()" wire:click.prevent="deleteMedType({{$medtype->id}})" style="margin-left:10px;"><i class="fa fa-times fa-2x text-danger"></i></a>
+                                    <a href="{{route('admin.editmedtype',['m_id'=>$medtype->id])}}"><i class="fa fa-edit"></i></a>
+                                    <a href="#" onclick="confirm('Are you sure, You want to delete this Medtype') || event.stopImmediatePropagation()" wire:click.prevent="deleteMedType({{$medtype->id}})" style="margin-left:10px;"><i class="fa fa-times text-danger"></i></a>
                                 </td>
                              </tr>
                              @endforeach 

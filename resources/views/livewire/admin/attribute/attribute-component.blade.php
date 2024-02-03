@@ -43,12 +43,14 @@
                                 <td>{{$attribute->id}}</td>
                                 <td>{{$attribute->name}}</td>
                                 
-                                <td>@if($attribute->status == 1) Active @else Deactive @endif</td>
+                                <td>@if($attribute->status == 1)<a href="#" wire:click.prevent='DeactiveAttribute({{$attribute->id}})' onclick="confirm('Are you sure, You want to Deactive this Attribute') || event.stopImmediatePropagation()"> Active </a> 
+                                @else <a href="#" wire:click.prevent='ActiveAttribute({{$attribute->id}})' onclick="confirm('Are you sure, You want to Active this attribute') || event.stopImmediatePropagation()">Deactive </a>
+                                @endif</td>
                                 
                                 <td>{{$attribute->created_at}}</td>                                 
                                 <td>
-                                    <a href="{{route('admin.editattribute',['att_id'=>$attribute->id])}}"><i class="fa fa-edit fa-2x"></i></a>
-                                    <a href="#" onclick="confirm('Are you sure, You want to delet this attribute') || event.stopImmediatePropagation()" wire:click.prevent="deleteAttribute({{$attribute->id}})" style="margin-left:10px;"><i class="fa fa-times fa-2x text-danger"></i></a>
+                                    <a href="{{route('admin.editattribute',['att_id'=>$attribute->id])}}"><i class="fa fa-edit"></i></a>
+                                    <a href="#" onclick="confirm('Are you sure, You want to delete this attribute') || event.stopImmediatePropagation()" wire:click.prevent="deleteAttribute({{$attribute->id}})" style="margin-left:10px;"><i class="fa fa-times text-danger"></i></a>
                                 </td>
                              </tr>
                              @endforeach 

@@ -20,6 +20,9 @@ use Carbon\Carbon;
 class AddProduct2Component extends Component
 {
     use WithFileUPloads;
+    public $brandtype = [];
+    public $brandhjs =[];
+    public $brandsdname;
     public $name;
     public $slug;
     public $short_description;
@@ -145,6 +148,12 @@ class AddProduct2Component extends Component
     {
         //dd($this->attribute_values);trim($str," ")
         $this->para =$this->tablepara($this->attribute_values);
+        $this->skus[0]=$this->SKU;
+        $this->mrps[0]=$this->regular_price;
+        $this->pris[0]=$this->sale_price;
+        $this->qtyes[0]=$this->quantity;
+        $this->bulkqtys[0]=$this->bulk_quantity;
+        $this->bulkrates[0]=$this->bulk_rate;
     }
     public function remove($attr,$value)
     {
@@ -188,11 +197,12 @@ class AddProduct2Component extends Component
     public function render()
     {
         $categories=Category::all();
-        $scategories = Subcategory::where('category_id',$this->category_id)->get();
+        $scategories = SubCategory::where('category_id',$this->category_id)->get();
         $attributes = Attribute::all();
         $brands = Brand::all();
         $medtypes = MedType::all();
         $taxs = Tax::all();
+        $this->brandhjs= Brand::all();
         return view('livewire.admin.product2.add-product2-component',[
             'categories'=>$categories,'scategories'=>$scategories,'attributes'=>$attributes,'brands'=>$brands,'medtypes'=>$medtypes,'taxs'=>$taxs
         ])->layout('layouts.admin');
@@ -336,5 +346,15 @@ class AddProduct2Component extends Component
         //$fgh =$this->tablepara($this->attribute_values);
         Session()->flash('message','Product has been Created Successfully!');
         //session()->put('varinat',$fgh);
+    }
+    
+    public function brandseletc()
+    {
+        
+    }
+    
+    public function myFunction()
+    {
+      $this->brandhjs= Brand::where('brand_slug','LIKE',"%{$this->brandsdname}%" )->get();
     }
 }

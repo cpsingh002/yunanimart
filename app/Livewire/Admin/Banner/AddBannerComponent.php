@@ -22,7 +22,7 @@ class AddBannerComponent extends Component
         $this->status = 1;
         $this->for = 'home';
      } 
-
+     
      public function updated($fields)
      {
          $this->validateOnly($fields,[
@@ -36,14 +36,14 @@ class AddBannerComponent extends Component
      }
      public function addBanner()
      {
-            $this->validate([
-                'title' => 'required',
-                'link' => 'required',
-                'images'=>'required|mimes:jpeg,jpg,png',
-                'for'=>'required',
-                'status'=>'required',        
-            ]);
-
+        $this->validate([
+            'title' => 'required',
+            'link' => 'required',
+            'images'=>'required|mimes:jpeg,jpg,png',
+            'for'=>'required',
+            'status'=>'required',        
+        ]);
+            
         $slider = new Banner();
         $slider->title = $this->title;
         $slider->link = $this->link;
@@ -51,13 +51,11 @@ class AddBannerComponent extends Component
         $slider->for = $this->for;
         if($this->images)
         {
-            $imagesname = '';
-            foreach($this->images as $key=>$image)
-            {
-                $imgName = Carbon::now()->timestamp. $key.'.'.$image->extension();
-                $image->storeAs('banner',$imgName);
-                $imagesname = $imagesname.','.$imgName;
-            }
+           
+                $imgName = Carbon::now()->timestamp.'.'.$this->images->extension();
+                $this->images->storeAs('banner',$imgName);
+                $imagesname = $imgName;
+            
             $slider->images = $imagesname;
         }
 

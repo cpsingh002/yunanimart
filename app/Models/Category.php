@@ -16,6 +16,9 @@ class Category extends Model
 
     public function productcount()
     {
-        return $this->hasMany(Product::class,'category_id');
+        return $this->hasMany(Product2::class,'category_id');
+    }
+    public function banner(){
+        return $this->hasMany(Banner::class,'for');
     }
 }

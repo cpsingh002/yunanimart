@@ -16,7 +16,9 @@ class WishlistComponent extends Component
     public $qty;
 
     public function render(Request $request)
-    {       
+    {        
+        $wishlist=[]; 
+        $count = 0;
 
         if(Auth::check())
         {

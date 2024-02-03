@@ -28,8 +28,7 @@
                                          @if(Session::has('message'))
                                          <div class="alert alert-success" role="alert">{{Session::get('message')}}</div>
                                          @endif
-                                         <form class="form-horizontal" enctype="multipart/form-data"
-                                             wire:submit.prevent="addTax">
+                                         <form class="form-horizontal" enctype="multipart/form-data" wire:submit.prevent="addTax">
                                              <div class="mb-5">
                                                  <h2 class="mb-0 fs-exact-18">Basic information</h2>
                                              </div>
@@ -58,7 +57,6 @@
                                                      wire:model="value" />
                                                  @error('value') <p class="text-danger">{{$message}}</p> @enderror
                                              </div>
-
                                              <div class="mb-4">
                                                  <label for="form-banner/image" class="form-label">Status</label>
                                                  <div class="input-group input-group--sa-slug">
@@ -69,27 +67,17 @@
                                                      </select>
                                                  </div>
                                              </div>
-
                                              <div class="mb-4 text-center">
                                                  <button type="submit" class="btn btn-primary">Submit</button>
                                              </div>
-
-                                             
-
                                          </form>
-
                                      </div>
                                  </div>
-
-
-
                              </div>
-
                          </div>
                      </div>
                  </div>
              </div>
-
          </div>
      </div>
  </div>

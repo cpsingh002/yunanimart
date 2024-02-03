@@ -66,6 +66,7 @@
                                                     @if($brand_image)
                                                      <img src="{{$brand_image->temporaryUrl()}}" width="120" />
                                                      @endif
+                                                     @error('brand_image') <p class="text-danger">{{$message}}</p> @enderror
                                                  </div>
                                              </div>
                                              <div class="md-4">
@@ -75,6 +76,7 @@
                                                             <option value="0">No</option>
                                                             <option value="1">Yes</option>
                                                         </select>
+                                                        @error('is_home') <p class="text-danger">{{$message}}</p> @enderror
                                                     </div>
                                                 </div>
 
@@ -86,6 +88,7 @@
                                                          <option value="0">Inactive</option>
                                                          <option value="1">Active</option>
                                                      </select>
+                                                     @error('status') <p class="text-danger">{{$message}}</p> @enderror
                                                  </div>
                                              </div>
 

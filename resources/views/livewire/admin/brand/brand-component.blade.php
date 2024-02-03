@@ -47,12 +47,14 @@
                                 <td>{{$brand->brand_name}}</td>
                                 <td>{{$brand->description}}</td>
                                 <td><img src="{{asset('admin/brand')}}/{{$brand->brand_image}}" width="60" /></td>
-                                <td>@if($brand->status == 1) Active @else Deactive @endif</td>
                                 <td>@if($brand->is_home == 1) Yes @else No @endif</td>
+                                <td>@if($brand->status == 1)<a href="#" onclick="confirm('Are you sure, You want to Deactive this Brand') || event.stopImmediatePropagation()" wire:click.prevent='DeactiveBrand({{$brand->id}})'> Active </a> 
+                                @else <a href="#" onclick="confirm('Are you sure, You want to Active this Brand') || event.stopImmediatePropagation()" wire:click.prevent='ActiveBrand({{$brand->id}})'>Deactive </a>
+                                @endif</td>
                                 <td>{{$brand->created_at}}</td>                                 
                                 <td>
-                                    <a href="{{route('admin.editbrand',['br_id'=>$brand->id])}}"><i class="fa fa-edit fa-2x"></i></a>
-                                    <a href="#" onclick="confirm('Are you sure, You want to delet this attribute') || event.stopImmediatePropagation()" wire:click.prevent="deleteBrand({{$brand->id}})" style="margin-left:10px;"><i class="fa fa-times fa-2x text-danger"></i></a>
+                                    <a href="{{route('admin.editbrand',['br_id'=>$brand->id])}}"><i class="fa fa-edit"></i></a>
+                                    <a href="#" onclick="confirm('Are you sure, You want to delete this brand') || event.stopImmediatePropagation()" wire:click.prevent="deleteBrand({{$brand->id}})" style="margin-left:10px;"><i class="fa fa-times text-danger"></i></a>
                                 </td>
                              </tr>
                              @endforeach 

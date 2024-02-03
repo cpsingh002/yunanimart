@@ -55,15 +55,15 @@
                                                  <div class="input-group input-group--sa-slug">
                                                     <input type="file" class="form-control" wire:model="newimages" />
                                                     @if($newimages)
-                                                        @foreach($images as $image)
-                                                            <img src="{{$image->temporaryUrl()}}" width="120" />
-                                                        @endforeach
+                                                        
+                                                            <img src="{{$newimages->temporaryUrl()}}" width="120" />
+                                                       
                                                     @else
-                                                        @foreach($images as $image)
-                                                            @if($image)
-                                                                <img src="{{asset('admin/banner')}}/{{$image}}" width="120"/>
+                                                        
+                                                            @if($images)
+                                                                <img src="{{asset('admin/banner')}}/{{$images}}" width="120"/>
                                                             @endif
-                                                        @endforeach
+                                                       
                                                      @endif
                                                      @error('newimages') <p class="text-danger">{{$message}}</p> @enderror
                                                  </div>

@@ -32,10 +32,10 @@ class ShopComponent extends Component
 
     public function render()
     {
-       // dd($this->brandtype);
+      // dd($this->pagesize);
         $query = Product2::whereBetween('sale_price',[$this->min_price,$this->max_price]);
        if($this->sorting=="date"){
-        $query=$query->orderBy('products.created_at','DESC');
+        $query=$query->orderBy('product2s.created_at','DESC');
        }
        if($this->sorting=="price"){
         $query=$query->orderBy('regular_price','ASC');

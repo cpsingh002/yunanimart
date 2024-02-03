@@ -4,7 +4,7 @@ namespace App\Livewire\Frontend;
 
 use Livewire\Component;
 use App\Models\Slider;
-use App\models\Category;
+use App\Models\Category;
 use App\Models\SubCategory;
 use App\Models\Brand;
 use App\Models\Banner;
@@ -13,16 +13,23 @@ use App\Models\Product2;
 
 class HomeComponent extends Component
 {
+    public function c_details($sid){
+
+        return Category::where('id',$sid)->first();
+    }
     public function render()
     {
         $sliders = Slider::where('for','home')->get();
         $categorys = Category::where('is_home',1)->get();
         $subcategorys = SubCategory::where('is_home',1)->get();
         $brands = Brand::where('is_home',1)->get();
-        $banners = Banner::where('for',1)->get();
+        $banners = Banner::where('for','home')->get();
+        $bannersd = Banner::where('for','!=','home')->pluck('for')->unique()->toArray();
+       // dd($bannersd);
         $products = Product2::where('sale_price','>',0)->inRandomOrder()->get()->take(8);
+        $category_banner = Banner::where('for','!=','home')->pluck('for')->unique();
        // dd($sliders); 
         return view('livewire.frontend.home-component',['sliders'=>$sliders,'categorys'=>$categorys,'subcategorys'=>$subcategorys,
-        'brands'=>$brands,'banners'=>$banners,'products'=>$products])->layout('layouts.main');
+        'brands'=>$brands,'banners'=>$banners,'products'=>$products,'category_banner'=>$category_banner])->layout('layouts.main');
     }
 }

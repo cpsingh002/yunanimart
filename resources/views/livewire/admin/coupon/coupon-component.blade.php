@@ -8,10 +8,10 @@
                      <nav class="mb-2" aria-label="breadcrumb">
 
                      </nav>
-                     <h1 class="h3 m-0">All Tax</h1>
+                     <h1 class="h3 m-0">All Coupon</h1>
                  </div>
                  <div class="col-auto d-flex">
-                     <a href="{{route('admin.addcoupon')}}" class="btn btn-primary">Add Tax</a>
+                     <a href="{{route('admin.addcoupon')}}" class="btn btn-primary">Add Coupon</a>
                  </div>
              </div>
          </div>
@@ -52,11 +52,13 @@
                                         <td>{{$coupon->value}}</td>
                                         <td>@if($coupon->category) {{$coupon->category->category_id}} @endif</td>
                                         <td>{{$coupon->cart_value}}</td>
-                                        <td>{{$coupon->status==1 ? 'Active':'Inactive'}}</td>
+                                        <td>@if($coupon->status == 1)<a href="#" onclick="confirm('Are you sure, You want to Deactive this Coupon') || event.stopImmediatePropagation()" wire:click.prevent='DeactiveCoupon({{$coupon->id}})'> Active </a> 
+                                        @else <a href="#" onclick="confirm('Are you sure, You want to Active this Coupon') || event.stopImmediatePropagation()" wire:click.prevent='ActiveCoupon({{$coupon->id}})'>Deactive </a>
+                                        @endif</td>
                                         <td>{{$coupon->created_at}}</td>
                                         <td>
-                                        <a href="{{route('admin.editcoupon',['cid'=> $coupon->id])}}"><i class="fa fa-edit fa-2x"></i></a>
-                                                <a href="#" onclick="confirm('Are you sure, You want to delet this slider') || event.stopImmediatePropagation()" wire:click.prevent="deleteCoupon({{$coupon->id}})" style="margin-left:10px;"><i class="fa fa-times fa-2x text-danger"></i></a>
+                                        <a href="{{route('admin.editcoupon',['cid'=> $coupon->id])}}"><i class="fa fa-edit"></i></a>
+                                                <a href="#" onclick="confirm('Are you sure, You want to delete this coupon') || event.stopImmediatePropagation()" wire:click.prevent="deleteCoupon({{$coupon->id}})" style="margin-left:10px;"><i class="fa fa-times text-danger"></i></a>
                                         </td>
                                     </tr>
                              @endforeach

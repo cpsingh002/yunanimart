@@ -10,6 +10,9 @@ use App\Models\Wishlist;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use Session;
+use App\Models\review;
+use App\Models\Question;
+
 
 use Illuminate\Support\Facades\Auth;
 
@@ -18,10 +21,46 @@ class ProductDetailsComponent extends Component
     public $slug;
     public $quntiti;
     public $wish;
+    public $pid;
+    public $question;
+    
     public function mount($slug)
     {
         $this->slug = $slug;
         $this->quntiti = 1; 
+    }
+     public function checkout(Request $request,$id,$sale_price){
+        if(!Auth::check())
+        {
+            $this->dispatch('show-edit-post-modal');
+            return;
+        }
+        else{
+            $this->AddtoCart($request,$id,$sale_price);
+            return $this->redirect('/check-out');
+        }
+    }
+    public function askQuestion($id){
+        if(!Auth::check())
+        {
+            $this->dispatch('show-edit-post-modal');
+            return;
+        }
+        else{
+            $this->pid=$id;
+            $this->dispatch('openquestionModal');
+        }
+    }
+    public function storeQuestion(){
+        $this->validate([
+            'question'=>'required',
+        ]);
+        $question =new Question();
+        $question->product_id=$this->pid;
+        $question->quser_id=Auth::id();
+        $question->question= $this->question;
+        $question->save();
+        Session()->flash('message','Question has been Submited Successfully');
     }
 
     public function addToWishlist(Request $request,$product_id,$product_price)
@@ -105,6 +144,7 @@ class ProductDetailsComponent extends Component
             // dd($wishlistdf);
             session()->flash('message','product remove from wishlist');
             // $this->dispatch('wishlist-count-component','refreshComponent');
+             $this->wish = '';
             $this->dispatch('wishlist_add');
             return;
 
@@ -199,14 +239,18 @@ class ProductDetailsComponent extends Component
             if (Session::has('wishlist')){
                 $wish = $request->session()->get('wishlist');
                 $product_ids = array_keys($wish);
-                $wishlist = Product2::whereIn('id',$product_ids)->get();
-                if($wishlist){
+                // in_array("100", $marks)
+               // $wishlist = Product2::whereIn('id',$product_ids)->get();
+                if(in_array($product->id, $product_ids)){
                     $this->wish = 1;
                 } 
    
             }
         }
+        $reviews=review::where('product_id',$product->id)->where('verified',1)->get();
+        $questions = Question::where('product_id',$product->id)->get();
         
-        return view('livewire.frontend.product-details-component',['product'=>$product,'varaiants'=>$varaiants])->layout('layouts.main');
+        
+        return view('livewire.frontend.product-details-component',['product'=>$product,'varaiants'=>$varaiants,'reviews'=>$reviews,'questions'=>$questions])->layout('layouts.main');
     }
 }

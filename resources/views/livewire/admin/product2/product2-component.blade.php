@@ -48,6 +48,7 @@
                                  <th>Quantity</th>
                                  <th>Category</th>
                                  <th>SubCategory</th>
+                                 <th>Status</th>
                                  <!-- <th>Tag</th> -->
                                  <th>Action</th>
                              </tr>
@@ -65,9 +66,12 @@
                                  <td>{{$product->quantity}}</td>
                                  <td>{{$product->category->name}}</td>
                                  <td>{{$product->subCategories->name}}</td>
+                                 <td>@if($product->status == 1)<a href="#" onclick="confirm('Are you sure, You want to Deactive this product') || event.stopImmediatePropagation()" wire:click.prevent='DeactiveProduct({{$product->id}})'> Active </a> 
+                                @else <a href="#" onclick="confirm('Are you sure, You want to Active this product') || event.stopImmediatePropagation()" wire:click.prevent='ActiveProduct({{$product->id}})'>Deactive </a>
+                                @endif</td>
                                  <td>
                                      <a href="{{route('admin.editproduct2',['product_slug'=>$product->slug])}}"><i class="fa fa-edit "></i></a>
-                                     <a href="#" onclick="confirm('Are you sure, You want to delet this product') || event.stopImmediatePropagation()"
+                                     <a href="#" onclick="confirm('Are you sure, You want to delete this product') || event.stopImmediatePropagation()"
                                          wire:click.prevent="deleteCategory({{$product->id}})"><i class="fa fa-times  text-danger ml-2"></i></a>
                                  </td>
                              </tr>

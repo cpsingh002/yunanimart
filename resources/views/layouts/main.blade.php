@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Hospitania</title>
+    <title>Think Pure India</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" href="assets/img/favicon.png" type="image/png">
@@ -41,12 +41,13 @@
     </div>
 
     <div class="header">
-        <div class="container-fluid theme-container">
+        <!--<div class="container-fluid theme-container">-->
             <div class="top-header">
-                <div class="row align-items-center">
+                <div class="container-fluid theme-container">
+                   <div class="row align-items-center">
                     <div class="col-auto">
                         <a href="{{route('index')}}">
-                            <img src="{{asset('assets/img/logo.png')}}" alt="logo" class="header-logo">
+                            <img src="{{asset('assets/img/think.jpeg')}}" alt="logo" class="header-logo">
                         </a>
                     </div>
                     @livewire('frontend.header-search-component')
@@ -124,9 +125,10 @@
                         </ul>
                     </div>
                 </div>
+                </div>
             </div>
             @livewire('nav-bar-component')
-        </div>
+        <!--</div>-->
     </div>
 
     <div class="mobile-header">
@@ -140,7 +142,7 @@
                     </ul>
                 </div>
                 <div class="col text-center">
-                    <img src="{{asset('assets/img/logo.png')}}" alt="logo" class="header-logo">
+                    <img src="{{asset('assets/img/think.jpeg')}}" alt="logo" class="header-logo">
                 </div>
                 <div class="col-auto">
                     <ul class="header-right-options">
@@ -191,13 +193,13 @@
     </div>
     {{$slot}}
 
-    <footer class="site-footer footer-padding-lg bg-light mt-8">
+    <footer class="site-footer footer-padding-lg bg-black">
         <div class="container-fluid theme-container">
             <div class="upper-footer">
                 <div class="row justify-content-around">
                     <div class="col-lg-4 col-md-3 col-12">
                         <div class="widget">
-                            <a href="index.html"><div class="footer-brand"><img src="{{asset('assets/img/logo.png')}}" alt=""></div></a>
+                            <a href="index.html"><div class="footer-brand"><img src="{{asset('assets/img/think.jpeg')}}" alt=""></div></a>
                             
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore numquam sit optio consectetur et pariatur modi officiis veritatis repellat alias?</p>
                         </div>
@@ -303,7 +305,7 @@
             <div class="lower-footer">
                 <div class="row">
                     <div class="col-md-6 text-lg-left">
-                        <p class="mb-4 mb-md-0 text-muted">Copyright © 2021 Hospitania By Dsahathemes | All rights reserved.</p>
+                        <p class="mb-4 mb-md-0 text-muted">Copyright © Thinkpureindia 2024 Jaipurdreams By <a href="https://softhunters.in/">Softhunters</a> | All rights reserved.</p>
                     </div>
                     <div class="col-md-6">
                         <div class="footer-card text-lg-right">
@@ -377,14 +379,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="modal-body">
-                
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <form method="POST" action="{{ route('password.email') }}">
+                   <form method="POST" action="{{ route('password.email') }}">
                         @csrf
 
                         <div class="row mb-3">
@@ -409,7 +404,6 @@
                             </div>
                         </div>
                     </form>
-                
                 </div>
             </div>
         </div>

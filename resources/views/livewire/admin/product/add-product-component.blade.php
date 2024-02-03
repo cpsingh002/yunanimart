@@ -307,71 +307,84 @@
                                                     
                                                     <div class="form-group">
                                                         <label class="col-md-4 control-label">Product Attribute</label>
-                                                        <div class="col-md-4">
+                                                        
+                                                        <div class="row">
+                                                            <div class="col-md-10">
                                                             <select class="form-control" wire:model="attr">
                                                                 <option value="0">Select Product Attributes</option>
                                                                 @foreach($attributes as $attribute)
                                                                     <option value="{{$attribute->id}}">{{$attribute->name}}</option>
                                                                 @endforeach
                                                             </select>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <button type="button" class="btn btn-info" wire:click.prevent="add">Add</button>
+                                                            </div>
                                                         </div>
-                                                        <div class="col-md-1">
-                                                            <button type="button" class="btn btn-info" wire:click.prevent="add">Add</button>
-                                                        </div>
+                                                        
                                                     </div>
                                                     @foreach($inputs as $key => $value)
                                                         <div class="form-group">
                                                             <label class="col-md-4 control-label">{{$attributes->where('id',$attribute_arr[$key])->first()->name}}</label>
-                                                            <div class="col-md-4">
-                                                                <input type ="text" placeholder="{{$attributes->where('id',$attribute_arr[$key])->first()->name}}" class="form-control input-md" wire:model="attribute_values.{{$value}}" wire:keyup="done"/>
+                                                            
+                                                            <div class="row">
+                                                                <div class="col-md-8">
+                                                                    <input type ="text" placeholder="{{$attributes->where('id',$attribute_arr[$key])->first()->name}}" class="form-control input-md attribute_val" wire:model="attribute_values.{{$value}}" wire:keyup="done"/>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <button type="button" class="btn btn-info" wire:click.prevent="done">Done</button>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <button type="button" class="btn btn-danger" wire:click.prevent="remove({{$key}},{{$attributes->where('id',$attribute_arr[$key])->first()->id}})">Remove</button>
+                                                                </div>
                                                             </div>
-                                                            <div class="col-md-1">
-                                                                <button type="button" class="btn btn-info" wire:click.prevent="done">Done</button>
-                                                            </div>
-                                                            <div class="col-md-1">
-                                                                <button type="button" class="btn btn-danger btn-sm" wire:click.prevent="remove({{$key}},{{$attributes->where('id',$attribute_arr[$key])->first()->id}})">Remove</button>
-                                                            </div>
+                                                            
+                                                            
                                                         </div>
                                                     @endforeach
-                                                    <div class="col-md-12">
+                                                    
+                                                    
+                                                    <div class="col-md-12 mt-2">
                                                         <div class="panel panel-default">
                                                             <div class="panel-heading">
                                                                 All varaint
                                                             </div>
-                                                        <div>
-                                                        <div class="card" id="product_attr">
-                                                            <div class="card-body" style="padding:15px;">
+                                                        </div>
+                                                        <div  id="product_attr">
+                                                            <div class="card">
+                                                            <!--<h4 class="card-header">Card Header</h4>-->
+                                                            <div class="card-body px-0 py-3">
                                                                 
                                                                     @foreach($para as $key1 => $tdata)
                                                                         <div class="form-group">
                                                                             <div class="row">
-                                                                                <div class="col-md-2 text-center">
+                                                                                <div class="col-md-2 px-1 text-center">
                                                                                     <label for="size_id" class="control-label mb-1"> Variant</label>
                                                                                     <p>{{$tdata}}</p>
                                                                                 </div>
-                                                                                <div class="col-md-2">
+                                                                                <div class="col-md-2 px-1">
                                                                                     <label for="sku" class="control-label mb-1"> SKU</label>
-                                                                                    <input id="sku"  type="text" class="form-control"  wire:model="skus.{{$key1}}" required>
+                                                                                    <input id="sku"  type="text" class="form-control p-1"  wire:model="skus.{{$key1}}" required>
                                                                                 </div>
-                                                                                <div class="col-md-1">
+                                                                                <div class="col-md-1 px-1">
                                                                                     <label for="mrp" class="control-label mb-1"> MRP</label>
-                                                                                    <input id="mrp" name="mrps[]" type="text" class="form-control"  wire:model="mrps.{{$key1}}" required>
+                                                                                    <input id="mrp" name="mrps[]" type="text" class="form-control p-1"  wire:model="mrps.{{$key1}}" required>
                                                                                 </div>
-                                                                                <div class="col-md-1">
+                                                                                <div class="col-md-1 px-1">
                                                                                     <label for="price" class="control-label mb-1"> Price</label>
-                                                                                    <input id="price" name="pris[]" type="text" class="form-control"  wire:model="pris.{{$key1}}" required>
+                                                                                    <input id="price" name="pris[]" type="text" class="form-control p-1"  wire:model="pris.{{$key1}}" required>
                                                                                 </div>
-                                                                                <div class="col-md-2">
+                                                                                <div class="col-md-2 px-1">
                                                                                     <label for="qty" class="control-label mb-1"> Bulk Qty</label>
-                                                                                    <input id="qty" name="bulkqtys[]" type="text" class="form-control"  wire:model="bulkqtys.{{$key1}}" required>
+                                                                                    <input id="qty" name="bulkqtys[]" type="text" class="form-control p-1"  wire:model="bulkqtys.{{$key1}}" required>
                                                                                 </div>
-                                                                                <div class="col-md-2">
+                                                                                <div class="col-md-2 px-1">
                                                                                     <label for="qty" class="control-label mb-1"> Bulk Rate</label>
-                                                                                    <input id="qty" name="bulkrates[]" type="text" class="form-control"  wire:model="bulkrates.{{$key1}}" required>
+                                                                                    <input id="qty" name="bulkrates[]" type="text" class="form-control p-1"  wire:model="bulkrates.{{$key1}}" required>
                                                                                 </div>
-                                                                                <div class="col-md-1">
+                                                                                <div class="col-md-1 px-1">
                                                                                     <label for="qty" class="control-label mb-1"> Qty</label>
-                                                                                    <input id="qty" name="qtyes[]" type="text" class="form-control"  wire:model="qtyes.{{$key1}}" required>
+                                                                                    <input id="qty" name="qtyes[]" type="text" class="form-control p-1"  wire:model="qtyes.{{$key1}}" required>
                                                                                 </div>
                                                                                 
                                                                             </div>
@@ -380,13 +393,14 @@
                                                                     @endforeach
                                                             </div>
                                                         </div>
+                                                        </div>
                                                     </div>
                                 
 
 
 
 
-                                                    <div class="mb-4 text-center">
+                                                    <div class="mb-4 text-center mt-4">
                                                         <button type="submit"
                                                             class="btn btn-primary">Submit</button>
                                                     </div>
@@ -444,4 +458,13 @@
             });
         });
     </script>
+    
+<!--    <script>-->
+<!--        $(document).ready(function () {-->
+  
+<!--    $('.attribute_val').on("keyup", function () {-->
+<!--        alert("ppppp")-->
+<!--  });-->
+<!--});-->
+<!--    </script>-->
 @endpush

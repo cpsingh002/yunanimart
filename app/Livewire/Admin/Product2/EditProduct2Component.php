@@ -47,7 +47,7 @@ class EditProduct2Component extends Component
     public $is_young;
     public $status;
     public $tax_id;
-    Public $freecancellation;
+    public $freecancellation;
     public $productvariant;
     public $skus=[];
     public $mrps=[];
@@ -181,7 +181,7 @@ class EditProduct2Component extends Component
     public function updateProduct()
     {
         //dd((($this->regular_price - $this->sale_price)/$this->regular_price)*100);
-       // dd($this->short_description, $this->description);
+        //dd($this->newqtyes);
         $this->validate([
             'name' => 'required',
             'short_description'=>'required',
@@ -252,15 +252,15 @@ class EditProduct2Component extends Component
                 {
                     if($image)
                     {
-                        unlink('admin/product'.'/'.$image);
+                       // unlink('admin/product'.'/'.$image);
                     }
                 }
             }
             $imagesname = '';
             foreach($this->newimages as $key=>$image)
             {
-                $imgName= Carbon::now()->timestamp.'.'.$image->extension();
-                $image->storeAs('products',$imgName);
+                $imgName = Carbon::now()->timestamp. $key.'.'.$image->extension();
+                $image->storeAs('product',$imgName);
                 $imagesname = $imagesname.','.$imgName;
             }
             $product->images = $imagesname;
@@ -354,7 +354,7 @@ class EditProduct2Component extends Component
     public function render()
     {
         $categories=Category::all();
-        $scategories = Subcategory::where('category_id',$this->category_id)->get();
+        $scategories = SubCategory::where('category_id',$this->category_id)->get();
         $attributes = Attribute::all();
         $brands = Brand::all();
         $medtypes = MedType::all();

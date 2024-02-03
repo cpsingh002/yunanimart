@@ -9,10 +9,10 @@
                          <nav class="mb-2" aria-label="breadcrumb">
 
                          </nav>
-                         <h1 class="h3 m-0">Add Category for product</h1>
+                         <h1 class="h3 m-0">Add Sub Category for product</h1>
                      </div>
                      <div class="col-auto d-flex">
-                         <a href="{{route('admin.categories')}}" class="btn btn-primary">All Category</a>
+                         <a href="{{route('admin.subcategories')}}" class="btn btn-primary">All Sub Category</a>
                      </div>
 
                  </div>
@@ -57,6 +57,7 @@
                                                          <option value="{{$category->id}}">{{$category->name}}</option>
                                                          @endforeach
                                                      </select>
+                                                     @error('category_id') <p class="text-danger">{{$message}}</p> @enderror
                                                  </div>
                                              </div>
 
@@ -82,6 +83,20 @@
                                                      @endif
                                                      @error('categorythum') <p class="text-danger">{{$message}}</p>
                                                      @enderror
+                                                 </div>
+                                             </div>
+                                             <div class="mb-4">
+                                                 <div>
+                                                     <label for="form-category/parent-category" class="form-label">For Home
+                                                         </label>
+
+                                                     <select class="form-select" wire:model="is_home">
+                                                         <option value>Select</option>
+                                                         <option value="1">Yes</option>
+                                                         <option value="0">No</option>
+                                                         @error('is_home') <p class="text-danger">{{$message}}</p>
+                                                     @enderror
+                                                     </select>
                                                  </div>
                                              </div>
 

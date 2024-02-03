@@ -85,6 +85,17 @@
                                 </div>
                             </div>
 
+                                             <div class="mb-4">
+                                                 <div>
+                                                     <label for="form-category/parent-category" class="form-label">For Home
+                                                         </label>
+
+                                                     <select class="form-select" wire:model="is_home">
+                                                         <option value="1">Yes</option>
+                                                         <option value="0">No</option>
+                                                     </select>
+                                                 </div>
+                                             </div>
 
                                              <div class="mb-4 text-center">
                                                  <button type="submit" class="btn btn-primary">Update</button>

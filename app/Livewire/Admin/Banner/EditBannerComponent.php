@@ -24,24 +24,23 @@ class EditBannerComponent extends Component
         $slider = Banner::find($bid);
         $this->title = $slider->title;
         $this->link=$slider->link;
-        $this->images = explode(",",$slider->images);
+        $this->images = $slider->images;
     
         $this->status=$slider->status;
         $this->for = $slider->for;
         $this->b_id = $slider->id;
        // dd($this->for);
      } 
+     
      public function updated($fields)
      {
          $this->validateOnly($fields,[
              'title' => 'required',
              'link' => 'required',
-             
              'for'=>'required',
              'status'=>'required',
              
          ]);
-
          if($this->newimages){
             $this->validateOnly($fields,[
                 'newimages'=>'required|mimes:jpeg,jpg,png'
@@ -53,7 +52,6 @@ class EditBannerComponent extends Component
         $this->validate([
             'title' => 'required',
             'link' => 'required',
-            
             'for'=>'required',
             'status'=>'required',
             
@@ -64,6 +62,7 @@ class EditBannerComponent extends Component
                 'newimages'=>'required|mimes:jpeg,jpg,png'
             ]);
         }
+      
         $slider = Banner::find($this->b_id);
         $slider->title = $this->title;
         $slider->link = $this->link;
@@ -73,23 +72,23 @@ class EditBannerComponent extends Component
         {
             if($slider->images)
             {
-                $images = explode(",",$slider->images);
-                foreach($images as $image)
-                {
-                    if($image)
+                $imagesd = $slider->images;
+               
+                    if($imagesd)
                     {
-                        unlink('admin/banner'.'/'.$image);
+                       // unlink('admin/banner'.'/'.$imagesd);
                     }
-                }
+                
             }
             $imagesname = '';
-            foreach($this->images as $key=>$image)
+            if($this->newimages)
             {
-                $imgName = Carbon::now()->timestamp. $key.'.'.$image->extension();
-                $image->storeAs('banner',$imgName);
-                $imagesname = $imagesname.','.$imgName;
+                $imgName = Carbon::now()->timestamp.'.'.$this->newimages->extension();
+                $this->newimages->storeAs('banner',$imgName);
+                $imagesname = $imgName;
+                $slider->images = $imagesname;
             }
-            $slider->images = $imagesname;
+            
         }
 
         $slider->save();

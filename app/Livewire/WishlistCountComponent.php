@@ -26,7 +26,7 @@ class WishlistCountComponent extends Component
         // return view('livewire.wishlist-count-component',['carts' => $cart]);
        // $wishlist = $request->session()->get('wishlist');;
         // dd(count($wishlist));
-
+    $this->count = 0;
         if(Auth::check())
         {
             $this->wishlist = Wishlist::where('user_id',Auth::user()->id)->get();

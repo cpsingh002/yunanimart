@@ -142,28 +142,7 @@
                                 </li>
 
 
-                                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon"
-                                    data-sa-collapse-item="sa-nav__menu-item--open">
-                                    <a href="#" class="sa-nav__link" data-sa-collapse-trigger="">
-                                        <i class="fa fa-compass me-4"></i>
-                                        <span class="sa-nav__title">Product</span>
-                                        <i class="fa fa-chevron-right"></i>
-                                    </a>
-                                    <ul class="sa-nav__menu sa-nav__menu--sub" data-sa-collapse-content="">
-                                        <li class="sa-nav__menu-item">
-                                            <a href="{{route('admin.addproduct')}}" class="sa-nav__link"><span
-                                                    class="sa-nav__menu-item-padding"></span><span
-                                                    class="sa-nav__title">Add Product</span></a>
-                                        </li>
-                                        <li class="sa-nav__menu-item">
-                                            <a href="{{route('admin.products')}}" class="sa-nav__link"><span
-                                                    class="sa-nav__menu-item-padding"></span><span
-                                                    class="sa-nav__title">Product List</span></a>
-                                        </li>
-
-
-                                    </ul>
-                                </li> 
+                                
 
                                 <li class="sa-nav__menu-item sa-nav__menu-item--has-icon"
                                     data-sa-collapse-item="sa-nav__menu-item--open">
@@ -298,6 +277,59 @@
 
                                         <i class="fa fa-file-image me-4"></i>
 
+                                        <span class="sa-nav__title">Review</span>
+                                        <i class="fa fa-chevron-right"></i>
+                                    </a>
+                                     <ul class="sa-nav__menu sa-nav__menu--sub" data-sa-collapse-content="">
+                                        <li class="sa-nav__menu-item">
+                                            <a href="{{route('admin.active-reviews')}}" class="sa-nav__link"><span
+                                                    class="sa-nav__menu-item-padding"></span><span
+                                                    class="sa-nav__title">Active Reviews</span></a>
+                                        </li>
+                                        <li class="sa-nav__menu-item">
+                                            <a href="{{route('admin.deactive-reviews')}}" class="sa-nav__link"><span
+                                                    class="sa-nav__menu-item-padding"></span><span
+                                                    class="sa-nav__title">Deactive Reviews</span></a>
+                                        </li>
+                                        <li class="sa-nav__menu-item">
+                                            <a href="{{route('admin.reviews')}}" class="sa-nav__link"><span
+                                                    class="sa-nav__menu-item-padding"></span><span
+                                                    class="sa-nav__title">Reviews</span></a>
+                                        </li>
+
+                                    </ul> 
+                                </li>
+                                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon"
+                                    data-sa-collapse-item="sa-nav__menu-item--open">
+                                    <a href="#" class="sa-nav__link" data-sa-collapse-trigger="">
+
+
+                                        <i class="fa fa-file-image me-4"></i>
+
+                                        <span class="sa-nav__title">Questions</span>
+                                        <i class="fa fa-chevron-right"></i>
+                                    </a>
+                                     <ul class="sa-nav__menu sa-nav__menu--sub" data-sa-collapse-content="">
+                                     <li class="sa-nav__menu-item">
+                                            <a href="{{route('admin.question-answers')}}" class="sa-nav__link"><span
+                                                    class="sa-nav__menu-item-padding"></span><span
+                                                    class="sa-nav__title">Question-Answers</span></a>
+                                        </li>
+                                        <li class="sa-nav__menu-item">
+                                            <a href="{{route('admin.questions')}}" class="sa-nav__link"><span
+                                                    class="sa-nav__menu-item-padding"></span><span
+                                                    class="sa-nav__title">Questions</span></a>
+                                        </li>
+                                        
+                                    </ul> 
+                                </li>
+                                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon"
+                                    data-sa-collapse-item="sa-nav__menu-item--open">
+                                    <a href="#" class="sa-nav__link" data-sa-collapse-trigger="">
+
+
+                                        <i class="fa fa-file-image me-4"></i>
+
                                         <span class="sa-nav__title">Tax</span>
                                         <i class="fa fa-chevron-right"></i>
                                     </a>
@@ -311,6 +343,26 @@
                                             <a href="{{route('admin.taxs')}}" class="sa-nav__link"><span
                                                     class="sa-nav__menu-item-padding"></span><span
                                                     class="sa-nav__title">Tax</span></a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon"
+                                    data-sa-collapse-item="sa-nav__menu-item--open">
+                                    <a href="#" class="sa-nav__link" data-sa-collapse-trigger="">
+
+
+                                        <i class="fa fa-file-image me-4"></i>
+
+                                        <span class="sa-nav__title">Order</span>
+                                        <i class="fa fa-chevron-right"></i>
+                                    </a>
+                                    <ul class="sa-nav__menu sa-nav__menu--sub" data-sa-collapse-content="">
+                                        
+                                        <li class="sa-nav__menu-item">
+                                            <a href="{{route('admin.orders')}}" class="sa-nav__link"><span
+                                                    class="sa-nav__menu-item-padding"></span><span
+                                                    class="sa-nav__title">Orders</span></a>
                                         </li>
 
                                     </ul>
@@ -397,6 +449,26 @@
                                                     class="sa-nav__menu-item-padding"></span><span
                                                     class="sa-nav__title">view Prescription </span></a>
                                         </li>
+                                    </ul>
+                                </li>
+                                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon"
+                                    data-sa-collapse-item="sa-nav__menu-item--open">
+                                    <a href="#" class="sa-nav__link" data-sa-collapse-trigger="">
+
+
+                                        <i class="fa fa-file-image me-4"></i>
+
+                                        <span class="sa-nav__title">Contact</span>
+                                        <i class="fa fa-chevron-right"></i>
+                                    </a>
+                                    <ul class="sa-nav__menu sa-nav__menu--sub" data-sa-collapse-content="">
+                                        
+                                        <li class="sa-nav__menu-item">
+                                            <a href="{{route('admin.contact-form')}}" class="sa-nav__link"><span
+                                                    class="sa-nav__menu-item-padding"></span><span
+                                                    class="sa-nav__title">Contact-Forms</span></a>
+                                        </li>
+
                                     </ul>
                                 </li>
 

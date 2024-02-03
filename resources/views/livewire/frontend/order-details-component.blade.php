@@ -110,6 +110,7 @@
                                                             </div>
                                                             <div class="cart_product_remove">
                                                                 <a href="#"><i class="ti-truck"></i> Return Item</a>
+                                                                <a class="btn btn-rounded btn-primary" wire:click.prevent="preview({{$orderitem->product->id}})" href="#">Post Review</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -282,4 +283,116 @@
             </div>
         </div>
     </main>
+<div wire:ignore.self class="modal fade" id="productPreviewModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<style>
+        /*.rating {*/
+        /*margin-top: 40px;*/
+        /*border: none;*/
+        /*float: left;*/
+        /*}*/
+
+        .rating > label {
+        color: #90A0A3;
+        float: right;
+        }
+
+        .rating > label:before {
+        margin: 5px;
+        font-size: 2em;
+        font-family: FontAwesome;
+        content: "\f005";
+        display: inline-block;
+        }
+
+        .rating > input {
+        display: none;
+        }
+
+        .rating > input:checked ~ label,
+        .rating:not(:checked) > label:hover,
+        .rating:not(:checked) > label:hover ~ label {
+        color: #F79426;
+        }
+
+        .rating > input:checked + label:hover,
+        .rating > input:checked ~ label:hover,
+        .rating > label:hover ~ input:checked ~ label,
+        .rating > input:checked ~ label:hover ~ label {
+        color: #FECE31;
+        }
+</style>
+<div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        
+        <h4 class="modal-title fs-5" id="staticBackdropLabel">Review Product</h4>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      @if(Session::has('message'))
+            <div class="alert alert-success" role="alert">{{Session::get('message')}}</div>
+        @endif
+        <div class="mb-4">
+             <label for="form-banner/name" class="form-label">Product name: </label>
+             <input type="text" class="form-control"
+                 wire:model="pname" disabled />
+        </div>
+        
+        
+        
+        <div class="rating">
+            <input type="radio" id="star5" wire:model="rating" name="rating" value="5" />
+            <label class="star" for="star5"  title="Awesome" aria-hidden="true"></label>
+            <input type="radio" id="star4" wire:model="rating" name="rating" value="4" />
+            <label class="star" for="star4" title="Great" aria-hidden="true"></label>
+            <input type="radio" id="star3" wire:model="rating" name="rating" value="3" />
+            <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
+            <input type="radio" id="star2" wire:model="rating" name="rating" value="2" />
+            <label class="star" for="star2" title="Good" aria-hidden="true"></label>
+            <input type="radio" id="star1" wire:model="rating" name="rating" value="1" />
+            <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
+            @error('rating') <p class="text-danger">{{$message}}</p> @enderror
+
+        </div>
+        <div class="mb-4">
+            <label for="form-banner/name" class="form-label"> Image</label>
+            <div class="input-form input-form2">
+                <input type="file" placeholder="image" wire:model="images" multiple>
+                @if($images)
+                    @foreach($images as $image)
+                        <img src="{{$image->temporaryUrl()}}" width="120" />
+                    @endforeach
+                @endif
+                @error('images') <p class="text-danger">{{$message}}</p> @enderror
+            </div>
+        </div>
+        <div class="mb-4">
+             <label for="form-banner/name" class="form-label">Message: </label>
+             <textarea type="text" class="form-control"
+                 wire:model="message" name='message' ></textarea>
+                 @error('message') <p class="text-danger">{{$message}}</p> @enderror
+        </div>
+     </div>
+     
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" wire:click.prevent="storeReview">Submit</button>
+      </div>
+      </form>
+    </div>
+  </div>
 </div>
+</div>
+
+@push('scripts')
+
+<script>
+    document.addEventListener('livewire:init', () => {
+       Livewire.on('openproductPreviewModal', (event) => {
+        $('#productPreviewModal').modal('show');
+       });
+    });
+</script>
+@endpush

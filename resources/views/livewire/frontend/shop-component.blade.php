@@ -18,7 +18,7 @@
             
                                 <div class="single-select-block d-inline-block">
                                     <span class="select-title">Show:</span>
-                                    <select class="wide border-0" id="pagewsize" name="pagewsize" wire:model="pagesize">
+                                    <select class="wide border-0" id ="pagewsize" name="pagewsize" wire:model="pagesize">
                                         <option value="10">10</option>
                                         <option value="20">20</option>
                                         <option value="30">30</option>
@@ -28,7 +28,7 @@
             
                                 <div class="single-select-block d-inline-block">
                                     <span class="select-title">Sort By:</span>
-                                    <select class="wide border-0" wire:model="sorting">
+                                    <select class="wide border-0" id="pagesorting" name ="pagesorting" wire:model="sorting">
                                         <option value ="default" selected="selected">Default</option>
                                         <option value="date">Sort by newness</option>
 								        <option value="price">Sort by price: low to high</option>
@@ -46,12 +46,22 @@
                                         </a>
                                         <div class="product-info">
                                             <div class="product-rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <div class="review-count">4.5 (2,213)</div>
+                                                @php
+                                                $ratingAvg=$product->reviews->avg('rating') 
+                                                @endphp
+                                                @foreach(range(1,5) as $i)
+                                                        @if($ratingAvg > 0)
+                                                            @if($ratingAvg > 0.5)
+                                                            <i class="fa fa-star"></i>
+                                                            @else
+                                                                <i class="fa fa-star-half-o"></i>
+                                                            @endif
+                                                        @else
+                                                            <i class="fa fa-star-o"></i>
+                                                        @endif 
+                                                        @php $ratingAvg--; @endphp
+                                                @endforeach
+                                                <div class="review-count">{{number_format($product->reviews->avg('rating'),1)}}  ({{$product->reviews->count()}})</div>
                                             </div>
                                             <h3>
                                                 <a href="{{route('product-details',['slug'=>$product->slug])}}"> {{$product->name}}</a>
@@ -353,13 +363,20 @@
 			@this.set('max_price',value[1]);
 		})
 	</script>
-    <script>
+	<script>
         
         $('#pagewsize').on('change',function(ev){
             //alert('gfhfgh');
             var data = $('#pagewsize').val();
-            alert(data);
+            //alert(data);
             @this.set('pagesize',data);
+        });
+        
+        $('#pagesorting').on('change',function(ev){
+            //alert('gfhfgh');
+            var data = $('#pagesorting').val();
+            //alert(data);
+            @this.set('sorting',data);
         });
     
     

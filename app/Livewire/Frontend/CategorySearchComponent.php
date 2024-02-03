@@ -63,6 +63,12 @@ class CategorySearchComponent extends Component
             $filter= "";
         }
         $query = Product2::whereBetween('sale_price',[$this->min_price,$this->max_price]);
+        if($this->category_slug){
+            $query=$query->where('category_id',$category->id);
+        }
+        if($this->scategory_slug){
+            $query=$query->where('subcategory_id',$scategory->id);
+        }
        if($this->sorting=="date"){
         $query=$query->orderBy('products.created_at','DESC');
        }
@@ -81,6 +87,7 @@ class CategorySearchComponent extends Component
         $query=$query->where('discount_value','>',max($this->discount));
        }
         $query=$query->distinct()->select('product2s.*');
+        
         $products=$query->paginate($this->pagesize);
 
         $categorys = Subcategory::where('category_id',$category_id)->get();

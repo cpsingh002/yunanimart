@@ -16,7 +16,7 @@ class Product2 extends Model
     }
     public function subCategories()
     {
-        return $this->belongsTo(Subcategory::class,'subcategory_id');
+        return $this->belongsTo(SubCategory::class,'subcategory_id');
     }
     public function MedTypes()
     {
@@ -30,5 +30,13 @@ class Product2 extends Model
     public function taxslab()
     {
         return $this->belongsTo(Tax::class,'tax_id');
+    }
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class,'brand_id');
+    }
+    public function reviews()
+    {
+        return $this->hasMany(review::class,'product_id')->where('verified',1);
     }
 }

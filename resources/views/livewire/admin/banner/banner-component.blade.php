@@ -54,11 +54,13 @@
                                             @endif
                                         </td>
                                         <td>{{$slider->for}}</td>
-                                        <td>{{$slider->status==1 ? 'Active':'Inactive'}}</td>
+                                        <td>@if($slider->status == 1)<a href="#" onclick="confirm('Are you sure, You want to Active this Banner') || event.stopImmediatePropagation()" wire:click.prevent='DeactiveBanner({{$slider->id}})'> Active </a> 
+                                        @else <a href="#" onclick="confirm('Are you sure, You want to Active this Banner') || event.stopImmediatePropagation()" wire:click.prevent='ActiveBanner({{$slider->id}})'>Deactive </a>
+                                        @endif</td>
                                         <td>{{$slider->created_at}}</td>
                                         <td>
-                                        <a href="{{route('admin.editbanner',['bid'=> $slider->id])}}"><i class="fa fa-edit fa-2x"></i></a>
-                                                <a href="#" onclick="confirm('Are you sure, You want to delet this slider') || event.stopImmediatePropagation()" wire:click.prevent="deleteBanner({{$slider->id}})" style="margin-left:10px;"><i class="fa fa-times fa-2x text-danger"></i></a>
+                                        <a href="{{route('admin.editbanner',['bid'=> $slider->id])}}"><i class="fa fa-edit"></i></a>
+                                                <a href="#" onclick="confirm('Are you sure, You want to delete this banner') || event.stopImmediatePropagation()" wire:click.prevent="deleteBanner({{$slider->id}})" style="margin-left:10px;"><i class="fa fa-times text-danger"></i></a>
                                         </td>
                                     </tr>
                              @endforeach

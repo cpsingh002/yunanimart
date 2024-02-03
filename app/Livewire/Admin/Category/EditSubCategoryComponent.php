@@ -23,6 +23,7 @@ class EditSubCategoryComponent extends Component
     public $categorythum;
     public $newimage;
     public $newicon;
+    public $is_home;
 
     public function mount($scategory_slug)
     {
@@ -36,6 +37,7 @@ class EditSubCategoryComponent extends Component
             $this->slug = $scategory->slug;
             $this->icon = $scategory->icon;
             $this->categorythum = $scategory->categorythum;
+            $this->is_home=$scategory->is_home;
             //dd($this->slug);
         
     }
@@ -65,7 +67,7 @@ class EditSubCategoryComponent extends Component
         {
             $this->validateOnly($fields,[
                 'name'=>'required',
-                'slug'=>'required|unique:sub_categories,slug,'.$this->category_id,
+                'slug'=>'required|unique:sub_categories,slug,'.$this->scategory_id,
                 'scategory_id'=>'required'
             ]);
         }
@@ -76,7 +78,7 @@ class EditSubCategoryComponent extends Component
         $this->validate([
             'name'=>'required',
             'category_id'=>'required',
-            'slug' => 'required|unique:sub_categories,slug,'.$this->category_id
+            'slug' => 'required|unique:sub_categories,slug,'.$this->scategory_id
         ]);
         if($this->newimage)
         {
@@ -88,6 +90,7 @@ class EditSubCategoryComponent extends Component
             $scategory =  SubCategory::find($this->scategory_id);
             $scategory->name =$this->name;
             $scategory->slug = $this->slug;
+            $scategory->is_home=$this->is_home;
             $scategory->category_id = $this->category_id;
             if($this->newicon){
                 //unlink('admin/category/icon'.'/'.$scategory->icon);
