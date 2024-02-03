@@ -53,11 +53,9 @@
                                                  <label for="form-banner/image" class="form-label">Image</label>
                                                  <div class="input-group input-group--sa-slug">
 
-                                                     <input type="file" class="input-file" wire:model="images" multiple/>
-                                                     @if($images)
-                                                            @foreach($images as $image)
-                                                                <img src="{{$image->temporaryUrl()}}" width="120" />
-                                                            @endforeach
+                                                     <input type="file" class="input-file" wire:model="images"/>
+                                                        @if($images)
+                                                            <img src="{{$images->temporaryUrl()}}" width="120" />
                                                         @endif
                                                         @error('images') <p class="text-danger">{{$message}}</p> @enderror
                                                  </div>

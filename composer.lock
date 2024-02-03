@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b254d1126a7357f1f7bb544ed85d3d5b",
+    "content-hash": "329904024aefd8d9f4181ecd26b3e55d",
     "packages": [
         {
             "name": "brick/math",
@@ -899,6 +899,49 @@
                 }
             ],
             "time": "2023-10-12T05:21:21+00:00"
+        },
+        {
+            "name": "gdbhosale/paywitheasebuzz-php",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gdbhosale/paywitheasebuzz-php.git",
+                "reference": "b5346031f15513a996e58b27af2800e074d37721"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gdbhosale/paywitheasebuzz-php/zipball/b5346031f15513a996e58b27af2800e074d37721",
+                "reference": "b5346031f15513a996e58b27af2800e074d37721",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Easebuzz\\": "src/easebuzz-lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHP Package integration kit for pay with easebuzz pay.easebuzz.in",
+            "homepage": "https://docs.easebuzz.in/docs/payment-gateway/ex7xej43lwl4g-php",
+            "keywords": [
+                "api",
+                "client",
+                "easebuzz",
+                "paywitheasebuzz",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/gdbhosale/paywitheasebuzz-php/issues",
+                "source": "https://github.com/gdbhosale/paywitheasebuzz-php/tree/1.0.4"
+            },
+            "time": "2023-03-15T06:48:43+00:00"
         },
         {
             "name": "graham-campbell/result-type",

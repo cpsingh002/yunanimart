@@ -48,10 +48,8 @@
                                         <td>{{$slider->title}}</td>
                                         <td><a href ="{{$slider->link}}">{{$slider->link}}</a></td>
                                         <td>@if($slider->images)
-                                                @php $images = explode(",",$slider->images); @endphp
-                                                @foreach($images as $image)
-                                                    @if($image)  <img src="{{asset('admin/slider')}}/{{$image}}" width="60" />  @endif
-                                                @endforeach
+                                                  <img src="{{asset('admin/slider')}}/{{$slider->images}}" width="60" /> 
+                                                
                                             @endif
                                         </td>
                                         <td>{{$slider->for}}</td>

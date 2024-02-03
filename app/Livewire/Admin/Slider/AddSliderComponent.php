@@ -23,8 +23,28 @@ class AddSliderComponent extends Component
         $this->status = 1;
         $this->for = 'home';
      } 
+
+     public function updated($fields)
+    {
+        $this->validateOnly($fields,[
+            'title' => 'required',
+            'link' => 'required',
+            'images'=>'required|mimes:jpeg,jpg,png',
+            'for'=>'required',
+            'status'=>'required',
+            
+        ]);
+    }
+
      public function addSlider()
      {
+        $this->validate([
+            'title' => 'required',
+            'link' => 'required',
+            'images'=>'required|mimes:jpeg,jpg,png',
+            'for'=>'required',
+            'status'=>'required',
+        ]);
         $slider = new Slider();
         $slider->title = $this->title;
         $slider->link = $this->link;
@@ -32,13 +52,10 @@ class AddSliderComponent extends Component
         $slider->for = $this->for;
         if($this->images)
         {
-            $imagesname = '';
-            foreach($this->images as $key=>$image)
-            {
-                $imgName = Carbon::now()->timestamp. $key.'.'.$image->extension();
-                $image->storeAs('slider',$imgName);
-                $imagesname = $imagesname.','.$imgName;
-            }
+         
+            $imgName = Carbon::now()->timestamp.'.'.$this->images->extension();
+            $this->images->storeAs('slider',$imgName);
+            $imagesname = $imgName;
             $slider->images = $imagesname;
         }
 

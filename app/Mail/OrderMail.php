@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 class OrderMail extends Mailable
 {
     use Queueable, SerializesModels;
-public Order $order;
+    public Order $order;
     /**
      * Create a new message instance.
      */

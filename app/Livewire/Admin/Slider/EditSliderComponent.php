@@ -24,15 +24,48 @@ class EditSliderComponent extends Component
         $slider = Slider::find($sid);
         $this->title = $slider->title;
         $this->link=$slider->link;
-        $this->images = explode(",",$slider->images);
+        $this->images = $slider->images;
     
         $this->status=$slider->status;
         $this->for = $slider->for;
         $this->s_id = $slider->id;
        // dd($this->for);
      } 
+
+     public function updated($fields)
+    {
+        $this->validateOnly($fields,[
+            'title' => 'required',
+            'link' => 'required',
+            
+            'for'=>'required',
+            'status'=>'required',
+            
+        ]);
+
+        if($this->newimages){
+            $this->validateOnly($fileds,[
+                'newimages'=>'required|mimes:jpeg,jpg,png'
+            ]);
+        }
+    }
       public function updateSlider()
       {
+        $this->validateOnly([
+            'title' => 'required',
+            'link' => 'required',
+            
+            'for'=>'required',
+            'status'=>'required',
+            
+        ]);
+
+        if($this->newimages){
+            $this->validate([
+                'newimages'=>'required|mimes:jpeg,jpg,png'
+            ]);
+        }
+    
         $slider = Slider::find($this->s_id);
         $slider->title = $this->title;
         $slider->link = $this->link;
@@ -42,22 +75,12 @@ class EditSliderComponent extends Component
         {
             if($slider->images)
             {
-                $images = explode(",",$slider->images);
-                foreach($images as $image)
-                {
-                    if($image)
-                    {
-                        unlink('admin/slider'.'/'.$image);
-                    }
-                }
+                unlink('admin/slider'.'/'.$slider->images);  
             }
-            $imagesname = '';
-            foreach($this->images as $key=>$image)
-            {
-                $imgName = Carbon::now()->timestamp. $key.'.'.$image->extension();
-                $image->storeAs('slider',$imgName);
-                $imagesname = $imagesname.','.$imgName;
-            }
+            
+            $imgName = Carbon::now()->timestamp.'.'.$this->newimages->extension();
+            $this->newimages->storeAs('slider',$imgName);
+            $imagesname = $imgName;
             $slider->images = $imagesname;
         }
 

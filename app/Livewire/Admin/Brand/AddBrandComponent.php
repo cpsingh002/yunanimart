@@ -34,7 +34,7 @@ class AddBrandComponent extends Component
              'brand_name'=>'required',
              'brand_slug'=>'required|unique:brands',
              'description'=>'required',
-             'brand_image'=>'required||mimes:jpeg,jpg,png',
+             'brand_image'=>'required|mimes:jpeg,jpg,png',
              'status'=>'required',
              'is_home'=>'required',
         ]);
@@ -45,7 +45,7 @@ class AddBrandComponent extends Component
             'brand_name'=>'required',
              'brand_slug'=>'required|unique:brands',
              'description'=>'required',
-             'brand_image'=>'required||mimes:jpeg,jpg,png',
+             'brand_image'=>'required|mimes:jpeg,jpg,png',
              'status'=>'required',
              'is_home'=>'required',
         ]);

@@ -22,8 +22,28 @@ class AddBannerComponent extends Component
         $this->status = 1;
         $this->for = 'home';
      } 
+
+     public function updated($fields)
+     {
+         $this->validateOnly($fields,[
+             'title' => 'required',
+             'link' => 'required',
+             'images'=>'required|mimes:jpeg,jpg,png',
+             'for'=>'required',
+             'status'=>'required',
+             
+         ]);
+     }
      public function addBanner()
      {
+            $this->validate([
+                'title' => 'required',
+                'link' => 'required',
+                'images'=>'required|mimes:jpeg,jpg,png',
+                'for'=>'required',
+                'status'=>'required',        
+            ]);
+
         $slider = new Banner();
         $slider->title = $this->title;
         $slider->link = $this->link;

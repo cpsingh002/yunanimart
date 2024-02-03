@@ -18,7 +18,7 @@
             
                                 <div class="single-select-block d-inline-block">
                                     <span class="select-title">Show:</span>
-                                    <select class="wide border-0" wire:model="pagesize">
+                                    <select class="wide border-0" id="pagewsize" name="pagewsize" wire:model="pagesize">
                                         <option value="10">10</option>
                                         <option value="20">20</option>
                                         <option value="30">30</option>
@@ -353,4 +353,15 @@
 			@this.set('max_price',value[1]);
 		})
 	</script>
+    <script>
+        
+        $('#pagewsize').on('change',function(ev){
+            //alert('gfhfgh');
+            var data = $('#pagewsize').val();
+            alert(data);
+            @this.set('pagesize',data);
+        });
+    
+    
+</script>
 @endpush

@@ -113,7 +113,8 @@ class EditProduct2Component extends Component
         // }
         // $this->varaintadata = ProductVariant::where('product_id',$product->id)->get();
         //dd( $this->varaintadata);
-        $this->productvariant = Product2::where('parent_id', $product->id)->get();
+        $this->productvariant = Product2::where('parent_id', $product->id)->orwhere('id',$product->id)->get();
+       // dd( $this->productvariant);
         foreach($this->productvariant as $key=> $tdata)
         {
             $this->skus[$key] = $tdata->SKU;
@@ -125,7 +126,7 @@ class EditProduct2Component extends Component
           
         }
        // dd($this->skus);
-       $this->productvariant = Product2::where('parent_id', $product->id)->get();
+    //    $this->productvariant = Product2::where('parent_id', $product->id)->get();
 
     }
 
@@ -180,7 +181,7 @@ class EditProduct2Component extends Component
     public function updateProduct()
     {
         //dd((($this->regular_price - $this->sale_price)/$this->regular_price)*100);
-        //dd($this->newqtyes);
+       // dd($this->short_description, $this->description);
         $this->validate([
             'name' => 'required',
             'short_description'=>'required',
@@ -279,7 +280,7 @@ class EditProduct2Component extends Component
         $product->is_young = $this->is_young;
         $product->tax_id = $this->tax_id;
         $product->freecancellation = $this->freecancellation;
-        $product->discount_value = (($this->regular_price - $this->sale_price)/$this->regular_price)*100;
+        $product->discount_value = round((($this->regular_price - $this->sale_price)/$this->regular_price)*100,2);
         
         $product->save();
 
@@ -328,7 +329,7 @@ class EditProduct2Component extends Component
             $product_varaint->is_young = $this->is_young;
             $product_varaint->tax_id = $this->tax_id;
             $product_varaint->freecancellation = $this->freecancellation;
-            $product_varaint->discount_value = (($this->mrps[$key] - $this->pris[$key])/$this->mrps[$key])*100;
+            $product_varaint->discount_value = round((($this->mrps[$key] - $this->pris[$key])/$this->mrps[$key])*100,2);
             $product_varaint->save();
 
             

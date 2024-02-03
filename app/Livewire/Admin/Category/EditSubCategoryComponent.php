@@ -65,7 +65,7 @@ class EditSubCategoryComponent extends Component
         {
             $this->validateOnly($fields,[
                 'name'=>'required',
-                'slug'=>'required|unique:categories,slug,'.$this->category_id,
+                'slug'=>'required|unique:sub_categories,slug,'.$this->category_id,
                 'scategory_id'=>'required'
             ]);
         }
@@ -76,7 +76,7 @@ class EditSubCategoryComponent extends Component
         $this->validate([
             'name'=>'required',
             'category_id'=>'required',
-            'slug' => 'required|unique:categories,slug,'.$this->category_id
+            'slug' => 'required|unique:sub_categories,slug,'.$this->category_id
         ]);
         if($this->newimage)
         {

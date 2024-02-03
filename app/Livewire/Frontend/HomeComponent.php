@@ -15,7 +15,7 @@ class HomeComponent extends Component
 {
     public function render()
     {
-        $sliders = Slider::where('for','home')->first();
+        $sliders = Slider::where('for','home')->get();
         $categorys = Category::where('is_home',1)->get();
         $subcategorys = SubCategory::where('is_home',1)->get();
         $brands = Brand::where('is_home',1)->get();

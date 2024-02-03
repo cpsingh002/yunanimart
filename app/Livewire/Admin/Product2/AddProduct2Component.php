@@ -271,7 +271,7 @@ class AddProduct2Component extends Component
         $product->is_young = $this->is_young;
         $product->tax_id = $this->tax_id;
         $product->freecancellation = $this->freecancellation;
-        $product->discount_value = (($this->regular_price - $this->sale_price)/$this->regular_price)*100;
+        $product->discount_value = round((($this->regular_price - $this->sale_price)/$this->regular_price)*100, 2);
         $product->status = '1';
         $product->add_by = '1'; //Auth::user()->id;
         $product->save();
@@ -323,7 +323,7 @@ class AddProduct2Component extends Component
             $product_varaint->is_young = $this->is_young;
             $product_varaint->tax_id = $this->tax_id;
             $product_varaint->freecancellation = $this->freecancellation;
-            $product_varaint->discount_value = (($this->mrps[$key] - $this->pris[$key])/$this->mrps[$key])*100;
+            $product_varaint->discount_value = round((($this->mrps[$key] - $this->pris[$key])/$this->mrps[$key])*100, 2);
             $product_varaint->status = '1';
             $product_varaint->add_by = '1'; //Auth::user()->id;
             $product_varaint->varaint_detail = $tdata;

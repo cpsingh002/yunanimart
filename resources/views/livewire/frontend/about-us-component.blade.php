@@ -11,6 +11,8 @@
         </section>
         <section class="pt-5">
             <div class="container">
+            <a href="#" wire:click.prevent="payeasybuzz">
+                                                    <i class="ti-trash"></i> Move to Cart</a>
                 <h2 class="mb-3">Know About our Company.</h2>
                 <div class="row">
                     <div class="col-lg-7 col-md-6">

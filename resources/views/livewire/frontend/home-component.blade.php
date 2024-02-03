@@ -1,15 +1,13 @@
 <div>
-    @if(isset($sliders))
+    @if(isset($sliders[0]))
     <div class="slider" data-autoplay="true" data-autoplay-speed="4000">
-            @php
-                $images = explode(",",$sliders->images);
-            @endphp
-            @foreach($images as $image)
-                @if($image)
-                    <a href="{{$sliders->link}}">
-                        <img src="{{asset('admin/slider')}}/{{$image}}" alt="" width="1500" height="365">
+           
+            @foreach($sliders as $slider)
+                
+                    <a href="{{$slider->link}}">
+                        <img src="{{asset('admin/slider')}}/{{$slider->images}}" alt="" width="1500" height="365">
                     </a>
-                @endif
+                
             @endforeach
         <a href="category.html">
             <img src="{{asset('assets/img/slider/slider-1.svg')}}" alt="">

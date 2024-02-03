@@ -377,31 +377,39 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="modal-body">
-                    <form action="#" method="POST">
-                        <div class="form-group">
-                            <input name="password" type="password" placeholder="Old Password"
-                                class="form-control input-lg rounded">
+                
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
                         </div>
-                        <div class="form-group">
-                            <input name="password" type="password" placeholder="New Password"
-                                class="form-control input-lg rounded">
+                    @endif
+
+                    <form method="POST" action="{{ route('password.email') }}">
+                        @csrf
+
+                        <div class="row mb-3">
+                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input name="password" type="text" placeholder="Confirm Password"
-                                class="form-control input-lg rounded">
-                        </div>
-                        <button type="submit" name="submit" class="btn btn-primary btn-full btn-medium rounded">Change
-                            Password</button>
-                        <div class="form-group text-center small font-weight-bold mt-3">
-                            Want to <a href="#" data-toggle="modal" data-dismiss="modal" data-target="#login_modal">
-                                Login?</a>
-                        </div>
-                        <hr class="my-4">
-                        <div class="form-group text-center small font-weight-bold mb-0">
-                            Don’t have an account? <a href="#" data-toggle="modal" data-dismiss="modal"
-                                data-target="#register_modal"> Register</a>
+
+                        <div class="row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Send Password Reset Link') }}
+                                </button>
+                            </div>
                         </div>
                     </form>
+                
                 </div>
             </div>
         </div>

@@ -52,14 +52,14 @@
                                                     <div class="mb-4">
                                                         <label class="control-label">Short Description</label>
                                                         <div class="input-group" wire:ignore>
-                                                            <textarea class ="form-control" id="short_description" placeholder="Short Description" wire:model="short_description"></textarea>
+                                                            <textarea class ="form-control" id="short_description" placeholder="Short Description" wire:model="short_description">{!! $short_description !!}</textarea>
                                                             @error('short_description') <p class="text-danger">{{$message}}</p> @enderror
                                                         </div>
                                                     </div>
                                                     <div class="mb-4">
                                                         <label class="control-label">Description</label>
                                                         <div class="input-group" wire:ignore>
-                                                            <textarea class ="form-control" id="description" placeholder="Description" wire:model="description"></textarea>
+                                                            <textarea class ="form-control" id="description" placeholder="Description" wire:model="description">{!! $description !!}</textarea>
                                                             @error('description') <p class="text-danger">{{$message}}</p> @enderror
                                                         </div>
                                                     </div>
@@ -439,30 +439,29 @@
 <!-- sa-app__footer -->
 
 @push('scripts')
-<script src="https://cdn.tiny.cloud/1/5949s82j52s02vlrmcq6l2c2gkzihao5gxjymat25ancman4/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
 <script>
-        $(function(){
-            tinymce.init({
-                selector:'#short_description',
-                setup:function(editor){
-                    editor.on('Change',function(e){
-                        tinyMCE.triggerSave();
-                        var sd_data = $('#short_description').val();
-                        @this.set('short_description',sd_data);
-                    });
-                }
+    ClassicEditor.create( document.querySelector( '#short_description' ) )
+            .then(editor => {
+                editor.model.document.on('change:data', () => {
+                @this.set('short_description', editor.getData());
+                })
+            })
+        .catch( error => {
+            console.error( error );
+        } );
+                    
+</script>
+<script>
+        ClassicEditor
+            .create(document.querySelector('#description'))
+            .then(editor => {
+                editor.model.document.on('change:data', () => {
+                @this.set('description', editor.getData());
+                })
+            })
+            .catch(error => {
+                console.error(error);
             });
-
-            tinymce.init({
-                selector:'#description',
-                setup:function(editor){
-                    editor.on('Change',function(e){
-                        tinyMCE.triggerSave();
-                        var d_data = $('#description').val();
-                        @this.set('description',d_data);
-                    });
-                }
-            });
-        });
     </script>
 @endpush

@@ -31,8 +31,39 @@ class EditBannerComponent extends Component
         $this->b_id = $slider->id;
        // dd($this->for);
      } 
+     public function updated($fields)
+     {
+         $this->validateOnly($fields,[
+             'title' => 'required',
+             'link' => 'required',
+             
+             'for'=>'required',
+             'status'=>'required',
+             
+         ]);
+
+         if($this->newimages){
+            $this->validateOnly($fields,[
+                'newimages'=>'required|mimes:jpeg,jpg,png'
+            ]);
+        }
+     }
       public function updateBanner()
       {
+        $this->validate([
+            'title' => 'required',
+            'link' => 'required',
+            
+            'for'=>'required',
+            'status'=>'required',
+            
+        ]);
+
+        if($this->newimages){
+            $this->validate([
+                'newimages'=>'required|mimes:jpeg,jpg,png'
+            ]);
+        }
         $slider = Banner::find($this->b_id);
         $slider->title = $this->title;
         $slider->link = $this->link;
