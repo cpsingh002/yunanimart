@@ -28,6 +28,7 @@ class CartComponent extends Component
     public $subtotal;
     public $taxvalue;
     public $totalamount;
+    public $shippingcost;
 
     
     public function render(Request $request)
@@ -79,6 +80,13 @@ class CartComponent extends Component
                     $this->totalamount = $taxtotalc + $subtotalc; 
                     //dd($cart);   
             }
+        }
+
+        if($this->totalamount >= 200)
+        {
+            $this->shippingcost = '0';
+        }else{
+            $this->shippingcost = '80';
         }
      
         if(session()->has('coupon'))
@@ -347,7 +355,12 @@ class CartComponent extends Component
         $this->validate([
             'CouponCode'=>'required',
             ]);
-
+           // dd($this->subtotal);
+        if($this->subtotal >= 0)
+        {
+            session()->flash('message','No Item in Cart');
+            return;
+        }
         $coupon = Coupon::where('code',$this->CouponCode)->where('status',1)->first();
         if(!$coupon)
         {

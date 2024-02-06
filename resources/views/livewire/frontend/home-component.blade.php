@@ -451,7 +451,7 @@
                                 <div class="product-value">
                                     <div class="d-flex">
                                         <small class="regular-price">MRP <del>₹{{$product->regular_price}}</del></small>
-                                        <div class="off-price">53% off</div>
+                                        <div class="off-price">{{$product->discount_value}}% off</div>
                                     </div>
                                     <div class="current-price">₹{{$product->sale_price}}</div>
                                 </div>
@@ -488,70 +488,7 @@
                             </a> -->
                         </div>
                     @endforeach
-                   {{-- <div class="product-brand">
-                        <a href="{{route('shop')}}" class="product-img">
-                            <img src="{{asset('assets/img/brand/brand-2.png')}}" class="category-img" alt="">
-                        </a>
-                        <!-- <a href="{{route('shop')}}" class="product-info">
-                            Healthcare Devices
-                        </a> -->
-                    </div>
-                    <div class="product-brand">
-                        <a href="{{route('shop')}}" class="product-img">
-                            <img src="{{asset('assets/img/brand/brand-3.png')}}" class="category-img" alt="">
-                        </a>
-                        <!-- <a href="{{route('shop')}}" class="product-info">
-                            Summer Essentials
-                        </a> -->
-                    </div>
-                    <div class="product-brand">
-                        <a href="{{route('shop')}}" class="product-img">
-                            <img src="{{asset('assets/img/brand/brand-4.png')}}" class="category-img" alt="">
-                        </a>
-                        <!-- <a href="{{route('shop')}}" class="product-info">
-                            Healthcare Devices
-                        </a> -->
-                    </div>
-                    <div class="product-brand">
-                        <a href="{{route('shop')}}" class="product-img">
-                            <img src="{{asset('assets/img/brand/brand-5.png')}}" class="category-img" alt="">
-                        </a>
-                        <!-- <a href="{{route('shop')}}" class="product-info">
-                            Summer Essentials
-                        </a> -->
-                    </div>
-                    <div class="product-brand">
-                        <a href="{{route('shop')}}" class="product-img">
-                            <img src="{{asset('assets/img/brand/brand-6.png')}}" class="category-img" alt="">
-                        </a>
-                        <!-- <a href="{{route('shop')}}" class="product-info">
-                            Healthcare Devices
-                        </a> -->
-                    </div>
-                    <div class="product-brand">
-                        <a href="{{route('shop')}}" class="product-img">
-                            <img src="{{asset('assets/img/brand/brand-7.png')}}" class="category-img" alt="">
-                        </a>
-                        <!-- <a href="{{route('shop')}}" class="product-info">
-                            Healthcare Devices
-                        </a> -->
-                    </div>
-                    <div class="product-brand">
-                        <a href="{{route('shop')}}" class="product-img">
-                            <img src="{{asset('assets/img/brand/brand-8.png')}}" class="category-img" alt="">
-                        </a>
-                        <!-- <a href="{{route('shop')}}" class="product-info">
-                            Healthcare Devices
-                        </a> -->
-                    </div>
-                    <div class="product-brand">
-                        <a href="{{route('shop')}}" class="product-img">
-                            <img src="{{asset('assets/img/brand/brand-9.png')}}" class="category-img" alt="">
-                        </a>
-                        <!-- <a href="{{route('shop')}}" class="product-info">
-                            Healthcare Devices
-                        </a> -->
-                    </div> --}}
+                   
                 </div>
             </div>
         </div>
@@ -566,7 +503,7 @@
                     <a href="{{route('shop')}}" class="btn btn-primary btn-sm product-heading-btn">See All</a>
                 </div> 
             </div>
-            <div class="slider  arrow-light slider-gap" data-slides-to-show="4" data-autoplay="true" data-nav="true"
+            <div class="slider  arrow-light slider-gap" data-slides-to-show="2" data-autoplay="true" data-nav="true"
                 data-dots="false">
                 @foreach($banners as $banner)
                 <div class="product">
@@ -609,7 +546,7 @@
                             <div class="product-value">
                                 <div class="d-flex">
                                     <small class="regular-price">MRP <del>₹{{$product->regular_price}}</del></small>
-                                    <div class="off-price">53% off</div>
+                                    <div class="off-price">{{$product->discount_value}}% off</div>
                                 </div>
                                 <div class="current-price">₹{{$product->sale_price}}</div>
                             </div>
@@ -623,7 +560,7 @@
 
 
     @foreach($category_banner as $categorys )
-@php $category=$this->c_details($categorys) @endphp
+        @php $category=$this->c_details($categorys) @endphp
     <div class="py-5">
         <div class="container-fluid theme-container">
             <div class="row mb-4">
@@ -634,7 +571,7 @@
                     <a href="{{route('shop')}}" class="btn btn-primary btn-sm product-heading-btn">See All</a>
                 </div> 
             </div>
-            <div class="slider  arrow-light slider-gap" data-slides-to-show="4" data-autoplay="true" data-nav="true"
+            <div class="slider  arrow-light slider-gap" data-slides-to-show="2" data-autoplay="true" data-nav="true"
                 data-dots="false">
                 @foreach($category->banner as $banner)
                 <div class="product">
@@ -685,7 +622,7 @@
                             <div class="product-value">
                                 <div class="d-flex">
                                     <small class="regular-price">MRP <del>₹{{$product->regular_price}}</del></small>
-                                    <div class="off-price">53% off</div>
+                                    <div class="off-price">{{$product->discount_value}}% off</div>
                                 </div>
                                 <div class="current-price">₹{{$product->sale_price}}</div>
                             </div>
@@ -744,7 +681,7 @@
                             <div class="product-value">
                                 <div class="d-flex">
                                     <small class="regular-price">MRP <del>₹{{$product->regular_price}}</del></small>
-                                    <div class="off-price">53% off</div>
+                                    <div class="off-price">{{$product->discount_value}}% off</div>
                                 </div>
                                 <div class="current-price">₹{{$product->sale_price}}</div>
                             </div>

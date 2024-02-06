@@ -82,7 +82,7 @@
                                 </div>
                                 @if(isset($varaiants[0]))
                                     <div class="varient mt-4">
-                                        <h6 class="font-weight-bold text-dark mb-3">Product Varient</h6>
+                                        <h6 class="font-weight-bold text-dark mb-3">Product Varient : {{$attribute->name}}</h6>
                                         <div class="row box-checkbox">
                                         <label tabindex="0">
                                                 <input tabindex="-1" type="checkbox" checked name="" />
@@ -126,15 +126,21 @@
                                     <div class="product-buttons ml-0 ml-md-3 mt-4 mt-md-0 text-md-left text-center">
                                         @if($wish)
                                         <a class="btn btn-rounded btn-soft-primary mr-2" href="#" wire:click.prevent="removeFromWishlist({{$product->id}})"> <i
-                                                class="fa fa-heart"></i> remove To Wishlist</a>
+                                                class="fa fa-heart"></i> Remove To Wishlist</a>
                                             
                                         @else
                                         <a class="btn btn-rounded btn-soft-primary mr-2" href="#" wire:click.prevent="addToWishlist({{$product->id}},{{$product->sale_price}})"> <i
                                                 class="fa fa-heart"></i> Add To Wishlist</a>
                                         @endif
-                                        
-                                        <a class="btn btn-rounded btn-primary" href="#" wire:click.prevent="AddtoCart({{$product->id}},{{$product->sale_price}})"> <i
+                                        @if($cart)
+                                            <a class="btn btn-rounded btn-primary" href="#"> <i
+                                                class="fa fa-shopping-cart"></i> Already Added To Cart</a>
+                                        @else
+                                            
+                                                <a class="btn btn-rounded btn-primary" href="#" wire:click.prevent="AddtoCart({{$product->id}},{{$product->sale_price}})"> <i
                                                 class="fa fa-shopping-cart"></i> Add To Cart</a>
+                                        
+                                        @endif
                                     </div>
 
                                 </div>
@@ -183,24 +189,7 @@
                             <div class="mt-4">
                                 <h6 class="font-weight-bold text-dark">Share on</h6>
                                 <div class="social-links social-links-dark">
-                                    <a href="#">
-                                        <i class="fa fa-facebook"></i>
-                                    </a>
-                                    <a href="#">
-                                        <i class="fa fa-twitter"></i>
-                                    </a>
-                                    <a href="#">
-                                        <i class="fa fa-google-plus"></i>
-                                    </a>
-                                    <a href="#">
-                                        <i class="fa fa-youtube"></i>
-                                    </a>
-                                    <a href="#">
-                                        <i class="fa fa-dribbble"></i>
-                                    </a>
-                                    <a href="#">
-                                        <i class="fa fa-behance"></i>
-                                    </a>
+                                {!! $shareButtons !!} 
 
                                 </div>
                             </div>
@@ -231,26 +220,7 @@
                         </p>
                         <h3 class="entry-product-section-heading">Additional information</h3>
                         <div class="product-info-sec">
-                            <table class="table table-bordered table-striped">
-                                <tbody>
-                                    <tr>
-                                        <td>Number of Servings</td>
-                                        <td>33</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Serving Size</td>
-                                        <td>30 g</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Protein per Serving</td>
-                                        <td>12 g</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Vegetarian/Non-Vegetarian</td>
-                                        <td>Vegetarian</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            {!! $product->additional_info !!}
                         </div>
                         <h2 class="entry-product-section-heading"> Reviews </h2>
                         <h5>Avg. Rating</h5>
@@ -352,223 +322,87 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="slider arrow-light slider-gap" data-slides-to-show="6" data-autoplay="true"
-                            data-nav="true" data-dots="false">
-                            <div class="product">
-                                <a href="product-single.html" class="product-img">
-                                    <img src="{{asset('assets/img/product/product-1.png')}}" class="" alt="">
-                                </a>
-                                <div class="product-info">
-                                    <div class="product-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-half-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <div class="review-count">4.5 (2,213)</div>
-                                    </div>
-                                    <h3>
-                                        <a href="product-single.html"> TruRadix Curcumin Oral Strip Orange Mango</a>
-                                    </h3>
-                                    <div class="product-value">
-                                        <div class="d-flex">
-                                            <small class="regular-price">MRP <del>₹250.99</del></small>
-                                            <div class="off-price">53% off</div>
+                            data-nav="true" data-dots="false" wire:ignore>
+                            @foreach($rproducts as $rproduct)
+                                <div class="product">
+                                    <a href="{{route('product-details',['slug'=>$rproduct->slug])}}" class="product-img">
+                                        <img src="{{asset('admin/product/feat')}}/{{$rproduct->image}}" class="" alt="{{$rproduct->slug}}" width="500" height="967">
+                                    </a>
+                                    <div class="product-info">
+                                        <div class="product-rating">
+                                            @php
+                                            $ratingAvg=$rproduct->reviews->avg('rating') 
+                                            @endphp
+                                            @foreach(range(1,5) as $i)
+                                                    @if($ratingAvg > 0)
+                                                        @if($ratingAvg > 0.5)
+                                                        <i class="fa fa-star"></i>
+                                                        @else
+                                                            <i class="fa fa-star-half-o"></i>
+                                                        @endif
+                                                    @else
+                                                        <i class="fa fa-star-o"></i>
+                                                    @endif 
+                                                    @php $ratingAvg--; @endphp
+                                            @endforeach
+                                            <div class="review-count">{{number_format($rproduct->reviews->avg('rating'),1)}}  ({{$rproduct->reviews->count()}})</div>
                                         </div>
-                                        <div class="current-price">₹237.99</div>
+                                        <h3>
+                                            <a href="{{route('product-details',['slug'=>$rproduct->slug])}}"> {{$rproduct->name}}</a>
+                                        </h3>
+                                        <div class="product-value">
+                                            <div class="d-flex">
+                                                <small class="regular-price">MRP <del>₹{{$rproduct->regular_price}}</del></small>
+                                                <div class="off-price">{{$rproduct->discount_value}}% off</div>
+                                            </div>
+                                            <div class="current-price">₹{{$rproduct->sale_price}}</div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="product">
-                                <a href="product-single.html" class="product-img">
-                                    <img src="{{asset('assets/img/product/product-2.png')}}" class="" alt="">
-                                </a>
-                                <div class="product-info">
-                                    <div class="product-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-half-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <div class="review-count">4.5 (2,213)</div>
-                                    </div>
-                                    <h3>
-                                        <a href="product-single.html"> TruRadix Curcumin Oral Strip Orange Mango</a>
-                                    </h3>
-                                    <div class="product-value">
-                                        <div class="d-flex">
-                                            <small class="regular-price">MRP <del>₹250.99</del></small>
-                                            <div class="off-price">53% off</div>
-                                        </div>
-                                        <div class="current-price">₹237.99</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product">
-                                <a href="product-single.html" class="product-img">
-                                    <img src="{{asset('assets/img/product/product-3.png')}}" class="" alt="">
-                                </a>
-                                <div class="product-info">
-                                    <div class="product-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-half-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <div class="review-count">4.5 (2,213)</div>
-                                    </div>
-                                    <h3>
-                                        <a href="product-single.html"> TruRadix Curcumin Oral Strip Orange Mango</a>
-                                    </h3>
-                                    <div class="product-value">
-                                        <div class="d-flex">
-                                            <small class="regular-price">MRP <del>₹250.99</del></small>
-                                            <div class="off-price">53% off</div>
-                                        </div>
-                                        <div class="current-price">₹237.99</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product">
-                                <a href="product-single.html" class="product-img">
-                                    <img src="{{asset('assets/img/product/product-4.png')}}" class="" alt="">
-                                </a>
-                                <div class="product-info">
-                                    <div class="product-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-half-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <div class="review-count">4.5 (2,213)</div>
-                                    </div>
-                                    <h3>
-                                        <a href="product-single.html"> TruRadix Curcumin Oral Strip Orange Mango</a>
-                                    </h3>
-                                    <div class="product-value">
-                                        <div class="d-flex">
-                                            <small class="regular-price">MRP <del>₹250.99</del></small>
-                                            <div class="off-price">53% off</div>
-                                        </div>
-                                        <div class="current-price">₹237.99</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product">
-                                <a href="product-single.html" class="product-img">
-                                    <img src="{{asset('assets/img/product/product-5.png')}}" class="" alt="">
-                                </a>
-                                <div class="product-info">
-                                    <div class="product-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-half-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <div class="review-count">4.5 (2,213)</div>
-                                    </div>
-                                    <h3>
-                                        <a href="product-single.html"> TruRadix Curcumin Oral Strip Orange Mango</a>
-                                    </h3>
-                                    <div class="product-value">
-                                        <div class="d-flex">
-                                            <small class="regular-price">MRP <del>₹250.99</del></small>
-                                            <div class="off-price">53% off</div>
-                                        </div>
-                                        <div class="current-price">₹237.99</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product">
-                                <a href="product-single.html" class="product-img">
-                                    <img src="{{asset('assets/img/product/product-6.png')}}" class="" alt="">
-                                </a>
-                                <div class="product-info">
-                                    <div class="product-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-half-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <div class="review-count">4.5 (2,213)</div>
-                                    </div>
-                                    <h3>
-                                        <a href="product-single.html"> TruRadix Curcumin Oral Strip Orange Mango</a>
-                                    </h3>
-                                    <div class="product-value">
-                                        <div class="d-flex">
-                                            <small class="regular-price">MRP <del>₹250.99</del></small>
-                                            <div class="off-price">53% off</div>
-                                        </div>
-                                        <div class="current-price">₹237.99</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product">
-                                <a href="product-single.html" class="product-img">
-                                    <img src="{{asset('assets/img/product/product-7.png')}}" class="" alt="">
-                                </a>
-                                <div class="product-info">
-                                    <div class="product-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-half-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <div class="review-count">4.5 (2,213)</div>
-                                    </div>
-                                    <h3>
-                                        <a href="product-single.html"> TruRadix Curcumin Oral Strip Orange Mango</a>
-                                    </h3>
-                                    <div class="product-value">
-                                        <div class="d-flex">
-                                            <small class="regular-price">MRP <del>₹250.99</del></small>
-                                            <div class="off-price">53% off</div>
-                                        </div>
-                                        <div class="current-price">₹237.99</div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
+                            
                         </div>
                     </div>
                 </div>
             </div>
         </div> 
     </section>
+    
     <div wire:ignore.self class="modal fade" id="questionModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     
-    <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content">
-        
-            <div class="modal-header">
-                
-                <h4 class="modal-title fs-5" id="staticBackdropLabel">Question</h4>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @if(Session::has('message'))
-                    <div class="alert alert-success" role="alert">{{Session::get('message')}}</div>
-                @endif
-                <div class="mb-4">
-                    <label for="form-banner/name" class="form-label">Product name: </label>
-                    <input type="text" class="form-control"
-                        wire:model="pname" disabled value="{{$product->name}}" />
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+            
+                <div class="modal-header">
+                    
+                    <h4 class="modal-title fs-5" id="staticBackdropLabel">Question</h4>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
                 </div>
-                <div class="mb-4">
-                    <label for="form-review/message" class="form-label">Question: </label>
-                    <textarea type="text" class="form-control"
-                        wire:model="question" name='question' ></textarea>
-                        @error('question') <p class="text-danger">{{$message}}</p> @enderror
-                </div>        
+                <div class="modal-body">
+                    @if(Session::has('message'))
+                        <div class="alert alert-success" role="alert">{{Session::get('message')}}</div>
+                    @endif
+                    <div class="mb-4">
+                        <label for="form-banner/name" class="form-label">Product name: </label>
+                        <input type="text" class="form-control"
+                            wire:model="pname" disabled value="{{$product->name}}" />
+                    </div>
+                    <div class="mb-4">
+                        <label for="form-review/message" class="form-label">Question: </label>
+                        <textarea type="text" class="form-control"
+                            wire:model="question" name='question' ></textarea>
+                            @error('question') <p class="text-danger">{{$message}}</p> @enderror
+                    </div>        
+                </div>
+            
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" wire:click.prevent="storeQuestion">Submit</button>
             </div>
-        
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" wire:click.prevent="storeQuestion">Submit</button>
-        </div>
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 @push('scripts')

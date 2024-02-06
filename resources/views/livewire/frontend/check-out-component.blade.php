@@ -15,8 +15,8 @@
                                                 <h6 class="card-subtitle mb-2 text-muted">{{$ship->mobile}}</h6>
                                                 <p class="card-text">{{$ship->line1}}.</p>
                                                 <p class="card-text">{{$ship->line2}}.</p>
-                                                <a href="#" class="card-link">Card link</a>
-                                                <a href="#" class="card-link">Another link</a>
+                                                <!-- <a href="#" class="card-link">Card link</a>
+                                                <a href="#" class="card-link">Another link</a> -->
                                             </div>
                                             <input type="radio" name="selected_address" value="{{$ship->id}}"  wire:model="selected_address" @if($ship->default_address) checked  @endif>This address
                                         </div>

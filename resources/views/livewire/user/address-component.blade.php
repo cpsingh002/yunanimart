@@ -6,10 +6,10 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-0">
                             <li class="breadcrumb-item">
-                                <a class="text-nowrap" href="index.html"><i class="fa fa-home mr-2"></i>Home</a>
+                                <a class="text-nowrap" href="{{route('index')}}"><i class="fa fa-home mr-2"></i>Home</a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a class="text-nowrap" href="account.html"><i class="fa fa-home mr-2"></i>Account</a>
+                                <a class="text-nowrap" href="{{route('user.account')}}"><i class="fa fa-home mr-2"></i>Account</a>
                             </li>
                             <li class="breadcrumb-item text-nowrap active" aria-current="page">Address</li>
                         </ol>
@@ -52,7 +52,7 @@
                                     </div>
                                 </div>
                                 <ul class="list-unstyled mb-0">
-                                    <li class="nav-item">
+                                    <li class="nav-item ">
                                         <a class="nav-link" href="{{route('user.account')}}"><i class="fa fa-user"></i> My
                                             Account</a>
                                     </li>
@@ -61,7 +61,7 @@
                                             Password</a>
                                     </li> -->
                                     <li class="nav-item active">
-                                        <a class="nav-link" href="{{route('user.address')}}"><i class="fa fa-address-book"></i>
+                                        <a class="nav-link active" href="{{route('user.address')}}"><i class="fa fa-address-book"></i>
                                             Address</a>
                                     </li>
                                     <li class="nav-item">
@@ -69,12 +69,17 @@
                                             Order</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="wishlist.html"><i class="fa fa-heart"></i>
+                                        <a class="nav-link" href="{{route('wishlist')}}"><i class="fa fa-heart"></i>
                                             Wishlist</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#"><i class="fa fa-sign-out"></i> Logout</a>
+                                        <a class="nav-link" href="{{ route('logout') }}"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            <i class="fa fa-sign-out"></i>Logout</a>
                                     </li>
+                                    <form id="logout-form" method="POST" action="{{route('logout')}}">
+                                        @csrf
+                                    </form>
                                 </ul>
                             </div>
                         </div>
@@ -119,19 +124,7 @@
                                 @else
                                 <p> No Address Added yet</p>
                                 @endif
-                                <div class="col-lg-6">
-                                    <div class="address-block bg-light rounded p-3">
-                                        <a href="#" class="edit_address" data-toggle="modal" data-dismiss="modal" data-target="#address_model">
-                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                        </a>
-                                        <a href="#" class="delete_address">
-                                            <i class="fa fa-trash text-danger" aria-hidden="true"></i>
-                                        </a>
-                                        <h6>My Home Address</h6>
-                                        <p class="text-muted">1234567890</p>
-                                        <span class="text-muted">Chayan para, pal para, Ghogomali, Siliguri, West Bengal - 734006</span>
-                                    </div>
-                                </div>
+                               
                             </div>
                         </div>
                         </div>

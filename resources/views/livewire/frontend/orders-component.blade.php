@@ -7,9 +7,9 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item">
-                                    <a class="text-nowrap" href="index.html"><i class="fa fa-home mr-2"></i>Home</a>
+                                    <a class="text-nowrap" href="{{route('index')}}"><i class="fa fa-home mr-2"></i>Home</a>
                                 </li>
-                                <li class="breadcrumb-item text-nowrap"><a href="account.html">Account</a>
+                                <li class="breadcrumb-item text-nowrap"><a href="{{route('user.account')}}">Account</a>
                                 </li>
                                 <li class="breadcrumb-item text-nowrap active" aria-current="page">Order</li>
                             </ol>
@@ -29,7 +29,9 @@
                             <!-- Menu -->
                             <a class="d-xl-none d-lg-none d-md-none text-inherit fw-bold" href="#">Sidebar Menu</a>
                             <!-- Button -->
-                            <button class="navbar-toggler d-md-none rounded bg-primary text-light" type="button" data-toggle="collapse" data-target="#sidenav" aria-controls="sidenav" aria-expanded="false" aria-label="Toggle navigation">
+                            <button class="navbar-toggler d-md-none rounded bg-primary text-light" type="button"
+                                data-toggle="collapse" data-target="#sidenav" aria-controls="sidenav"
+                                aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="ti-menu"></span>
                             </button>
                             <!-- Collapse navbar -->
@@ -51,21 +53,34 @@
                                     </div>
                                     <ul class="list-unstyled mb-0">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="{{route('user.account')}}"><i class="fa fa-user"></i> My Account</a>
+                                            <a class="nav-link" href="{{route('user.account')}}"><i class="fa fa-user"></i> My
+                                                Account</a>
                                         </li>
-                                       
+                                        <!-- <li class="nav-item">
+                                            <a class="nav-link" href="change-password.html"><i class="fa fa-lock"></i>
+                                                Password</a>
+                                        </li> -->
                                         <li class="nav-item">
-                                            <a class="nav-link" href="{{route('user.address')}}"><i class="fa fa-address-book"></i> Address</a>
+                                            <a class="nav-link" href="{{route('user.address')}}"><i class="fa fa-address-book"></i>
+                                                Address</a>
                                         </li>
                                         <li class="nav-item active">
-                                            <a class="nav-link" href="{{route('orders')}}"><i class="fa fa-shopping-cart"></i> Order</a>
+                                            <a class="nav-link active" href="{{route('orders')}}"><i class="fa fa-shopping-cart"></i>
+                                                Order</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="{{route('wishlist')}}"><i class="fa fa-heart"></i> Wishlist</a>
+                                            <a class="nav-link" href="{{route('wishlist')}}"><i class="fa fa-heart"></i>
+                                                Wishlist</a>
                                         </li>
+                                        
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#"><i class="fa fa-sign-out"></i> Logout</a>
+                                            <a class="nav-link" href="{{ route('logout') }}"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            <i class="fa fa-sign-out"></i>Logout</a>
                                         </li>
+                                        <form id="logout-form" method="POST" action="{{route('logout')}}">
+                                            @csrf
+                                        </form>
                                     </ul>
                                 </div>
                             </div>
@@ -100,42 +115,13 @@
                                         <tbody>
                                             @foreach($orders as $order)
                                             <tr>
-                                                <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="{{route('order-details',['id'=>$order->id])}}" data-bs-toggle="modal">{{$order->id}}</a></td>
+                                                <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="{{route('order-details',['id'=>$order->id])}}" data-bs-toggle="modal">{{$order->order_number}}</a></td>
                                                 <td class="py-3">{{$order->created_at->format('M d Y')}}</td>
                                                 <td class="py-3"><span class="badge bg-soft-info m-0">In Progress</span></td>
                                                 <td class="py-3">${{$order->total}}</td>
                                             </tr>
                                             @endforeach
-                                            <tr>
-                                                <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="{{route('order-details',['id'=>$order->id])}}" data-bs-toggle="modal">78A643CD409</a></td>
-                                                <td class="py-3">December 09, 2018</td>
-                                                <td class="py-3"><span class="badge bg-soft-danger m-0">Canceled</span></td>
-                                                <td class="py-3"><span>$760.50</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="{{route('order-details',['id'=>$order->id])}}" data-bs-toggle="modal">112P45A90V2</a></td>
-                                                <td class="py-3">October 15, 2018</td>
-                                                <td class="py-3"><span class="badge bg-soft-warning m-0">Delayed</span></td>
-                                                <td class="py-3">$1,264.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="{{route('order-details',['id'=>$order->id])}}" data-bs-toggle="modal">28BA67U0981</a></td>
-                                                <td class="py-3">July 19, 2018</td>
-                                                <td class="py-3"><span class="badge bg-soft-success m-0">Delivered</span></td>
-                                                <td class="py-3">$198.35</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="single_order.html" data-bs-toggle="modal">502TR872W2</a></td>
-                                                <td class="py-3">April 04, 2018</td>
-                                                <td class="py-3"><span class="badge bg-soft-success m-0">Delivered</span></td>
-                                                <td class="py-3">$2,133.90</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="{{route('order-details',['id'=>$order->id])}}" data-bs-toggle="modal">47H76G09F33</a></td>
-                                                <td class="py-3">March 30, 2018</td>
-                                                <td class="py-3"><span class="badge bg-soft-success m-0">Delivered</span></td>
-                                                <td class="py-3">$86.40</td>
-                                            </tr>
+                                            
                                         </tbody>
                                     </table>
                                 </div>

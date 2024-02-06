@@ -24,7 +24,7 @@ class Product2 extends Model
     }
     public function attributeValues()
     {
-        return $this->hasMany(AttributeValue::class,'product_id');
+        return $this->hasOne(AttributeValue2::class,'product_id')->get();
     }
     
     public function taxslab()

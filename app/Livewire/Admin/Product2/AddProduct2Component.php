@@ -27,6 +27,7 @@ class AddProduct2Component extends Component
     public $slug;
     public $short_description;
     public $description;
+    public $additional_info;
     public $regular_price;
     public $sale_price;
     public $bulk_quantity;
@@ -49,7 +50,9 @@ class AddProduct2Component extends Component
     public $is_young;
     public $status;
     public $tax_id;
-    Public $freecancellation;
+    public $freecancellation;
+    public $meta_description;
+    public $meta_keywords;
 
     public $attr;
     public $inputs = [];
@@ -190,7 +193,7 @@ class AddProduct2Component extends Component
             'is_child'=>'required',
             'is_young'=>'required',
             'tax_id' =>'required',
-            'freecancellation' =>'required' 
+            'freecancellation' =>'required'
         ]);
     }
 
@@ -243,6 +246,7 @@ class AddProduct2Component extends Component
         $product->slug = $this->slug;
         $product->short_description =  $this->short_description;
         $product->description = $this->description;
+        $product->additional_info = $this->additional_info;
         $product->regular_price= $this->regular_price;
         $product->sale_price = $this->sale_price;
         $product->bulk_quantity= $this->bulk_quantity;
@@ -271,6 +275,8 @@ class AddProduct2Component extends Component
         {
             $product->subcategory_id = $this->scategory_id;
         }
+        $product->meta_keywords = $this->meta_keywords;
+        $product->meta_description = $this->meta_description;
         $product->brand_id = $this->brand_id;
         $product->medtype_id = $this->medtype_id;
         $product->prescription = $this->prescription;
@@ -310,6 +316,7 @@ class AddProduct2Component extends Component
             $product_varaint->name = $this->name;
             $product_varaint->slug = $this->slug.'-'.$tdata;
             $product_varaint->short_description =  $this->short_description;
+            $product_varaint->additional_info = $this->additional_info;
             $product_varaint->description = $this->description;
             $product_varaint->regular_price= $this->mrps[$key];;
             $product_varaint->sale_price = $this->pris[$key];
@@ -323,6 +330,8 @@ class AddProduct2Component extends Component
             $product_varaint->images = $product->images;
             $product_varaint->category_id= $this->category_id;
             $product_varaint->subcategory_id = $this->scategory_id;
+            $product_varaint->meta_keywords = $this->meta_keywords;
+            $product_varaint->meta_description = $this->meta_description;
             $product_varaint->brand_id = $this->brand_id;
             $product_varaint->medtype_id = $this->medtype_id;
             $product_varaint->prescription = $this->prescription;

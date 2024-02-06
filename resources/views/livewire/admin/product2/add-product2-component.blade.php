@@ -74,10 +74,17 @@
                                                         </div>
                                                     </div>
                                                     <div class="mb-4">
-                                                        <label class="control-label">Description</label>
+                                                        <label class="control-label">Description</label>additional_info
                                                         <div class="input-group" wire:ignore>
                                                             <textarea class ="form-control" id="description" placeholder="Description" wire:model="description">{!! $description !!}</textarea>
                                                             @error('description') <p class="text-danger">{{$message}}</p> @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4">
+                                                        <label class="control-label">Additional Info</label>
+                                                        <div class="input-group" wire:ignore>
+                                                            <textarea class ="form-control" id="additional_info" placeholder="additional_info" wire:model="additional_info">{!! $additional_info !!}</textarea>
+                                                            @error('additional_info') <p class="text-danger">{{$message}}</p> @enderror
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -470,6 +477,7 @@
 
 // function myFunction() {
 //   alert("You pressed a key inside the input field");
+// ALTER TABLE `product2s` ADD `meta_keywords` VARCHAR(255) NULL DEFAULT NULL AFTER `discount_value`, ADD `meta_description` VARCHAR(255) NULL DEFAULT NULL AFTER `meta_keywords`, ADD `additional_info` TEXT NULL DEFAULT NULL AFTER `meta_description`; 
 // }
 
 function myFunction(){
@@ -514,15 +522,27 @@ function myFunction(){
                     
 </script>
 <script>
-        ClassicEditor
-            .create(document.querySelector('#description'))
-            .then(editor => {
-                editor.model.document.on('change:data', () => {
-                @this.set('description', editor.getData());
-                })
+    ClassicEditor
+        .create(document.querySelector('#description'))
+        .then(editor => {
+            editor.model.document.on('change:data', () => {
+            @this.set('description', editor.getData());
             })
-            .catch(error => {
-                console.error(error);
-            });
-    </script>
+        })
+        .catch(error => {
+            console.error(error);
+        });
+</script>
+<script>
+    ClassicEditor
+        .create(document.querySelector('#additional_info'))
+        .then(editor => {
+            editor.model.document.on('change:data', () => {
+            @this.set('additional_info', editor.getData());
+            })
+        })
+        .catch(error => {
+            console.error(error);
+        });
+</script>
 @endpush

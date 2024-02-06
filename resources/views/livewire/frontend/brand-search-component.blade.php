@@ -79,6 +79,17 @@
                             @endforeach
                           
                         </div>
+                        <div class="row pt-70">
+                            <div class="col-lg-12 d-flex justify-content-center">
+                                <div class="paginations-area">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination">
+                                            {{$products->links('vendor/livewire/bootstrap')}}
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-3 order-md-1">
                     <div class="sidebar-wrapper mt-5 mt-md-0">
@@ -109,7 +120,7 @@
                         <div class="sidebar-wrapper mt-5 mt-md-0">
                             <div class="sidebar-widget widget_categories">
                                 <h6 class="widget-title mb-2">Price </h6>
-                                <div class="px-3"><span class="text-info">${{$min_price}} - ${{$max_price}}</span>
+                                <div class="px-3"><span class="text-info">₹{{$min_price}} - ₹{{$max_price}}</span>
                                     <div class="widget-content" style="padding 10px 5px 40px 5px;">
 						                <div id="slider" wire:ignore></div>
 						            </div>
@@ -265,21 +276,21 @@
                                 <h6 class="widget-title">DISCOUNT</h6>
                                 <ul class="widget-list widget-filter-list list-unstyled pt-1" style="max-height: 11rem;"
                                     data-simplebar data-simplebar-auto-hide="false">
-                                    <li
+                                    {{-- <li
                                         class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" id="brand-13"  value ="10" wire:model="discount" wire:click="brandseletc">
                                             <label class="form-check-label widget-filter-item-text" for="brand-13">
                                                 Less than 10%</label>
-                                        </div><span class="fs-xs text-muted">425</span>
-                                    </li>
+                                        </div>
+                                    </li> --}}
                                     <li
                                         class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="brand-23" value ="15" wire:model="discount" wire:click="brandseletc">
+                                            <input class="form-check-input" type="checkbox" id="brand-23" value ="10" wire:model="discount" wire:click="brandseletc">
                                             <label class="form-check-label widget-filter-item-text" for="brand-23">
                                                 10% and above</label>
-                                        </div><span class="fs-xs text-muted">15</span>
+                                        </div>
                                     </li>
                                     <li
                                         class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
@@ -287,7 +298,7 @@
                                             <input class="form-check-input" type="checkbox" id="Brandina3" value ="20" wire:model="discount" wire:click="brandseletc">
                                             <label class="form-check-label widget-filter-item-text" for="Brandina3">
                                                 20% and above</label>
-                                        </div><span class="fs-xs text-muted">18</span>
+                                        </div>
                                     </li>
                                     <li
                                         class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
@@ -296,31 +307,31 @@
                                             <label class="form-check-label widget-filter-item-text" for="Belleaeis3">30%
                                                 and above
                                             </label>
-                                        </div><span class="fs-xs text-muted">103</span>
+                                        </div>
                                     </li>
                                     <li
                                         class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="bilabong3">
+                                            <input class="form-check-input" type="checkbox" id="bilabong3" value="40" wire:model="discount" wire:click="brandseletc">
                                             <label class="form-check-label widget-filter-item-text" for="bilabong3">40%
                                                 and above</label>
-                                        </div><span class="fs-xs text-muted">27</span>
+                                        </div>
                                     </li>
                                     <li
                                         class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="birkenstock3">
+                                            <input class="form-check-input" type="checkbox" id="birkenstock3" value="50" wire:model="discount" wire:click="brandseletc">
                                             <label class="form-check-label widget-filter-item-text"
                                                 for="birkenstock3">50% and above</label>
-                                        </div><span class="fs-xs text-muted">10</span>
+                                        </div>
                                     </li>
                                     <li
                                         class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="klein3">
+                                            <input class="form-check-input" type="checkbox" id="klein3" value="60" wire:model="discount" wire:click="brandseletc">
                                             <label class="form-check-label widget-filter-item-text" for="klein3">
                                                 60% and above</label>
-                                        </div><span class="fs-xs text-muted">365</span>
+                                        </div>
                                     </li>
                                 </ul>
                             </div>

@@ -29,7 +29,9 @@
                                 </div>
                                 <div class="c-item-body mt-4 mt-md-0">
                                     <div class="cart_item_title mb-2">
-                                        <h4>{{$item->name}}</h4>
+                                        <a href="{{route('product-details',['slug'=>$item->slug])}}">
+                                            <h4>{{$item->name}}</h4>
+                                        </a>
                                         <p class="small mb-0 text-muted">{{$item->varaint_detail}}</p>
                                     </div>
                                     <div class="cart_item_price">
@@ -114,7 +116,9 @@
                                 </div>
                                 <div class="c-item-body mt-4 mt-md-0">
                                     <div class="cart_item_title mb-2">
-                                        <h4>{{$item->product->name}}</h4>
+                                        <a href="{{route('product-details',['slug'=>$item->product->slug])}}">
+                                            <h4>{{$item->product->name}}</h4>
+                                        </a>
                                         <p class="small mb-0 text-muted">{{$item->product->varaint_detail}}</p>
                                     </div>
                                     <div class="cart_item_price">
@@ -171,13 +175,13 @@
                     <div class="cart-summary">
                         <div class="cart-summary-wrap">
                             <h4>Cart Summary</h4>
-                            <p>Sub Total <span>${{$subtotalc}}</span></p>
-                            <p>Tax <span>${{$taxtotalc}}</span></p>
+                            <p>Sub Total <span>₹{{$subtotalc}}</span></p>
+                            {{-- <p>Tax <span>₹{{$taxtotalc}}</span></p> --}}
                             @if($discount)
-                            <p>Coupon Discount <span>${{$discount}}</span></p>
+                            <p>Coupon Discount <span>₹{{$discount}}</span></p>
                             @endif
-                            <p>Shipping Cost <span>$00.00</span></p>
-                            <h2>Grand Total <span>${{$subtotalc}}</span></h2>
+                            <p>Shipping Cost <span>₹{{$shippingcost}}</span></p>
+                            <h2>Grand Total <span>₹{{$subtotalc + $shippingcost}}</span></h2>
                         </div>
                         <div class="cart-summary-button">
                             <a href="#" wire:click.prevent="checkout" id = "sbhjs" class="btn btn-primary btn-rounded btn-full btn-large">Proceed to Checkout <i class="ti-arrow-right"></i> </a>

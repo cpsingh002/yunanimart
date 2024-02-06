@@ -25,7 +25,7 @@ use App\Livewire\User\AccountComponent;
 use App\Livewire\User\AddressComponent;
 
 use App\Livewire\Frontend\SearchComponent;
-
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,6 +36,7 @@ use App\Livewire\Frontend\SearchComponent;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/jjjjjj',[HomeController::class, 'sdsdsd']);
 
 // Route::get('/', function () {
 //     return view('welcome');

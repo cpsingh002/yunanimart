@@ -12,7 +12,8 @@ use Illuminate\Http\Request;
 use Session;
 use App\Models\review;
 use App\Models\Question;
-
+use App\Models\AttributeValue2;
+use App\Models\Attribute;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -21,8 +22,10 @@ class ProductDetailsComponent extends Component
     public $slug;
     public $quntiti;
     public $wish;
+    public $cart;
     public $pid;
     public $question;
+   // public $attribute;
     
     public function mount($slug)
     {
@@ -36,7 +39,7 @@ class ProductDetailsComponent extends Component
             return;
         }
         else{
-            $this->AddtoCart($request,$id,$sale_price);
+           $this->AddtoCart($request ,$id,$sale_price);       
             return $this->redirect('/check-out');
         }
     }
@@ -154,11 +157,13 @@ class ProductDetailsComponent extends Component
     }
     public function AddtoCart(Request $request,$product_id,$product_price)
     {
-        $id= $product_id;
+            $id= $product_id;
         if(Auth::check())
         {
-            $wproduct = Cart::where('product_id',$product_id)->first();
+            //dd('gfgf');
+            $wproduct = Cart::where('product_id',$product_id)->where('user_id', Auth::user()->id)->first();
             if($wproduct){
+                
                 session()->flash('message','product alreday added to Cart');
                 return;
             }else{
@@ -224,33 +229,46 @@ class ProductDetailsComponent extends Component
        // dd($product);
        if($product->parent_id){
         $varaiants = Product2::where('parent_id',$product->parent_id)->orWhere('id',$product->parent_id)->get();
+        $attribute = AttributeValue2::select('attributes.name')->leftJoin('attributes', 'attributes.id', '=', 'attribute_value2s.attribute_id')->where('product_id',$product->parent_id)->first();
        }else{
         $varaiants = Product2::where('parent_id',$product->id)->get();
+        $attribute = AttributeValue2::select('attributes.name')->leftJoin('attributes', 'attributes.id', '=', 'attribute_value2s.attribute_id')->where('product_id',$product->id)->first();
        }
         //dd($varaiants);
         if(Auth::check())
         {
             $wishlist = Wishlist::where('user_id',Auth::user()->id)->where('product_id',$product->id)->first();  
+            $cartlist = Cart::where('user_id',Auth::user()->id)->where('product_id',$product->id)->first();  
             if($wishlist){
                 $this->wish = 1;
             } 
+            if($cartlist){
+                $this->cart = 1;
+            }
 
         }else{
             if (Session::has('wishlist')){
                 $wish = $request->session()->get('wishlist');
                 $product_ids = array_keys($wish);
-                // in_array("100", $marks)
-               // $wishlist = Product2::whereIn('id',$product_ids)->get();
+                
                 if(in_array($product->id, $product_ids)){
                     $this->wish = 1;
                 } 
    
             }
+            if (Session::has('cart')){
+                $cartlist = $request->session()->get('cart');
+                $product_idcs = array_keys($cartlist);
+                if(in_array($product->id, $product_idcs)){
+                    $this->cart = 1;
+                } 
+            }
         }
         $reviews=review::where('product_id',$product->id)->where('verified',1)->get();
         $questions = Question::where('product_id',$product->id)->get();
+        $rproducts = Product2::where('category_id', $product->category_id)->inRandomOrder()->limit(8)->get();
+        $shareButtons = \Share::page(route('product-details',['slug'=>$product->slug]))->facebook()->twitter()->linkedin()->telegram()->whatsapp()->reddit();
         
-        
-        return view('livewire.frontend.product-details-component',['product'=>$product,'varaiants'=>$varaiants,'reviews'=>$reviews,'questions'=>$questions])->layout('layouts.main');
+        return view('livewire.frontend.product-details-component',['attribute'=>$attribute,'product'=>$product,'varaiants'=>$varaiants,'reviews'=>$reviews,'questions'=>$questions,'rproducts'=>$rproducts,'shareButtons'=>$shareButtons])->layout('layouts.main');
     }
 }

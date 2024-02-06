@@ -25,6 +25,7 @@ class EditProduct2Component extends Component
     public $slug;
     public $short_description;
     public $description;
+    public $additional_info;
     public $regular_price;
     public $sale_price;
     public $bulk_quantity;
@@ -48,6 +49,8 @@ class EditProduct2Component extends Component
     public $status;
     public $tax_id;
     public $freecancellation;
+    public $meta_description;
+    public $meta_keywords;
     public $productvariant;
     public $skus=[];
     public $mrps=[];
@@ -93,6 +96,9 @@ class EditProduct2Component extends Component
         $this->is_young = $product->is_young;
         $this->tax_id = $product->tax_id;
         $this->freecancellation = $product->freecancellation;
+        $this->additional_info = $product->additional_info;
+        $this->meta_description = $product->meta_description;
+        $this->meta_keywords = $product->meta_keywords;
         $this->product_id = $product->id;
        // $this->inputs = $product->attributeValues->where('product_id',$product->id)->unique('attribute_id')->pluck('attribute_id');
        // $this->attribute_arr = $product->attributeValues->where('product_id',$product->id)->unique('attribute_id')->pluck('attribute_id');
@@ -280,6 +286,9 @@ class EditProduct2Component extends Component
         $product->is_young = $this->is_young;
         $product->tax_id = $this->tax_id;
         $product->freecancellation = $this->freecancellation;
+        $product->additional_info = $this->additional_info;
+        $product->meta_keywords = $this->meta_keywords;
+        $product->meta_description = $this->meta_description;
         $product->discount_value = round((($this->regular_price - $this->sale_price)/$this->regular_price)*100,2);
         
         $product->save();
@@ -329,6 +338,9 @@ class EditProduct2Component extends Component
             $product_varaint->is_young = $this->is_young;
             $product_varaint->tax_id = $this->tax_id;
             $product_varaint->freecancellation = $this->freecancellation;
+            $product_varaint->additional_info = $this->additional_info;
+            $product_varaint->meta_keywords = $this->meta_keywords;
+            $product_varaint->meta_description = $this->meta_description;
             $product_varaint->discount_value = round((($this->mrps[$key] - $this->pris[$key])/$this->mrps[$key])*100,2);
             $product_varaint->save();
 

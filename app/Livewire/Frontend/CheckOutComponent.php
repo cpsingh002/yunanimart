@@ -78,7 +78,7 @@ class CheckOutComponent extends Component
         }
         elseif(!session()->get('checkout'))
         {
-            return redirect()->route('product.cart');
+            return redirect()->route('cart');
         }
     }
 

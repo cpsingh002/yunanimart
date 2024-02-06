@@ -63,6 +63,13 @@
                                                             @error('description') <p class="text-danger">{{$message}}</p> @enderror
                                                         </div>
                                                     </div>
+                                                    <div class="mb-4">
+                                                        <label class="control-label">Additional Info</label>
+                                                        <div class="input-group" wire:ignore>
+                                                            <textarea class ="form-control" id="additional_info" placeholder="additional_info" wire:model="additional_info">{!! $additional_info !!}</textarea>
+                                                            @error('additional_info') <p class="text-danger">{{$message}}</p> @enderror
+                                                        </div>
+                                                    </div>
                                                     <div class="row">
                                                         <div class="col-md-6">
                                                             <div class="mb-4">
@@ -485,9 +492,9 @@
 <!-- sa-app__footer -->
 
 @push('scripts')
-<script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
-<script>
-    ClassicEditor.create( document.querySelector( '#short_description' ) )
+    <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor.create( document.querySelector( '#short_description' ) )
             .then(editor => {
                 editor.model.document.on('change:data', () => {
                 @this.set('short_description', editor.getData());
@@ -497,13 +504,24 @@
             console.error( error );
         } );
                     
-</script>
-<script>
-        ClassicEditor
-            .create(document.querySelector('#description'))
+    </script>
+    <script>
+        ClassicEditor.create(document.querySelector('#description'))
             .then(editor => {
                 editor.model.document.on('change:data', () => {
                 @this.set('description', editor.getData());
+                })
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#additional_info'))
+            .then(editor => {
+                editor.model.document.on('change:data', () => {
+                @this.set('additional_info', editor.getData());
                 })
             })
             .catch(error => {

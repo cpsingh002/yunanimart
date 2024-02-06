@@ -9,4 +9,9 @@ class AttributeValue2 extends Model
 {
     use HasFactory;
     protected $table = "attribute_value2s";
+    
+    public function productAttribute()
+    {
+        return $this->belongsTo(Attribute::class,'attribute_id');
+    }
 }

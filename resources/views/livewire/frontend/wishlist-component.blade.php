@@ -17,6 +17,7 @@
                                 </div>
                             </div>
                         </div>
+                        @if(isset($wishlist[0]))
                         @foreach($wishlist as $item)
                             <div class="cart_item">
                                 <div class="cart_item_image">
@@ -24,7 +25,8 @@
                                 </div>
                                 <div class="c-item-body mt-4 mt-md-0">
                                     <div class="cart_item_title mb-2">
-                                        <h4>{{$item->name}}</h4>
+                                        <a href="{{route('product-details',['slug'=>$item->slug])}}">
+                                        <h4>{{$item->name}}</h4> </a>
                                         <p class="small mb-0 text-muted">{{$item->varaint_detail}}</p>
                                         <div class="cart_item_price">
                                             <div class="product-price">
@@ -53,64 +55,9 @@
                                 </div>
                             </div>
                         @endforeach
-                        <div class="cart_item">
-                            <div class="cart_item_image">
-                                <img src="{{asset('assets/img/product/product-2.png')}}" alt="shop">
-                            </div>
-                            <div class="c-item-body  mt-4 mt-md-0">
-                                <div class="cart_item_title mb-2">
-                                    <h4>1mg Salmon Omega 3 Fish Oil Capsule</h4>
-                                    <p class="small mb-0 text-muted">bottle of 60 capsules</p>
-                                </div>
-                                <div class="cart_item_price">
-                                    <div class="product-price">
-                                        <span>
-                                        <strong>₹499 </strong>
-                                            <del>₹1,000</del>
-                                            <small class="product-discountPercentage">(50% OFF)</small>
-                                        </span>
-                                    </div>
-                                    <div class="cart_product_remove">
-                                        <a href="#">
-                                            <i class="ti-trash"></i> Remove</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="qty-input btn  mt-4 mt-md-0">
-                                <i class="less">-</i>
-                                <input type="text" value="2" />
-                                <i class="more">+</i>
-                            </div>
-                        </div>
-                        <div class="cart_item">
-                            <div class="cart_item_image">
-                                <img src="{{asset('assets/img/product/product-3.png')}}" alt="shop">
-                            </div>
-                            <div class="c-item-body  mt-4 mt-md-0">
-                                <div class="cart_item_title mb-2">
-                                    <h4>1mg Salmon Omega 3 Fish Oil Capsule</h4>
-                                    <p class="small mb-0 text-muted">bottle of 60 capsules</p>
-                                </div>
-                                <div class="cart_item_price">
-                                    <div class="product-price">
-                                        <span>
-                                        <strong>₹499 </strong>
-                                            <del>₹1,000</del>
-                                            <small class="product-discountPercentage">(50% OFF)</small>
-                                        </span>
-                                    </div>
-                                    <div class="cart_product_remove">
-                                        <a href="#">
-                                            <i class="ti-trash"></i> Remove</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="qty-input btn mt-4 mt-md-0">
-                                <i class="less">-</i>
-                                <input type="text" value="2" />
-                                <i class="more">+</i>
-                            </div>
-                        </div>
+                        @else
+                        <p>No Item Added Yet</p>
+                        @endif
                     </div>
                 </div>
                 <!-- <div class="col-lg-3 mt-lg-0 mt-6">

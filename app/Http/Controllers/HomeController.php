@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 //use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\UserExport; 
 use Maatwebsite\Excel\Excel;
+use Session;
 class HomeController extends Controller
 {
     /**
@@ -35,5 +36,18 @@ class HomeController extends Controller
        // return $excel->download(new UserExport, 'users.xlsx');
         return $excel->download(new UserExport, 'users.csv',Excel::CSV);
       // return $excel->download(new UserExport, 'users.pdf',Excel::DOMPDF);
+    }
+
+
+    public function sdsdsd(Request $request)
+    {
+        if (Session::has('wishlist')){
+
+            Session::forget('wishlist');
+        }
+        if (Session::has('cart')){
+
+            Session::forget('cart');
+        }
     }
 }

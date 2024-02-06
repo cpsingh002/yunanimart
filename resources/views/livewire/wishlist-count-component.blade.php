@@ -32,20 +32,7 @@
                                 </div>			
                             </li>
                             @endforeach
-                            <li class="mini_cart_item">
-                                <div class="left-section">
-                                    <a href="product-single.html">
-                                        <img src="{{asset('assets/img/product/product-1.png')}}" alt="">
-                                    </a>
-                                </div>
-                                <div class="right-section">
-                                    TruRadix Curcumin Oral Strip Orange Mango
-                                    <div>
-                                        <div class="item-desc">Qty: 1</div>
-                                        <div class="item-desc">₹ 237</div>
-                                    </div>
-                                </div>			
-                            </li>
+                            
                             <li class="w-100 d-block">
                                 <a href="{{route('wishlist')}}" class="btn btn-primary w-100 d-block">
                                     Proceed to Wishlist

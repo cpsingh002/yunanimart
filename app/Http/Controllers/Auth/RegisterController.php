@@ -50,8 +50,9 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+         
             'phone'=>['required','numeric','digits:10','unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
 
@@ -74,8 +75,9 @@ class RegisterController extends Controller
         $valid=Validator::make($request->all(),[
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
             'phone'=>['required','numeric','digits:10','unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            
         ]);
         if(!$valid->passes()){
             return response()->json(['status'=>'error','error'=>$valid->errors()->toArray()]);

@@ -7,11 +7,11 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item">
-                                    <a class="text-nowrap" href="index.html"><i class="fa fa-home mr-2"></i>Home</a>
+                                    <a class="text-nowrap" href="{{route('index')}}"><i class="fa fa-home mr-2"></i>Home</a>
                                 </li>
-                                <li class="breadcrumb-item text-nowrap"><a href="account.html">Account</a>
+                                <li class="breadcrumb-item text-nowrap"><a href="{{route('orders')}}">Order</a>
                                 </li>
-                                <li class="breadcrumb-item text-nowrap active" aria-current="page">Order</li>
+                                <li class="breadcrumb-item text-nowrap active" aria-current="page">{{Order Details}}</li>
                             </ol>
                         </nav>
                     </div>
@@ -25,11 +25,13 @@
             <div class="container">
                 <div class="row justify-content-between">
                     <div class="col-lg-4 col-md-4 col-12">
-                        <nav class="navbar navbar-expand-md mb-5 mb-lg-0 sidenav">
+                        <nav class="navbar navbar-expand-md mb-4 mb-lg-0 sidenav">
                             <!-- Menu -->
                             <a class="d-xl-none d-lg-none d-md-none text-inherit fw-bold" href="#">Sidebar Menu</a>
                             <!-- Button -->
-                            <button class="navbar-toggler d-md-none rounded bg-primary text-light" type="button" data-toggle="collapse" data-target="#sidenav" aria-controls="sidenav" aria-expanded="false" aria-label="Toggle navigation">
+                            <button class="navbar-toggler d-md-none rounded bg-primary text-light" type="button"
+                                data-toggle="collapse" data-target="#sidenav" aria-controls="sidenav"
+                                aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="ti-menu"></span>
                             </button>
                             <!-- Collapse navbar -->
@@ -51,21 +53,33 @@
                                     </div>
                                     <ul class="list-unstyled mb-0">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="{{route('user.account')}}"><i class="fa fa-user"></i> My Account</a>
+                                            <a class="nav-link" href="{{route('user.account')}}"><i class="fa fa-user"></i> My
+                                                Account</a>
                                         </li>
-                                       
+                                        <!-- <li class="nav-item">
+                                            <a class="nav-link" href="change-password.html"><i class="fa fa-lock"></i>
+                                                Password</a>
+                                        </li> -->
                                         <li class="nav-item">
-                                            <a class="nav-link" href="{{route('user.address')}}"><i class="fa fa-address-book"></i> Address</a>
+                                            <a class="nav-link" href="{{route('user.address')}}"><i class="fa fa-address-book"></i>
+                                                Address</a>
                                         </li>
                                         <li class="nav-item active">
-                                            <a class="nav-link" href="{{route('orders')}}"><i class="fa fa-shopping-cart"></i> Order</a>
+                                            <a class="nav-link active" href="{{route('orders')}}"><i class="fa fa-shopping-cart"></i>
+                                                Order</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="{{route('wishlist')}}"><i class="fa fa-heart"></i> Wishlist</a>
+                                            <a class="nav-link" href="{{route('wishlist')}}"><i class="fa fa-heart"></i>
+                                                Wishlist</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#"><i class="fa fa-sign-out"></i> Logout</a>
+                                            <a class="nav-link" href="{{ route('logout') }}"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            <i class="fa fa-sign-out"></i>Logout</a>
                                         </li>
+                                        <form id="logout-form" method="POST" action="{{route('logout')}}">
+                                            @csrf
+                                        </form>
                                     </ul>
                                 </div>
                             </div>
@@ -90,6 +104,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         @foreach($orderitems as $orderitem)
+                                        <div class="col-md-6 col-sm-6 col-12">
                                             <div class="cart_product border-0">
                                                 <div class="cart_item px-0">
                                                     <div class="cart_item_image">
@@ -116,32 +131,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        @endforeach
-                                        <div class="cart_product border-0">
-                                            <div class="cart_item px-0">
-                                                <div class="cart_item_image">
-                                                    <img src="{{asset('assets/img/product/product-3.png')}}" alt="shop">
-                                                </div>
-                                                <div class="c-item-body">
-                                                    <div class="cart_item_title mb-2">
-                                                        <h4>1mg Salmon Omega 3 Fish Oil Capsule</h4>
-                                                        <p class="small mb-0 text-muted">bottle of 60 capsules</p>
-                                                    </div>
-                                                    <div class="cart_item_price">
-                                                        <div class="product-price">
-                                                            <span>
-                                                                <strong>₹499 </strong>
-                                                                <del>₹1,000</del>
-                                                                <small class="product-discountPercentage">(50% OFF)</small>
-                                                            </span>
-                                                        </div>
-                                                        <div class="cart_product_remove">
-                                                            <a href="#"><i class="ti-truck"></i> Return Item</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
+                                        @endforeach
+                                        
                                     </div>
                                     
                                     <div class="row mt-4">

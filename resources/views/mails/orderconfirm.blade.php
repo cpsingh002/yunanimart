@@ -22,7 +22,7 @@
             <tbody>
                 @foreach($order->orderItems as $item)
                     <tr>
-                        <td><img src="{{asset('assets/images/products')}}/{{$item->product_>image}}" alt="" width="100"></td>
+                        <td><img src="{{asset('admin/product/feat')}}/{{$item->product->image}}" alt="" width="100"></td>
                         <td>{{$item->product->name}}</td>
                         <td>{{$item->quantity}}</td>
                         <td>${{$item->price * $item->quantity}}</td>
@@ -30,11 +30,11 @@
                 @endforeach
                 <tr>
                     <td colspan="3" style="border-top:1px solid #ccc;"></td>
-                    <td style="font-size:15px;font-weight:bold; border-top:1px solid #ccc;">Subtotal : ${{$order->subtotal}}</td>
+                    <td style="font-size:15px;font-weight:bold; border-top:1px solid #ccc;">Subtotal : ₹{{$order->subtotal}}</td>
                 </tr>
                 <tr>
                     <td colspan="3"></td>
-                    <td style="font-size:15px;font-weight:bold;">Tax : ${{$order->tax}}</td>
+                    <td style="font-size:15px;font-weight:bold;">Tax : ₹{{$order->tax}}</td>
                 </tr>
                 <tr>
                     <td colspan="3"></td>
@@ -42,7 +42,7 @@
                 </tr>
                 <tr>
                     <td colspan="3"></td>
-                    <td style="font-size:22px;font-weight:bold;">Total : ${{$order->total}}</td>
+                    <td style="font-size:22px;font-weight:bold;">Total : ₹{{$order->total}}</td>
                 </tr>
             </tbody>
         </table>

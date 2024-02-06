@@ -73,7 +73,7 @@
                                                 Account
                                             </a>
                                         </li>
-                                       
+                                        
                                         <li>
                                             <a href="{{route('user.address')}}">
                                                 Address
@@ -183,7 +183,7 @@
         </div>
         <div class="overlay"></div>
     </div>
-    {{$slot}}
+    @yield('content')
 
     <footer class="site-footer footer-padding-lg bg-black">
         <div class="container-fluid theme-container">
@@ -351,7 +351,7 @@
                         <button type="submit" id="login_btn"
                             class="btn btn-primary btn-full btn-medium rounded">Login</button>
                         <div class="form-group text-center small font-weight-bold mt-3">
-                            <a href="{{ route('password.request') }}"> Forgot
+                            <a href="#" data-toggle="modal" data-dismiss="modal" data-target="#forgot_modal"> Forgot
                                 Password?</a>
                         </div>
                         <hr class="my-4">
@@ -414,7 +414,7 @@
                     </div>
                     <form method="POST"  action="#" id="frmRegistar">
                     @csrf
-                        {{-- <div class="row">
+                    <div class="row">
                             <div class="col-12">
                                 <a href="#" class="btn btn-gray-border btn-full rounded btn-large text-capitalize mb-3">
                                     <img src="assets/img/facebook.png" alt="">
@@ -428,28 +428,29 @@
                             <div class="col-12 text-center">
                                 <p class="text-muted my-4">Or Register With</p>
                             </div>
-                        </div> --}}
+                        </div> 
                         <div class="form-group mb-3">
                             <!-- <label for="name" class="col-md-4 col-form-label fw-bold text-md-end">{{ __('Name') }}</label> -->
-                            <input class="form-control"  name="name" placeholder="First Name"    type="text">
+                            <input class="form-control" required name="name" placeholder="First Name"    type="text">
                             <div id="name_error" class="field_error text-danger"></div>
                         </div>
                         <div class="form-group mb-3">
                             <!-- <label for="email" class="col-md-4 col-form-label fw-bold text-md-end">{{ __('Email Address') }}</label> -->
-                            <input name="email" type="email"  placeholder="Email" class="form-control rounded">
+                            <input name="email" type="email" required placeholder="Email" class="form-control rounded">
                                 <div id="email_error" class="field_error text-danger"></div>
                         </div>
                         <div class="form-group mb-3">
-                            <input name="phone" type="text"  placeholder="Phone"  class="form-control rounded checkIsNumber phone-check">
-                            <div id="phone_error" class="field_error text-danger"></div>
+                            <input name="phone" type="text" required placeholder="Phone"
+                                class="form-control rounded checkIsNumber phone-check">
+                                <div id="phone_error" class="field_error text-danger"></div>
                         </div>
                         <div class="form-group mb-3">
                             <!-- <label for="password"   class="col-md-4 col-form-label fw-bold text-md-end">{{ __('Password') }}</label> -->
-                            <input id="password" type="password" class="form-control" placeholder="password" name="password"  autocomplete="new-password">
+                            <input id="password" type="password" class="form-control" placeholder="password" name="password" required autocomplete="new-password">
                         </div>
                         <div class="form-group mb-3">
                             <!-- <label for="password-confirm"  class="col-md-4 col-form-label fw-bold text-md-end">{{ __('Confirm Password') }}</label>                          -->
-                            <input id="password-confirm" type="password" class="form-control"  placeholder="password" name="password_confirmation"  autocomplete="new-password">
+                            <input id="password-confirm" type="password" class="form-control"  placeholder="password" name="password_confirmation" required autocomplete="new-password">
                             <div id="password_error" class="field_error text-danger"></div>
                         </div>
                         <div id="checkboxed_error" class="field_error text-danger"></div>
@@ -484,7 +485,7 @@
     jQuery('#frmRegistar').submit(function(e){
     //alert(jQuery('#frmRegistar').serialize());
     var daat = jQuery('#frmRegistar').serialize();
-    // alert(daat);
+    alert(daat);
         e.preventDefault();
         jQuery('.field_error').html('');
         jQuery.ajax({

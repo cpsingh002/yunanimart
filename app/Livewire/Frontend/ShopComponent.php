@@ -47,12 +47,10 @@ class ShopComponent extends Component
        {
         $query=$query->whereIn('brand_id',$this->brandtype);
        }
-
-    //    $query=$query->distinct()->select('product2s.*',DB::raw('((product2s.regular_price - product2s.sale_price)/product2s.regular_price)*100 as offerdiscount'));
        if($this->discount != null)
        {
-        //dd($this->discount);
-        $query=$query->where('discount_value','>',max($this->discount));
+       // dd(max($this->discount));
+        $query=$query->where('discount_value','>=',min($this->discount));
         
        }
        
