@@ -17,10 +17,14 @@ use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
 use Carbon\Carbon; 
 use App\Models\ProductQuantity;
+use App\Models\Disease;
 
 class EditProduct2Component extends Component
 {
     use WithFileUPloads;
+    public $brandtype = [];
+    public $brandhjs =[];
+    public $brandsdname;
     public $name;
     public $slug;
     public $short_description;
@@ -64,6 +68,9 @@ class EditProduct2Component extends Component
     public $varaintadata;
     public $newquantity;
     public $newqtyes=[];
+    public $disease_id = [];
+    public $cod;
+    public $refund;
 
 
     public function mount($product_slug)
@@ -100,6 +107,9 @@ class EditProduct2Component extends Component
         $this->meta_description = $product->meta_description;
         $this->meta_keywords = $product->meta_keywords;
         $this->product_id = $product->id;
+        $this->cod = $product->cod;
+        $this->refund = $product->refund;
+         $this->disease_id = json_decode($product->disease_id);
        // $this->inputs = $product->attributeValues->where('product_id',$product->id)->unique('attribute_id')->pluck('attribute_id');
        // $this->attribute_arr = $product->attributeValues->where('product_id',$product->id)->unique('attribute_id')->pluck('attribute_id');
         
@@ -289,6 +299,9 @@ class EditProduct2Component extends Component
         $product->additional_info = $this->additional_info;
         $product->meta_keywords = $this->meta_keywords;
         $product->meta_description = $this->meta_description;
+        $product->cod = $this->cod;
+        $product->refund = $this->refund;
+         $product->disease_id = json_encode($this->disease_id);
         $product->discount_value = round((($this->regular_price - $this->sale_price)/$this->regular_price)*100,2);
         
         $product->save();
@@ -341,6 +354,9 @@ class EditProduct2Component extends Component
             $product_varaint->additional_info = $this->additional_info;
             $product_varaint->meta_keywords = $this->meta_keywords;
             $product_varaint->meta_description = $this->meta_description;
+            $product_varaint->cod = $this->cod;
+            $product_varaint->refund = $this->refund;
+             $product_varaint->disease_id = json_encode($this->disease_id);
             $product_varaint->discount_value = round((($this->mrps[$key] - $this->pris[$key])/$this->mrps[$key])*100,2);
             $product_varaint->save();
 
@@ -349,7 +365,7 @@ class EditProduct2Component extends Component
             if(array_key_exists($key,$this->newqtyes)){
                 $prqty = new ProductQuantity();
                 $prqty->product_id = $product->id;
-                $prqty->product_varaint_id = $PVG->id;
+                $prqty->product_varaint_id = $product_varaint->id;
                 $prqty->quantity = $this->newqtyes[$key];
                 $prqty->save();
             }
@@ -371,8 +387,9 @@ class EditProduct2Component extends Component
         $brands = Brand::all();
         $medtypes = MedType::all();
         $taxs = Tax::all();
+        $diseases = Disease::where('status','!=',3)->get();
 
-        return view('livewire.admin.product2.edit-product2-component',[
+        return view('livewire.admin.product2.edit-product2-component',['diseases'=>$diseases,
             'categories'=>$categories,'scategories'=>$scategories,'attributes'=>$attributes,'brands'=>$brands,'medtypes'=>$medtypes,'taxs'=>$taxs
         ])->layout('layouts.admin');
     }

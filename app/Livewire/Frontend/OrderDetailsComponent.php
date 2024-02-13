@@ -29,6 +29,15 @@ class OrderDetailsComponent extends Component
         $this->order_id = $id;
 
     }
+    
+    public function cancelOrder()
+    {
+        $order = Order::find($order_id);
+        $order->status = "canceled";
+        $order->canceled_date = DB::raw('CURRENT_DATE');
+        $order->save();
+        session()->flash('order_message','Order has been canceled!');
+    }
     public function preview($id){
         $product=Product2::where('id',$id)->first();
         $this->pid=$id;

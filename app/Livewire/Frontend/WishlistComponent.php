@@ -126,7 +126,7 @@ class WishlistComponent extends Component
                 $cart->save();
                 
                 $wishlist->delete();
-                
+                $this->dispatch('wishlist_add');
                 session()->flash('message','product move to  cart from wishlist');
               //  $this->dispatch('wishlist-count-component','refreshComponent');
               $this->dispatch('cart_add');

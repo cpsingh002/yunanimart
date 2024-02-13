@@ -26,13 +26,13 @@ class ShopComponent extends Component
     {
         $this->sorting="default";
         $this->pagesize="12";
-        $this->min_price =1;
-        $this->max_price=60000;
+        $this->min_price ='10';
+        $this->max_price='500';
     }
 
     public function render()
     {
-      // dd($this->pagesize);
+    //    dd($this->min_price);
         $query = Product2::whereBetween('sale_price',[$this->min_price,$this->max_price]);
        if($this->sorting=="date"){
         $query=$query->orderBy('product2s.created_at','DESC');

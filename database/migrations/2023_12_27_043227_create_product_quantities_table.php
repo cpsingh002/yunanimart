@@ -17,7 +17,7 @@ return new class extends Migration
             $table->bigInteger('product_varaint_id')->unsigned()->nullable();
             $table->decimal('quantity');
             $table->timestamps();
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('product2s')->onDelete('cascade');
             $table->foreign('product_varaint_id')->references('id')->on('product_variants')->onDelete('cascade');
         });
     }

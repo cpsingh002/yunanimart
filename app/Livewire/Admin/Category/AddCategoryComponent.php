@@ -28,7 +28,9 @@ class AddCategoryComponent extends Component
         $this->validateOnly($fields,[
             'name'=>'required',
             'slug'=>'required|unique:categories',
-            'is_home'=>'required'
+            'is_home'=>'required',
+            'categorythum'=>'required|mimes:jpeg,jpg,png',
+            'icon'=>'required|mimes:jpeg,jpg,png',
         ]);
     }
     public function storeCategory()
@@ -36,7 +38,9 @@ class AddCategoryComponent extends Component
         $this->validate([
             'name'=>'required',
             'slug' => 'required|unique:categories',
-            'is_home'=>'required'
+            'is_home'=>'required',
+            'categorythum'=>'required|mimes:jpeg,jpg,png',
+            'icon'=>'required|mimes:jpeg,jpg,png',
         ]);
         
         if($this->category_id){

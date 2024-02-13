@@ -42,6 +42,7 @@
                                 <div class="col-md-4 col-sm-6 col-12">
                                     <div class="product">
                                         <a href="{{route('product-details',['slug'=>$product->slug])}}" class="product-img">
+                                        @if($product->prescription)<span class="onsale">Prescription!</span> @endif
                                             <img src="{{asset('admin/product/feat')}}/{{$product->image}}" class="" alt="{{$product->slug}}" width="500" height="967">
                                         </a>
                                         <div class="product-info">
@@ -136,11 +137,12 @@
                         </div>
                         <div class="sidebar-wrapper mt-5 mt-md-0">
                             <div class="sidebar-widget widget_categories">
-                                <h6 class="widget-title mb-2">Price </h6>
-                                <div class="px-3"><span class="text-info">₹{{$min_price}} - ₹{{$max_price}}</span>
-                                    <div class="widget-content" style="padding 10px 5px 40px 5px;">
-						                <div id="slider" wire:ignore></div>
-						            </div>
+                                <h6 class="widget-title mb-2">Price
+                                </h6>
+                               <div class="px-3" wire:ignore>
+                                <div class="range-slider range-slider-ui" id="nouislider" data-start-min="{{$min_price}}" data-start-max="{{$max_price}}" data-min="0"
+                                data-max="1000" data-step="1">
+                            </div>
                                </div>
                             </div>
                         </div>
@@ -363,24 +365,15 @@
 
 @push('scripts')
 	<script>
-		var slider = document.getElementById('slider');
-		noUiSlider.create(slider, {
-    		start: [1, 1000],
-    		connect: true,
-    		range: {
-        		'min': 1,
-        		'max': 1000
-    		},
-			pips: {
-        		mode: 'steps',
-        		stepped: true,
-        		density: 4
-   	 		}
-		});
-
-		slider.noUiSlider.on('update',function(value){
-			@this.set('min_price',value[0]);
-			@this.set('max_price',value[1]);
+        var nonLinearSlider = $('.range-slider');
+        var startMin = parseInt(nonLinearSlider.data('start-min'));
+        var startMax = parseInt(nonLinearSlider.data('start-max'));
+		var slider = document.getElementById('nouislider');
+        
+// alert(startMin);
+		slider.noUiSlider.on('update',function(startMin){
+			@this.set('min_price',startMin['0']);
+			@this.set('max_price',startMin['1']);
 		})
 	</script>
 	<script>

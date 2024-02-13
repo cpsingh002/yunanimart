@@ -25,6 +25,7 @@ use App\Livewire\User\AccountComponent;
 use App\Livewire\User\AddressComponent;
 
 use App\Livewire\Frontend\SearchComponent;
+use App\Livewire\Frontend\PrescriptionCheckOutComponent;
 use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,7 @@ Route::get('/blog/slug',BlogDetailsComponent::class)->name('blog-details');
 Route::get('/wishlist',WishlistComponent::class)->name('wishlist');
 Route::get('/cart',CartComponent::class)->name('cart');
 Route::get('/check-out',CheckOutComponent::class)->name('check-out');
+Route::get('/prcheck-out',PrescriptionCheckOutComponent::class)->name('prcheck-out');
 
 Route::get('/thankyou',ThankyouComponent::class)->name('thankyou');
 

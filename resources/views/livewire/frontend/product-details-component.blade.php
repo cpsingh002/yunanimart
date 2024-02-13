@@ -52,7 +52,8 @@
                         <div class="col-lg-7">
                             <div class="single-product-content-description">
                                 <p class="single-info">Brand: <a href="{{route('brand-products',['brand_slug'=>$product->brand->brand_slug])}}">{{$product->brand->brand_name}}</a> </p>
-                                <h4 class="product-title">{{$product->name}}</h4>
+                                <h4 class="product-title">{{$product->name}}</h4> 
+                                
                                 <div class="rating">
                                     @php
                                     $ratingAvg=$product->reviews->avg('rating') 
@@ -144,12 +145,13 @@
                                     </div>
 
                                 </div>
-                                
+                                @if(!$product->prescription)
                                 <div class="mb-4">
                                     <a wire:click.prevent="checkout({{$product->id}},{{$product->sale_price}})"
                                         class="btn btn-block btn-primary btn-pill transition-3d-hover">Buy
                                         Now</a>
                                 </div>
+                                @endif
                             </div>
                         </div>
                         <div class="col-lg-5 mt-4 mt-lg-0">
@@ -184,13 +186,31 @@
                             </div>
                             <div class="mt-4">
                                 <h6 class="font-weight-bold text-dark">Products highlights</h6>
+                                <ul class="pl-3">
+                                    @if($product->prescription)
+                                        <li>Government regulations require a prescription</li>
+                                    @endif
+                                    @if($product->is_baby)
+                                        <li>For Baby </li>
+                                    @endif
+                                    @if($product->is_young)
+                                        <li>For Adult</li>
+                                    @endif
+                                    @if($product->is_child)
+                                        <li>For Child </li>
+                                    @endif
+                                    @if($product->age_limit)
+                                        <li>Government regulations put  an age restrictions (18+ only)</li>
+                                    @endif
+                                </ul>
                                 {!! $product->short_description !!}
                             </div>
                             <div class="mt-4">
                                 <h6 class="font-weight-bold text-dark">Share on</h6>
                                 <div class="social-links social-links-dark">
+                                    
                                 {!! $shareButtons !!} 
-
+                                
                                 </div>
                             </div>
                             <div class="form-group mt-5">

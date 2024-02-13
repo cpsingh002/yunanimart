@@ -91,6 +91,7 @@
                                                         </div>
                                                         
                                                     </div> 
+                                                    
                                                     <div class="row">
                                                         <div class="col-md-6">
                                                             <div class="mb-4">
@@ -112,50 +113,25 @@
                                                         </div>
                                                         
                                                     </div> 
-                                                    <div class="mb-4">
-                                                        <label class="form-label">SKU</label>
-                                                        <input type ="text" placeholder="SKU" class ="form-control input-md" wire:model="SKU"/>
-                                                        @error('SKU') <p class="text-danger">{{$message}}</p> @enderror
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label class="form-label">SKU</label>
+                                                                <input type ="text" placeholder="SKU" class ="form-control input-md" wire:model="SKU"/>
+                                                                @error('SKU') <p class="text-danger">{{$message}}</p> @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label class="form-label">Stock Status</label>
+                                                                <select class="form-control">
+                                                                    <option value="instock">InStock</option>
+                                                                    <option value="outofstock">Out Stock</option>
+                                                                </select>
+                                                                @error('stock_status') <p class="text-danger">{{$message}}</p> @enderror
+                                                            </div>
+                                                        </div>
                                                         
-                                                    </div>
-                                                    <div class="mb-4">
-                                                        <label class="form-label">Stock Status</label>
-                                                        <select class="form-control">
-                                                            <option value="instock">InStock</option>
-                                                            <option value="outofstock">Out Stock</option>
-                                                        </select>
-                                                        @error('stock_status') <p class="text-danger">{{$message}}</p> @enderror
-                                                    </div>
-                                                    <div class="mb-4">
-                                                        <label class="form-label">Featured</label>
-                                                        <select class="form-control" wire:model="featured">
-                                                            <option value="0">No</option>
-                                                            <option value="1">Yes</option>
-                                                        </select>
-                                                        @error('featured') <p class="text-danger">{{$message}}</p>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="mb-4">
-                                                        <label class="form-label">Tax SLab</label>
-                                                        <select class="form-control" wire:model="tax_id">
-                                                            <option value="">Select Tax Slab</option>
-                                                            @foreach($taxs as $tax)
-                                                            <option value="{{$tax->id}}">{{$tax->tax_name}} {{$tax->value}}%</option>
-                                                            @endforeach
-                                                            
-                                                        </select>
-                                                        @error('tax_id') <p class="text-danger">{{$message}}</p>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="mb-4">
-                                                        <label class="form-label">Free Delivery</label>
-                                                        <select class="form-control" wire:model="freecancellation">
-                                                            <option  value="">Select</option>
-                                                            <option value="0">No</option>
-                                                            <option value="1">Yes</option>
-                                                        </select>
-                                                        @error('freecancellation') <p class="text-danger">{{$message}}</p>
-                                                        @enderror
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-4">
@@ -184,20 +160,85 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                                                                        
-                                                    <div class="mb-4">
-                                                        <label class="form-label">Med Tpye</label>
-                                                        <div class="col-md-12">
-                                                            <select class="form-control" wire:model="medtype_id">
-                                                                <option value="">Select Med Type</option>
-                                                                @foreach($medtypes as $medtype)
-                                                                    <option value="{{$medtype->id}}">{{$medtype->medtype}}</option>
-                                                                @endforeach
-                                                            </select>
-                                                            @error('medtype_id') <p class="text-danger">{{$message}}</p> @enderror
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label class="form-label">Free Delivery</label>
+                                                                <select class="form-control" wire:model="freecancellation">
+                                                                    <option  value="">Select</option>
+                                                                    <option value="0">No</option>
+                                                                    <option value="1">Yes</option>
+                                                                </select>
+                                                                @error('freecancellation') <p class="text-danger">{{$message}}</p>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label class="form-label">COD</label>
+                                                                <select class="form-control" wire:model="cod">
+                                                                    <option  value="">Select</option>
+                                                                    <option value="0">No</option>
+                                                                    <option value="1">Yes</option>
+                                                                </select>
+                                                                @error('cod') <p class="text-danger">{{$message}}</p>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="my-2">
+                                                                <label class="form-label">Refund</label>
+                                                                <select class="form-control" wire:model="refund">
+                                                                    <option  value="">Select</option>
+                                                                    <option value="0">No</option>
+                                                                    <option value="1">Yes</option>
+                                                                </select>
+                                                                @error('refund') <p class="text-danger">{{$message}}</p>
+                                                                @enderror
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                   
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label class="form-label">Featured</label>
+                                                                <select class="form-control" wire:model="featured">
+                                                                    <option value="0">No</option>
+                                                                    <option value="1">Yes</option>
+                                                                </select>
+                                                                @error('featured') <p class="text-danger">{{$message}}</p>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label class="form-label">Tax SLab</label>
+                                                                <select class="form-control" wire:model="tax_id">
+                                                                    <option value="">Select Tax Slab</option>
+                                                                    @foreach($taxs as $tax)
+                                                                    <option value="{{$tax->id}}">{{$tax->tax_name}} {{$tax->value}}%</option>
+                                                                    @endforeach
+                                                                    
+                                                                </select>
+                                                                @error('tax_id') <p class="text-danger">{{$message}}</p>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="my-2">
+                                                                <label class="form-label">MEd Type</label>
+                                                                <div class="col-md-12">
+                                                                    <select class="form-control" wire:model="medtype_id">
+                                                                        <option value="">Select Med Type</option>
+                                                                        @foreach($medtypes as $medtype)
+                                                                            <option value="{{$medtype->id}}">{{$medtype->medtype}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                    @error('medtype_id') <p class="text-danger">{{$message}}</p> @enderror
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>                                                   
                                                     <div class="row">
                                                         <div class="col-md-4">
                                                             <div class="form-group">
@@ -242,9 +283,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-                                                                                                                                                                                        
-
                                                     <div class="row">
                                                         <div class="col-md-4">
                                                             <div class="mb-4">
@@ -301,7 +339,6 @@
                                                                 <label class="form-label">For Child</label>
                                                                 <div class="input-group input-group--sa-slug">
                                                                     <select class="form-select mt-3" wire:model="is_child">
-                                                                        <option  value="">Select</option>
                                                                         <option value="1">Yes</option>
                                                                         <option value="0">No</option>
                                                                     </select>
@@ -323,6 +360,25 @@
                                                             </div>
                                                         </div>
                                                     </div> 
+                                                    <div class="mb-4">
+                                                        <label for="form-category/slug" class="form-label">Disease </label>
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                @foreach($diseases as $disease)
+                                                                    <div class="col-md-4 col-sm-6 col-12">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" id="brand-1" wire:model="disease_id" value="{{$disease->id}}"  wire:click="brandseletc">
+                                                                            <label class="form-check-label widget-filter-item-text" for="brand-1">{{$disease->name}} </label>
+                                                                        </div>
+                                                                    </div>
+                                                                @endforeach
+                                                                @error('brand_id') <p class="text-danger">{{$message}}</p> @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>            
+                                                    
+                                                                                                        
+                                                    
                                                             
                                                     <div class="mb-4">
                                                         <label for="formFile-1" class="form-label">Thumbnail Images</label>

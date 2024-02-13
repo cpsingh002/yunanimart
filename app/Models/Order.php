@@ -28,7 +28,11 @@ class Order extends Model
     }
     public function city()
     {
-        return $this->belongsTo(City::class,'state_id');
+        return $this->belongsTo(City::class,'city_id');
+    }
+    public function state()
+    {
+        return $this->belongsTo(State::class,'state_id');
     }
 
 }

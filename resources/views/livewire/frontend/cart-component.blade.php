@@ -9,7 +9,9 @@
                                 <div class="col-sm-6 text-lg-left">
                                     <h4>Shopping Cart
                                         <span>( {{$count}} Item )</span>
+                                        
                                     </h4>
+                                    <span class="text-danger">( {{$uploadper}} Med Prescription Required )</span>
                                 </div>
                                 <div class="col-sm-6 text-lg-right">
                                     <a href="#" wire:click.prevent="EmptyCart" class="btn btn-light btn-medium button-sm d-none d-md-inline-block"><i class="ti-trash"></i> Empty
@@ -32,6 +34,7 @@
                                         <a href="{{route('product-details',['slug'=>$item->slug])}}">
                                             <h4>{{$item->name}}</h4>
                                         </a>
+                                        <div>@if($item->prescription)<span class="text-danger">Prescription Required for this Med</span> @endif</div>
                                         <p class="small mb-0 text-muted">{{$item->varaint_detail}}</p>
                                     </div>
                                     <div class="cart_item_price">
@@ -43,15 +46,12 @@
                                             </span>
                                         </div>
                                         <div class="cart_product_remove">
-                                            <a href="#" wire:click.prevent="removeFromCart({{$item->id}})">
-                                                <i class="ti-trash"></i> Remove</a>
+                                            <a href="#" wire:click.prevent="removeFromCart({{$item->id}})"><i class="ti-trash"></i> Remove</a>
+                                            @auth
+                                            <a href="#" wire:click.prevent="Savetolater({{$item->id}})"><i class="ti-trash"></i> Save To Later</a>
+                                                @endauth
                                         </div>      
-                                        @auth
-                                        <div class="cart_product_remove">
-                                                <a href="#" wire:click.prevent="Savetolater({{$item->id}})">
-                                                    <i class="ti-trash"></i> Save To Later</a>
-                                            </div>
-                                        @endauth
+                                       
                                     </div>
                                 </div>
                                 @if(Auth::check())
@@ -130,22 +130,13 @@
                                             </span>
                                         </div>
                                         <div class="cart_product_remove">
-                                            <a href="#" wire:click.prevent="removeFromsavelater({{$item->id}})">
-                                                <i class="ti-trash"></i> Remove</a>
+                                            <a href="#" wire:click.prevent="removeFromsavelater({{$item->id}})"><i class="ti-trash"></i> Remove</a>
+                                            <a href="#" wire:click.prevent="MovetoCart({{$item->id}})"><i class="ti-trash"></i> Move To Cart</a>
                                         </div>      
-                                        @auth
-                                        <div class="cart_product_remove">
-                                                <a href="#" wire:click.prevent="MovetoCart({{$item->id}})">
-                                                    <i class="ti-trash"></i> Move To Cart</a>
-                                            </div>
-                                        @endauth
+                                        
                                     </div>
                                 </div>
-                                <!-- <div class="qty-input btn mt-4 mt-md-0">
-                                    <i class="less">-</i>
-                                    <input type="text" value="{{$item->qty}}"  name="product-quatity" />
-                                    <i class="more">+</i>
-                                </div> -->
+                                
                             </div>
                         @endforeach
                         
@@ -183,9 +174,15 @@
                             <p>Shipping Cost <span>₹{{$shippingcost}}</span></p>
                             <h2>Grand Total <span>₹{{$subtotalc + $shippingcost}}</span></h2>
                         </div>
-                        <div class="cart-summary-button">
-                            <a href="#" wire:click.prevent="checkout" id = "sbhjs" class="btn btn-primary btn-rounded btn-full btn-large">Proceed to Checkout <i class="ti-arrow-right"></i> </a>
-                        </div>
+                        @if($uploadper > 0)
+                            <div class="cart-summary-button">
+                                <a href="#" wire:click.prevent="prcheckout" id = "sbhjs" class="btn btn-primary btn-rounded btn-full btn-large">Upload Prescription <i class="ti-arrow-right"></i> </a>
+                            </div>
+                        @else
+                            <div class="cart-summary-button">
+                                <a href="#" wire:click.prevent="checkout" id = "sbhjs" class="btn btn-primary btn-rounded btn-full btn-large">Proceed to Checkout <i class="ti-arrow-right"></i> </a>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

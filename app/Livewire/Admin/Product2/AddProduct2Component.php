@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
 use Carbon\Carbon; 
+use App\Models\Disease;
 
 class AddProduct2Component extends Component
 {
@@ -68,6 +69,9 @@ class AddProduct2Component extends Component
     public $qtyes=[];
     public $bulkqtys=[];
     public $bulkrates=[];
+    public $disease_id = [];
+    public $cod;
+    public $refund;
 
     public function mount()
     {
@@ -205,8 +209,9 @@ class AddProduct2Component extends Component
         $brands = Brand::all();
         $medtypes = MedType::all();
         $taxs = Tax::all();
+        $diseases = Disease::where('status','!=',3)->get();
         $this->brandhjs= Brand::all();
-        return view('livewire.admin.product2.add-product2-component',[
+        return view('livewire.admin.product2.add-product2-component',['diseases'=>$diseases,
             'categories'=>$categories,'scategories'=>$scategories,'attributes'=>$attributes,'brands'=>$brands,'medtypes'=>$medtypes,'taxs'=>$taxs
         ])->layout('layouts.admin');
     }
@@ -359,7 +364,7 @@ class AddProduct2Component extends Component
     
     public function brandseletc()
     {
-        
+        // dd($this->disease_id);
     }
     
     public function myFunction()

@@ -22,11 +22,14 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderMail;
 use Exception;
 use Stripe;
-use Carbon\Carbon; 
+use Carbon\Carbon;
+use Livewire\WithFileUploads;
 
-
-class CheckOutComponent extends Component
+class PrescriptionCheckOutComponent extends Component
 {
+    use WithFileUploads;
+    public $imageuploaded;
+    public $prescription;
     public $subtotalfinal;
     public $shopping_charge;
     public $finaldiscount;
@@ -95,7 +98,7 @@ class CheckOutComponent extends Component
         $states = State::where('country_id',$this->country_id)->get();
         $cities = City::where('state_id',$this->st_id)->get();
         $ships = ShippingAddress::where('user_id',Auth::user()->id)->get();
-        return view('livewire.frontend.check-out-component',['countries'=>$countries,'states'=>$states,'cities'=>$cities,'ships'=>$ships])->layout('layouts.main');
+        return view('livewire.frontend.prescription-check-out-component',['countries'=>$countries,'states'=>$states,'cities'=>$cities,'ships'=>$ships])->layout('layouts.main');
     }
 
     public function changecountry()
@@ -172,6 +175,7 @@ class CheckOutComponent extends Component
     }
     public function placeordercod ()
     {
+        dd($this->prescription);
         $this->payment_type = 'cod';
        // dd('hello');
        if(!$this->selected_address){
@@ -210,7 +214,7 @@ class CheckOutComponent extends Component
             $orderItem->quantity = $item->quantity;
             $orderItem->save();
         }
-        $this->makeTransaction($order->id,'pending','cod');
+        $this->makeTransaction($order->id,'pending','cod',null,'0');
         $this->resetCart();
         $this->sendOrderConfirmationMail($order);
 
@@ -236,7 +240,7 @@ class CheckOutComponent extends Component
         'card_no'=>'required|numeric',
         'card_name' =>'required',
         ]);
-    dd($this->cvc, $this->card_no,$this->card_name,$this->exp_year,$this->exp_month);
+        dd($this->cvc, $this->card_no,$this->card_name,$this->exp_year,$this->exp_month);
 
         $ship = ShippingAddress::find($this->selected_address);
        if($ship){
@@ -355,5 +359,24 @@ class CheckOutComponent extends Component
     public function sendOrderConfirmationMail($order)
     {
         Mail::to(Auth::user()->email)->send(new OrderMail($order));
+    }
+
+    public function UploadPresc()
+    {
+        $this->validate(['prescription'=>'required|mimes:jpeg,jpg,png,pdf']);
+
+        // $slider = new Prescription();
+        
+        // $slider->user_id = Auth::user()->id;
+        // $slider->status = '1';
+        // $slider->current_status = 'packing';
+        // $imageName= Carbon::now()->timestamp.'.'.$this->prescription->extension();
+        // $this->prescription->storeAs('prescription',$imageName);
+        // $slider->prescription_file = $imageName;
+
+        // $slider->save();
+        $this->imageuploaded= 1;
+        Session()->flash('message','File has been Uploaded Successfully!');
+
     }
 }

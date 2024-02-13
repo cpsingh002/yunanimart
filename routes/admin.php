@@ -58,6 +58,8 @@ use App\Livewire\Admin\Reviews\ReviewsComponent;
 use App\Http\Controllers\ReviewController;
 
 use App\Livewire\Admin\Contact\ContactFormComponent;
+use App\Livewire\Admin\Disease\BodyPartNamengComponent;
+use App\Livewire\Admin\Disease\DiseaseComponent;
 
 Route::get('post', Coupon2Component::class);
 Route::middleware(['auth:sanctum','verified','authadmin'])->group(function(){
@@ -123,4 +125,8 @@ Route::middleware(['auth:sanctum','verified','authadmin'])->group(function(){
     Route::get('/reviews/deactive',[ReviewController::class, 'deactiveReviews'])->name('admin.deactive-reviews');
     Route::get('/reviews/active/{id}',[ReviewController::class, 'changeActive'])->name('admin.change-active');
     Route::get('/reviews/deactive/{id}',[ReviewController::class, 'changeDeactive'])->name('admin.change-deactive');
+
+    Route::get('/diseases',DiseaseComponent::class)->name('admin.diseases');
+    Route::get('/body-part',BodyPartNamengComponent::class)->name('admin.bodypart');
+    
 });

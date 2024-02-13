@@ -31,6 +31,9 @@ return new class extends Migration
             $table->bigInteger('subcategory_id')->unsigned()->nullable();
             $table->bigInteger('medtype_id')->unsigned()->nullable();
             $table->bigInteger('parent_id')->unsigned()->nullable();
+            $table->boolean('cod')->default(0);
+            $table->boolean('refund')->default(0);
+            $table->string('disease_id')->nullable();
             
           
             

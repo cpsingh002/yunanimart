@@ -29,6 +29,7 @@ class CartComponent extends Component
     public $taxvalue;
     public $totalamount;
     public $shippingcost;
+   
 
     
     public function render(Request $request)
@@ -39,6 +40,7 @@ class CartComponent extends Component
         $subtotalc = 0;
         $taxtotalc = 0;
         $savelater = [];
+        $uploadper = 0;
         if(Auth::check())
         {
             $cartlsit = Cart::where('user_id', Auth::user()->id)->pluck('product_id')->toArray();
@@ -51,8 +53,13 @@ class CartComponent extends Component
                 $item['qty'] = $dffg->quantity;
                 $subtotalc = $subtotalc + $item->sale_price * $dffg->quantity;
                 $taxtotalc = $taxtotalc + (($item->taxslab->value * $item->sale_price)*($dffg->quantity)/100);
-               
+                if($item->prescription)
+                {
+                    $uploadper = $uploadper + 1;
+                    
                 }
+               
+            }
             //dd($subtotalc,$taxtotalc);
             $this->taxvalue = $taxtotalc;
             $this->subtotal = $subtotalc;
@@ -74,6 +81,11 @@ class CartComponent extends Component
                         $subtotalc = $subtotalc + $item->sale_price*$cartlist[$item->id]['quantity'];
                         $taxtotalc = $taxtotalc + (($item->taxslab->value * $item->sale_price)*($cartlist[$item->id]['quantity'])/100);
                         $item['qty'] = $cartlist[$item->id]['quantity'];
+                        if($item->prescription)
+                        {
+                            $uploadper = $uploadper + 1;
+                          
+                        }
                     }  
                     $this->taxvalue = $taxtotalc;
                     $this->subtotal = $subtotalc;
@@ -104,7 +116,7 @@ class CartComponent extends Component
         $this->setAmountForCheckout();
         }
         
-        return view('livewire.frontend.cart-component',['cart'=>$cart,'count'=>$count,'subtotalc'=>$subtotalc,'taxtotalc'=>$taxtotalc,'savelater'=>$savelater])->layout('layouts.main');
+        return view('livewire.frontend.cart-component',['uploadper'=>$uploadper,'cart'=>$cart,'count'=>$count,'subtotalc'=>$subtotalc,'taxtotalc'=>$taxtotalc,'savelater'=>$savelater])->layout('layouts.main');
     }
 
    
@@ -175,11 +187,9 @@ class CartComponent extends Component
                 $cart->user_id = Auth::user()->id;
                 $cart->product_id = $wishlist->product_id;
                 $cart->save();
-                
                 $wishlist->delete();
-                
                 session()->flash('message','product move to SAve to later  from Cart');
-               // $this->dispatch('wishlist-count-component','refreshComponent');
+               
                $this->dispatch('cart_add');
                 return;
             }    
@@ -328,13 +338,14 @@ class CartComponent extends Component
             session()->forget('checkout');
             return;
         }
-        
+       // dd($this->reqper);
         if(session()->has('coupon')){
             session()->put('checkout',[
                 'discount'=>$this->discount,
                 'subtotal'=>$this->subtotalAfterDiscount,
                 'tax'=>$this->taxAfterDiscount,
                 'total'=>$this->totalAfterDiscount
+                
             ]);
         }else{
             session()->put('checkout',[
@@ -342,6 +353,7 @@ class CartComponent extends Component
                 'subtotal'=> $this->subtotal,
                 'tax'=>$this->taxvalue,
                 'total'=>$this->totalamount
+                
             ]);
 
             // $this->taxvalue = $taxtotal;
@@ -462,5 +474,25 @@ class CartComponent extends Component
         $this->CouponCode='';
         $this->discount = '';
         return;
+    }
+
+    public function prcheckout()
+    {
+        if(Auth::check())
+        { //dd($this->out_of_stock, $this->out_of_qty);
+            if($this->out_of_stock){
+                session()->flash('message','Remove Out Of stock Product please!');
+                return ;
+            }
+            if($this->out_of_qty){
+                session()->flash('message','Cart Qunatity is out of stock please! change qunatity');
+                return ;
+            }
+            return redirect()->route('prcheck-out');
+        }else{
+             session()->flash('message','Login First');
+             $this->dispatch('show-edit-post-modal');
+            return ;
+        }
     }
 }

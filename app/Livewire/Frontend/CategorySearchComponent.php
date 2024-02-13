@@ -34,8 +34,8 @@ class CategorySearchComponent extends Component
         $this->sorting="default";
         $this->pagesize="12";
         $this->category_slug = $category_slug;
-        $this->min_price =1;
-        $this->max_price=60000;
+        $this->min_price ='10';
+        $this->max_price='500';
         $this->scategory_slug = $scategory_slug;
     }
 

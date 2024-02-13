@@ -23,8 +23,8 @@ class BrandSearchComponent extends Component
         $this->sorting="default";
         $this->pagesize="12";
         $this->brand_slug = $brand_slug;
-        $this->min_price =1;
-        $this->max_price=60000;
+        $this->min_price ='10';
+        $this->max_price='500';
     }
     public function render()
     {

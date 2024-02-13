@@ -18,7 +18,7 @@
             
                                 <div class="single-select-block d-inline-block">
                                     <span class="select-title">Show:</span>
-                                    <select class="wide border-0" wire:model="pagesize">
+                                    <select class="wide border-0" id ="pagewsize" name="pagewsize" wire:model="pagesize">
                                         <option value="10">10</option>
                                         <option value="20">20</option>
                                         <option value="30">30</option>
@@ -28,7 +28,7 @@
             
                                 <div class="single-select-block d-inline-block">
                                     <span class="select-title">Sort By:</span>
-                                    <select class="wide border-0" wire:model="sorting">
+                                    <select class="wide border-0" id="pagesorting" name ="pagesorting" wire:model="sorting">
                                         <option value ="default" selected="selected">Default</option>
                                         <option value="date">Sort by newness</option>
 								        <option value="price">Sort by price: low to high</option>
@@ -119,11 +119,12 @@
                         </div>
                         <div class="sidebar-wrapper mt-5 mt-md-0">
                             <div class="sidebar-widget widget_categories">
-                                <h6 class="widget-title mb-2">Price </h6>
-                                <div class="px-3"><span class="text-info">₹{{$min_price}} - ₹{{$max_price}}</span>
-                                    <div class="widget-content" style="padding 10px 5px 40px 5px;">
-						                <div id="slider" wire:ignore></div>
-						            </div>
+                                <h6 class="widget-title mb-2">Price
+                                </h6>
+                               <div class="px-3" wire:ignore>
+                                <div class="range-slider range-slider-ui" id="nouislider" data-start-min="{{$min_price}}" data-start-max="{{$max_price}}" data-min="0"
+                                data-max="1000" data-step="1">
+                            </div>
                                </div>
                             </div>
                         </div>
@@ -345,24 +346,35 @@
 
 @push('scripts')
 	<script>
-		var slider = document.getElementById('slider');
-		noUiSlider.create(slider, {
-    		start: [1, 1000],
-    		connect: true,
-    		range: {
-        		'min': 1,
-        		'max': 1000
-    		},
-			pips: {
-        		mode: 'steps',
-        		stepped: true,
-        		density: 4
-   	 		}
-		});
-
-		slider.noUiSlider.on('update',function(value){
-			@this.set('min_price',value[0]);
-			@this.set('max_price',value[1]);
+		
+        var nonLinearSlider = $('.range-slider');
+        var startMin = parseInt(nonLinearSlider.data('start-min'));
+        var startMax = parseInt(nonLinearSlider.data('start-max'));
+		var slider = document.getElementById('nouislider');
+        
+// alert(startMin);
+		slider.noUiSlider.on('update',function(startMin){
+			@this.set('min_price',startMin['0']);
+			@this.set('max_price',startMin['1']);
 		})
+	
 	</script>
+        <script>
+        
+        $('#pagewsize').on('change',function(ev){
+            //alert('gfhfgh');
+            var data = $('#pagewsize').val();
+            //alert(data);
+            @this.set('pagesize',data);
+        });
+        
+        $('#pagesorting').on('change',function(ev){
+            //alert('gfhfgh');
+            var data = $('#pagesorting').val();
+            //alert(data);
+            @this.set('sorting',data);
+        });
+    
+    
+</script>
 @endpush

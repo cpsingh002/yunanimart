@@ -62,11 +62,11 @@ class LoginController extends Controller
            }
 
            if ($this->attemptLogin($request)) {
-            if ($request->hasSession()) {
-                $request->session()->put('auth.password_confirmed_at', time());
-            }
-            $this->movewishlist($request);
-            $this->movecart($request);
+                if ($request->hasSession()) {
+                    $request->session()->put('auth.password_confirmed_at', time());
+                }
+                $this->movewishlist($request);
+                $this->movecart($request);
 
             return response()->json(['status'=>'success','msg'=>'msg']);
         }else{

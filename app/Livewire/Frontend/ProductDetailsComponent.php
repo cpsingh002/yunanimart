@@ -135,6 +135,7 @@ class ProductDetailsComponent extends Component
                     $wishlist->delete();
                     session()->flash('message','product remove from wishlist');
                     // $this->dispatch('wishlist-count-component','refreshComponent');
+                    $this->wish = '';
                     $this->dispatch('wishlist_add');
                     return;
                 }
