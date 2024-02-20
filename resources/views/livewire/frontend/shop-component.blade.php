@@ -42,7 +42,7 @@
                                 <div class="col-md-4 col-sm-6 col-12">
                                     <div class="product">
                                         <a href="{{route('product-details',['slug'=>$product->slug])}}" class="product-img">
-                                        @if($product->prescription)<span class="onsale">Prescription!</span> @endif
+                                            @if($product->prescription)<span class="onsale">Prescription!</span> @endif
                                             <img src="{{asset('admin/product/feat')}}/{{$product->image}}" class="" alt="{{$product->slug}}" width="500" height="967">
                                         </a>
                                         <div class="product-info">

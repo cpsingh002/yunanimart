@@ -29,7 +29,6 @@ class OrderDetailsComponent extends Component
         $this->order_id = $id;
 
     }
-    
     public function cancelOrder()
     {
         $order = Order::find($order_id);

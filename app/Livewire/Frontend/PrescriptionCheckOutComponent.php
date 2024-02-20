@@ -175,7 +175,7 @@ class PrescriptionCheckOutComponent extends Component
     }
     public function placeordercod ()
     {
-        dd($this->prescription);
+        //dd($this->prescription);
         $this->payment_type = 'cod';
        // dd('hello');
        if(!$this->selected_address){
@@ -187,10 +187,10 @@ class PrescriptionCheckOutComponent extends Component
        if($ship){
         $order = new Order();
         $order->user_id = Auth::user()->id;
-        $order->subtotal = '230';//session()->get('checkout')['subtotal'];
-        $order->discount = '0'; //session()->get('checkout')['discount'];
-        $order->tax =  '24'; //session()->get('checkout')['tax'];
-        $order->total = '230'; //session()->get('checkout')['total'];
+        $order->subtotal = session()->get('checkout')['subtotal'];
+        $order->discount = session()->get('checkout')['discount'];
+        $order->tax =  session()->get('checkout')['tax'];
+        $order->total = session()->get('checkout')['total'];
         $order->name=$ship->name;
         $order->mobile=$ship->mobile;
         $order->mobile_optional=$ship->mobile_optional;
@@ -203,6 +203,12 @@ class PrescriptionCheckOutComponent extends Component
         $order->zipcode=$ship->zipcode;
         $order->order_number=Carbon::now()->timestamp;
         $order->status = 'ordered';
+        if($this->prescription){
+            $imageName= Carbon::now()->timestamp.'.'.$this->prescription->extension();
+            $this->prescription->storeAs('prescription',$imageName);
+            $order->prescription  = $imageName;
+        }
+        
         $order->save();
         $carts = Cart::where('user_id', Auth::user()->id)->get();
         foreach($carts as $item)
@@ -261,6 +267,11 @@ class PrescriptionCheckOutComponent extends Component
             $order->country_id=$ship->country_id;
             $order->zipcode=$ship->zipcode;
             $order->status = 'ordered';
+            if($this->prescription){
+                $imageName= Carbon::now()->timestamp.'.'.$this->prescription->extension();
+                $this->prescription->storeAs('prescription',$imageName);
+                $order->prescription  = $imageName;
+            }
             $order->save();
             $carts = Cart::where('user_id', Auth::user()->id)->get();
             foreach($carts as $item)

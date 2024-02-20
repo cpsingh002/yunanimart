@@ -381,14 +381,13 @@ class EditProduct2Component extends Component
 
     public function render()
     {
-        $categories=Category::all();
-        $scategories = SubCategory::where('category_id',$this->category_id)->get();
-        $attributes = Attribute::all();
-        $brands = Brand::all();
-        $medtypes = MedType::all();
-        $taxs = Tax::all();
+        $categories=Category::where('status',1)->get();
+        $scategories = SubCategory::where('category_id',$this->category_id)->where('statuts',1)->get();
+        $attributes = Attribute::where('status',1)->get();
+        $brands = Brand::where('status',1)->get();
+        $medtypes = MedType::where('status',1)->get();
+        $taxs = Tax::where('status',1)->get();
         $diseases = Disease::where('status','!=',3)->get();
-
         return view('livewire.admin.product2.edit-product2-component',['diseases'=>$diseases,
             'categories'=>$categories,'scategories'=>$scategories,'attributes'=>$attributes,'brands'=>$brands,'medtypes'=>$medtypes,'taxs'=>$taxs
         ])->layout('layouts.admin');

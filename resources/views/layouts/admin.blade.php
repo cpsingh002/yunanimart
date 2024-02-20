@@ -238,8 +238,7 @@
                                 </li> --}}
 
 
-
-                             
+                           
 
 
 
@@ -432,6 +431,11 @@
                                             <a href="{{route('admin.brands')}}" class="sa-nav__link"><span
                                                     class="sa-nav__menu-item-padding"></span><span
                                                     class="sa-nav__title">Brand</span></a>
+                                        </li>
+                                        <li class="sa-nav__menu-item">
+                                            <a href="{{route('admin.newbrands')}}" class="sa-nav__link"><span
+                                                    class="sa-nav__menu-item-padding"></span><span
+                                                    class="sa-nav__title">new Brand</span></a>
                                         </li>
 
 

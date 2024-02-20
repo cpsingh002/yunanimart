@@ -13,9 +13,9 @@ class EditTaxComponent extends Component
     public $value;
     public $t_id;
 
-    public function mount($tid)
+    public function mount($bid)
     {
-        $tax = Tax::find($tid);
+        $tax = Tax::find($bid);
         $this->tax_name = $tax->tax_name;
         $this->type = $tax->type;
         $this->value = $tax->value;

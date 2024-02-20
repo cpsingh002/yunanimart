@@ -11,7 +11,7 @@
                                         <span>( {{$count}} Item )</span>
                                         
                                     </h4>
-                                    <span class="text-danger">( {{$uploadper}} Med Prescription Required )</span>
+                                    @if($uploadper > 0)  <span class="text-danger">( {{$uploadper}} Med Prescription Required )</span>   @endif
                                 </div>
                                 <div class="col-sm-6 text-lg-right">
                                     <a href="#" wire:click.prevent="EmptyCart" class="btn btn-light btn-medium button-sm d-none d-md-inline-block"><i class="ti-trash"></i> Empty
@@ -48,47 +48,54 @@
                                         <div class="cart_product_remove">
                                             <a href="#" wire:click.prevent="removeFromCart({{$item->id}})"><i class="ti-trash"></i> Remove</a>
                                             @auth
-                                            <a href="#" wire:click.prevent="Savetolater({{$item->id}})"><i class="ti-trash"></i> Save To Later</a>
+                                            <a href="#" wire:click.prevent="Savetolater({{$item->id}})"><i class="ti-trash"></i> Save For Later</a>
                                                 @endauth
                                         </div>      
                                        
                                     </div>
                                 </div>
+                                <div class="mt-4 mt-md-0">
+                                <span style="margin: 0 77px 0 0;"><strong>₹{{number_format(($item->sale_price * $item->qty),2)}} </strong> </span>
+                                </div>
                                 @if(Auth::check())
 
+                                    @if($item->stock_status === "instock" )
+                                        <div class="qty-input btn mt-4 mt-md-0">
+                                            
+                                            <a class="btn btn-increase" href="#" wire:click.prevent="decreaseQuantity('{{$item->id}}')">-</a>
+                                            <input type="text" name="product-quatity" value="{{$item->qty}}" data-max="5" pattern="[0-9]*" >
+                                            @if(($item->quantity - $item->qty) > 3)
+                                                <a class="btn btn-increase" href="#" wire:click.prevent="increaseQuantity('{{$item->id}}')">+</a>
+                                                <input class="frm-input " value="1" type="hidden" id ="outofqty" name="outofqty" wire:model="out_of_qty">
+                                                @php $this->out_of_qty = "" @endphp
+                                            @endif
+                                        </div>
+                                        @if(($item->quantity - $item->qty) < 4)
+                                            <div>
+                                                <input class="frm-input " value="1" type="hidden" id ="outofqty" name="outofqty" wire:model="out_of_qty">
+                                                @php $this->out_of_qty = 2 @endphp
+                                                <p>This Qunatity is not present </p>
+                                            </div>
+                                        @endif
+                                    @else
+                                        <input class="frm-input" value="1" type="hidden" name="outofsctock" wire:model="out_of_stock">
+                                        @php $this->out_of_stock = 2 @endphp
+                                        <p> Out of Stock</p>
+                                    @endif
+                                @else
                                     @if($item->stock_status === "instock" )
                                     <div class="qty-input btn mt-4 mt-md-0">
                                         <a class="btn btn-increase" href="#" wire:click.prevent="decreaseQuantity('{{$item->id}}')">-</a>
                                         <input type="text" name="product-quatity" value="{{$item->qty}}" data-max="5" pattern="[0-9]*" >
-                                        @if(($item->quantity - $item->qty) > 3)
+                                       
                                         <a class="btn btn-increase" href="#" wire:click.prevent="increaseQuantity('{{$item->id}}')">+</a>
-                                        <input class="frm-input " value="1" type="hidden" id ="outofqty" name="outofqty" wire:model="out_of_qty">
-                                        @php $this->out_of_qty = "" @endphp
-                                        @endif
+                                        
                                     </div>
-                                    @if(($item->quantity - $item->qty) < 4)
-                                    <div><input class="frm-input " value="1" type="hidden" id ="outofqty" name="outofqty" wire:model="out_of_qty">
-                                    @php $this->out_of_qty = 2 @endphp
-                                        <p>This Qunatity is not present </p></div>
-                                    @endif
+                                    
+                                    
                                     @else
-                                    <input class="frm-input" value="1" type="hidden" name="outofsctock" wire:model="out_of_stock">
-                                    @php $this->out_of_stock = 2 @endphp
                                     <p> Out of Stock</p>
                                     @endif
-                                @else
-                                @if($item->stock_status === "instock" )
-                                <div class="qty-input btn mt-4 mt-md-0">
-                                    <a class="btn btn-increase" href="#" wire:click.prevent="decreaseQuantity('{{$item->id}}')">-</a>
-                                    <input type="text" name="product-quatity" value="{{$item->qty}}" data-max="5" pattern="[0-9]*" >
-                                   
-                                    <a class="btn btn-increase" href="#" wire:click.prevent="increaseQuantity('{{$item->id}}')">+</a>
-                                    
-                                </div>
-                                
-                                @else
-                                <p> Out of Stock</p>
-                                @endif
                                 @endif
                             </div>
                         @endforeach
@@ -166,13 +173,14 @@
                     <div class="cart-summary">
                         <div class="cart-summary-wrap">
                             <h4>Cart Summary</h4>
-                            <p>Sub Total <span>₹{{$subtotalc}}</span></p>
+                            <p>Total MRP <span>₹{{number_format(($subtotalc + $pricesoff),2) }}</span></p>
                             {{-- <p>Tax <span>₹{{$taxtotalc}}</span></p> --}}
+                            <p>Off Discount <span> - ₹{{number_format($pricesoff,2)}}</spna></p>
                             @if($discount)
-                            <p>Coupon Discount <span>₹{{$discount}}</span></p>
+                            <p>Coupon Discount <span>₹{{number_format($discount,2)}}</span></p>
                             @endif
-                            <p>Shipping Cost <span>₹{{$shippingcost}}</span></p>
-                            <h2>Grand Total <span>₹{{$subtotalc + $shippingcost}}</span></h2>
+                            <p>Shipping Cost <span>₹{{number_format($shippingcost,2)}}</span></p>
+                            <h2>Grand Total <span>₹{{number_format(($subtotalc + $shippingcost),2)}}</span></h2>
                         </div>
                         @if($uploadper > 0)
                             <div class="cart-summary-button">

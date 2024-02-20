@@ -53,7 +53,7 @@
                                              <div class="mb-4">
                                                  <label for="form-category/slug" class="form-label">Image</label>
                                                  <div class="input-group input-group--sa-slug">
-                                                    <input type="file" class="form-control" wire:model="newimages" />
+                                                    <input type="file" class="input-file" wire:model="newimages" />
                                                     @if($newimages)
                                                         
                                                             <img src="{{$newimages->temporaryUrl()}}" width="120" />
@@ -86,7 +86,7 @@
                                                      class="form-label">Status</label>
 
                                                  <select class="form-control input-md" wire:model="status">
-                                                     <option value="0">Inactive</option>
+                                                     <option value="0">Deactive</option>
                                                      <option value="1">Active</option>
                                                  </select>
 

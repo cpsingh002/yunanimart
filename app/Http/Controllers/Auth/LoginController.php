@@ -62,11 +62,15 @@ class LoginController extends Controller
            }
 
            if ($this->attemptLogin($request)) {
-                if ($request->hasSession()) {
-                    $request->session()->put('auth.password_confirmed_at', time());
-                }
-                $this->movewishlist($request);
-                $this->movecart($request);
+            if ($request->hasSession()) {
+                $request->session()->put('auth.password_confirmed_at', time());
+            }
+             if(Auth::user()->status != 1){
+                Auth::logout();
+                return response()->json(['status'=>'error','msg'=>'Your Account is deactivated by Think Pure India. Please reach out to info@thinkpureindia.com. We apologize for the inconvenience.']);
+            }   
+            $this->movewishlist($request);
+            $this->movecart($request);
 
             return response()->json(['status'=>'success','msg'=>'msg']);
         }else{
@@ -94,6 +98,7 @@ class LoginController extends Controller
             //return $this->sendLoginResponse($request);
             return redirect('admin/brands');
         }
+        return $this->sendFailedLoginResponse($request);
     }
 
     public function movewishlist($request)

@@ -126,7 +126,7 @@
                                                 @if($newprofile)
                                                     <img src="{{$newprofile->temporaryUrl()}}" width="120" /> 
                                                 @else
-                                                    <img src="{{asset('admin/profiles')}}/{{$profile}}" width="120" />
+                                                    <img src="{{asset('admin/profilespic')}}/{{$profile}}" width="120" />
                                                 @endif
                                                 
                                                 @error('newprofile') <p class="text-danger">{{$message}}</p> @enderror
@@ -154,10 +154,14 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                     <div class="modal-body">
+                        @if(Session::has('password_message'))
+                            <div class="alert alert-success" role="alert">{{Session::get('password_message')}}</div>
+                        @endif
                         <form  wire:submit.prevent="updatepassword">
                             <div class="form-group">
                                 <input name="old_password" type="password" placeholder="Old Password"
-                                    class="form-control input-lg rounded" wire:model="old_password">
+                                    class="form-control input-lg rounded @error('old_password') is-invalid @enderror" wire:model="old_password">
+                                    @error('old_password') <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong></span>     @enderror
                             </div>
                             <div class="form-group">
                                     <input id="password" type="password" class="form-control input-lg rounded @error('password') is-invalid @enderror" wire:model="password" required autocomplete="new-password" placeholder="new Password">

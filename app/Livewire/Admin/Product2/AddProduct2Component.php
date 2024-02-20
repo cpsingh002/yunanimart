@@ -203,14 +203,14 @@ class AddProduct2Component extends Component
 
     public function render()
     {
-        $categories=Category::all();
-        $scategories = SubCategory::where('category_id',$this->category_id)->get();
-        $attributes = Attribute::all();
-        $brands = Brand::all();
-        $medtypes = MedType::all();
-        $taxs = Tax::all();
-        $diseases = Disease::where('status','!=',3)->get();
-        $this->brandhjs= Brand::all();
+        $categories=Category::where('status',1)->get();
+        $scategories = SubCategory::where('category_id',$this->category_id)->where('statuts',1)->get();
+        $attributes = Attribute::where('status',1)->get();
+        $brands = Brand::where('status',1)->get();
+        $medtypes = MedType::where('status',1)->get();
+        $taxs = Tax::where('status',1)->get();
+        // $this->brandhjs= Brand::where('status',1)->get();
+        $diseases = Disease::where('status',1)->get();
         return view('livewire.admin.product2.add-product2-component',['diseases'=>$diseases,
             'categories'=>$categories,'scategories'=>$scategories,'attributes'=>$attributes,'brands'=>$brands,'medtypes'=>$medtypes,'taxs'=>$taxs
         ])->layout('layouts.admin');
@@ -291,7 +291,10 @@ class AddProduct2Component extends Component
         $product->is_child = $this->is_child;
         $product->is_young = $this->is_young;
         $product->tax_id = $this->tax_id;
-        $product->freecancellation = $this->freecancellation;
+        $product->cod = $this->cod;
+         $product->refund = $this->refund;
+          $product->disease_id = json_encode($this->disease_id);
+        
         $product->discount_value = round((($this->regular_price - $this->sale_price)/$this->regular_price)*100, 2);
         $product->status = '1';
         $product->add_by = '1'; //Auth::user()->id;
@@ -347,6 +350,9 @@ class AddProduct2Component extends Component
             $product_varaint->is_young = $this->is_young;
             $product_varaint->tax_id = $this->tax_id;
             $product_varaint->freecancellation = $this->freecancellation;
+            $product_varaint->cod = $this->cod;
+            $product_varaint->refund = $this->refund;
+            $product_varaint->disease_id = json_encode($this->disease_id);
             $product_varaint->discount_value = round((($this->mrps[$key] - $this->pris[$key])/$this->mrps[$key])*100, 2);
             $product_varaint->status = '1';
             $product_varaint->add_by = '1'; //Auth::user()->id;

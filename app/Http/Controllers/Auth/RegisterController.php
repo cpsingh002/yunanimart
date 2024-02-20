@@ -50,7 +50,6 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-         
             'phone'=>['required','numeric','digits:10','unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -77,14 +76,13 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone'=>['required','numeric','digits:10','unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            
         ]);
         if(!$valid->passes()){
             return response()->json(['status'=>'error','error'=>$valid->errors()->toArray()]);
         }else{
 
             event(new Registered($user = $this->create($request->all())));
-            return response()->json(['status'=>"success",'msg'=>"Thank you for your interest in Solvemonkey – now you can login."]);
+            return response()->json(['status'=>"success",'msg'=>"Thank you for your interest in ThinkPureIndia – now you can login."]);
         }
 
 

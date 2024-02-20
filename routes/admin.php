@@ -61,6 +61,8 @@ use App\Livewire\Admin\Contact\ContactFormComponent;
 use App\Livewire\Admin\Disease\BodyPartNamengComponent;
 use App\Livewire\Admin\Disease\DiseaseComponent;
 
+use App\Livewire\Admin\Brand\NewBrandComponent;
+
 Route::get('post', Coupon2Component::class);
 Route::middleware(['auth:sanctum','verified','authadmin'])->group(function(){
     Route::get('/dashboard',DashboardComponent::class)->name('admin.dashboard');
@@ -78,6 +80,7 @@ Route::middleware(['auth:sanctum','verified','authadmin'])->group(function(){
     Route::get('/subcategory/edit/{scategory_slug}',EditSubCategoryComponent::class)->name('admin.editsubcategory');
 
     Route::get('/brands',BrandComponent::class)->name('admin.brands');
+    Route::get('/newbrands',NewBrandComponent::class)->name('admin.newbrands');
     Route::get('/brands/add',AddBrandComponent::class)->name('admin.addbrand');
     Route::get('/brands/edit/{br_id}',EditBrandComponent::class)->name('admin.editbrand');
 
@@ -119,7 +122,7 @@ Route::middleware(['auth:sanctum','verified','authadmin'])->group(function(){
     Route::get('/questionanswers',QuestionAnswerComponent::class)->name('admin.question-answers');
     Route::get('/answers/{id}',AllAnswersComponent::class)->name('admin.all-answers');
     
-    Route::get('/cotact',ContactFormComponent::class)->name('admin.contact-form');
+    Route::get('/contact',ContactFormComponent::class)->name('admin.contact-form');
     
     Route::get('/reviews/active',[ReviewController::class, 'activeReviews'])->name('admin.active-reviews');
     Route::get('/reviews/deactive',[ReviewController::class, 'deactiveReviews'])->name('admin.deactive-reviews');

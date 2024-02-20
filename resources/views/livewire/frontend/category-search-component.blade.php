@@ -362,7 +362,7 @@
 			@this.set('max_price',startMin['1']);
 		})
 	</script>
-    <script>
+	    <script>
         
         $('#pagewsize').on('change',function(ev){
             //alert('gfhfgh');

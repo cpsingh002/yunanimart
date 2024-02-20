@@ -96,6 +96,29 @@
 
                                     </ul>
                                 </li>
+                                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon"
+                                    data-sa-collapse-item="sa-nav__menu-item--open">
+                                    <a href="#" class="sa-nav__link" data-sa-collapse-trigger="">
+
+
+                                        <i class="fa fa-file-image me-4"></i>
+
+                                        <span class="sa-nav__title">Diseases</span>
+                                        <i class="fa fa-chevron-right"></i>
+                                    </a>
+                                     <ul class="sa-nav__menu sa-nav__menu--sub" data-sa-collapse-content="">
+                                        <li class="sa-nav__menu-item">
+                                            <a href="{{route('admin.bodypart')}}" class="sa-nav__link"><span
+                                                    class="sa-nav__menu-item-padding"></span><span
+                                                    class="sa-nav__title">Body Part</span></a>
+                                        </li>
+                                        <li class="sa-nav__menu-item">
+                                            <a href="{{route('admin.diseases')}}" class="sa-nav__link"><span
+                                                    class="sa-nav__menu-item-padding"></span><span
+                                                    class="sa-nav__title">Disease</span></a>
+                                        </li>
+                                    </ul> 
+                                </li>
 
                             {{--    <li class="sa-nav__menu-item sa-nav__menu-item--has-icon"
                                     data-sa-collapse-item="sa-nav__menu-item--open">

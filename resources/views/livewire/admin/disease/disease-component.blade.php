@@ -57,8 +57,8 @@
                                 @else <a href="#" onclick="confirm('Are you sure, You want to Active this disease') || event.stopImmediatePropagation()" wire:click.prevent='ActivePart({{$disease->id}})'>Deactive </a>
                                 @endif</td>
                                  <td>
-                                        <button class="btn btn-sm btn-primary" wire:click="editPost({{ $disease->id }})">Edit</button>
-                                     <a href="#" wire:click="editPost({{ $disease->id }})"><i class="fa fa-edit"></i></a>
+                                        <button class="btn btn-sm btn-primary"  wire:click.prevent="editPost({{ $disease->id }})">Edit</button>
+                                     <a href="#" wire:click.prevent="editPost({{ $disease->id }})"><i class="fa fa-edit"></i></a>
                                      <a href="#" onclick="confirm('Are you sure, You want to delete this category') || event.stopImmediatePropagation()"
                                          wire:click.prevent="deleteDisease({{$disease->id}})"><i class="fa fa-times ml-1 text-danger"></i></a>
                                  </td>
@@ -76,8 +76,8 @@
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">Add New Body Part</h5>
-                    <button type="button" class="sa-close sa-close--modal" data-bs-dismiss="modal" aria-label="Close" wire:click="close"></button>
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Add New Disease </h5>
+                    <button type="button" class="sa-close sa-close--modal" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     @if(Session::has('message'))
@@ -88,7 +88,7 @@
                             <h2 class="mb-0 fs-exact-18">Basic information</h2>
                         </div>
                         <div class="mb-4">
-                            <label for="form-category/name" class="form-label">Body Part Name</label>
+                            <label for="form-category/name" class="form-label">Disease Name</label>
                             <input type="text" placeholder="Name" class="form-control"
                                 wire:model="name" wire:keyup="generateslug" />
                             @error('name') <p class="text-danger">{{$message}}</p> @enderror
@@ -153,7 +153,7 @@
 
                         
                         <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" wire:click="close">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         Close</button
                     ><button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
@@ -168,7 +168,7 @@
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="EditModelTitle">Add New Body Part</h5>
+                    <h5 class="modal-title" id="EditModelTitle">Edit Disease</h5>
                     <button type="button" class="sa-close sa-close--modal" data-bs-dismiss="modal" aria-label="Close" wire:click="close"></button>
                 </div>
                 <div class="modal-body">
@@ -180,7 +180,7 @@
                             <h2 class="mb-0 fs-exact-18">Basic information</h2>
                         </div>
                         <div class="mb-4">
-                            <label for="form-category/name" class="form-label">Body Part Name</label>
+                            <label for="form-category/name" class="form-label">Disease Name</label>
                             <input type="text" placeholder="Name" class="form-control"
                                 wire:model="name" wire:keyup="generateslug" />
                             @error('name') <p class="text-danger">{{$message}}</p> @enderror
@@ -214,7 +214,7 @@
                                 @if($newimage)
                                     <img src="{{$newimage->temporaryUrl()}}" width="120" />
                                 @else
-                                    <img src="{{asset('admin/disea')}}/{{$image}}" width="120" />
+                                    <img src="{{asset('admin/disea')}}/{{$eimage}}" width="120" />
                                 @endif
                                 @error('newimage') <p class="text-danger">{{$message}}</p> @enderror
                             </div>

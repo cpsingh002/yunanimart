@@ -497,7 +497,7 @@
         <div class="container-fluid theme-container">
             <div class="row mb-4">
                 <div class="col">
-                    <h5 class="product-heading">Best of Personal Care</h5>
+                    <h5 class="product-heading">Exclusive Store</h5>
                 </div>
                  <div class="col-auto text-md-right">
                     <a href="{{route('shop')}}" class="btn btn-primary btn-sm product-heading-btn">See All</a>
@@ -514,7 +514,7 @@
                 @endforeach
                 
             </div>
-            <div class="slider  arrow-light slider-gap" data-slides-to-show="6" data-autoplay="true" data-nav="true"
+           {{-- <div class="slider  arrow-light slider-gap" data-slides-to-show="6" data-autoplay="true" data-nav="true"
                 data-dots="false">
                 @foreach($products as $product)
                     <div class="product">
@@ -554,7 +554,7 @@
                     </div>
                 @endforeach
                 
-            </div>
+            </div> --}}
         </div>
     </div>
 
@@ -571,7 +571,7 @@
                     <a href="{{route('shop')}}" class="btn btn-primary btn-sm product-heading-btn">See All</a>
                 </div> 
             </div>
-            <div class="slider  arrow-light slider-gap" data-slides-to-show="2" data-autoplay="true" data-nav="true"
+            <div class="slider  arrow-light slider-gap" data-slides-to-show="3" data-autoplay="true" data-nav="true"
                 data-dots="false">
                 @foreach($category->banner as $banner)
                 <div class="product">
@@ -643,7 +643,7 @@
         <div class="container-fluid theme-container">
             <div class="row mb-4">
                 <div class="col">
-                    <h5 class="product-heading">Flash deals</h5>
+                    <h5 class="product-heading">Most Rated Product</h5>
                 </div>
                 <div class="col-auto text-md-right">
                     <a href="{{route('shop')}}" class="btn btn-primary btn-sm product-heading-btn">See All</a>
@@ -651,7 +651,7 @@
             </div>
             <div class="slider  arrow-light slider-gap" data-slides-to-show="6" data-autoplay="true" data-nav="true"
                 data-dots="false">
-                @foreach($products as $product)
+                @foreach($fproducts as $product)
                     <div class="product">
                         <a href="{{route('product-details',['slug'=>$product->slug])}}" class="product-img">
                             <img src="{{asset('admin/product/feat')}}/{{$product->image}}" class="" alt="{{$product->slug}}" width="500" height="967">

@@ -51,10 +51,9 @@ class EditSliderComponent extends Component
     }
       public function updateSlider()
       {
-        $this->validateOnly([
+        $this->validate([
             'title' => 'required',
             'link' => 'required',
-            
             'for'=>'required',
             'status'=>'required',
             

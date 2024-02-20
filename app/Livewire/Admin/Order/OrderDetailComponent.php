@@ -16,7 +16,6 @@ class OrderDetailComponent extends Component
     {
         $order = Order::where('id',$this->order_id)->first();
         $orderitems = OrderItem::where('order_id',$order->id)->get();
-        
         return view('livewire.admin.order.order-detail-component',['order'=>$order,'orderitems'=>$orderitems])->layout('layouts.admin');
     }
 }

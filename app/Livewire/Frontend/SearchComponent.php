@@ -34,7 +34,7 @@ class SearchComponent extends Component
         $brand_id = Brand::where('brand_slug','like','%'.$this->search.'%')->first() ? Brand::where('brand_slug','like','%'.$this->search.'%')->first()->id : '';
         $subcategory_id = SubCategory::where('slug','like','%'.$this->search.'%')->first() ? SubCategory::where('slug','like','%'.$this->search.'%')->first()->id : '';
         
-        $query = Product2::whereBetween('sale_price',[$this->min_price,$this->max_price]);
+        $query = Product2::whereBetween('sale_price',[$this->min_price,$this->max_price])->where('status',1);
         if($category_id){
          $query=$query->where('category_id',$category_id);
         }elseif($subcategory_id){
@@ -49,8 +49,8 @@ class SearchComponent extends Component
         $products=$query->paginate(20);
         // dd($products);
 
-        $brands = Brand::all();
-        $categories = Category::all();
+        $brands = Brand::where('status',1)->get();
+        $categories = Category::where('status',1)->get();
         return view('livewire.frontend.search-component',['categories'=>$categories,'products'=>$products,'brands'=>$brands])->layout('layouts.main');
     }
     public function brandseletc()

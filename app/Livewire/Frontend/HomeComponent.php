@@ -19,17 +19,18 @@ class HomeComponent extends Component
     }
     public function render()
     {
-        $sliders = Slider::where('for','home')->get();
-        $categorys = Category::where('is_home',1)->get();
-        $subcategorys = SubCategory::where('is_home',1)->get();
-        $brands = Brand::where('is_home',1)->get();
-        $banners = Banner::where('for','home')->get();
+        $sliders = Slider::where('for','home')->where('status',1)->get();
+        $categorys = Category::where('is_home',1)->where('status',1)->get();
+        $subcategorys = SubCategory::where('is_home',1)->where('statuts',1)->get();
+        $brands = Brand::where('is_home',1)->where('status',1)->get();
+        $banners = Banner::where('for','home')->where('status',1)->get();
         $bannersd = Banner::where('for','!=','home')->pluck('for')->unique()->toArray();
        // dd($bannersd);
-        $products = Product2::where('sale_price','>',0)->inRandomOrder()->get()->take(8);
+        $products = Product2::where('sale_price','>',0)->where('status',1)->where('featured',1)->inRandomOrder()->get()->take(8);
+        $fproducts = Product2::where('sale_price','>',0)->where('status',1)->where('featured',1)->inRandomOrder()->get()->take(8);
         $category_banner = Banner::where('for','!=','home')->pluck('for')->unique();
        // dd($sliders); 
         return view('livewire.frontend.home-component',['sliders'=>$sliders,'categorys'=>$categorys,'subcategorys'=>$subcategorys,
-        'brands'=>$brands,'banners'=>$banners,'products'=>$products,'category_banner'=>$category_banner])->layout('layouts.main');
+        'brands'=>$brands,'banners'=>$banners,'products'=>$products,'category_banner'=>$category_banner,'fproducts'=>$fproducts])->layout('layouts.main');
     }
 }

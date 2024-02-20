@@ -28,7 +28,7 @@
             
                                 <div class="single-select-block d-inline-block">
                                     <span class="select-title">Sort By:</span>
-                                    <select class="wide border-0" id="pagesorting" name ="pagesorting"  wire:model="sorting">
+                                    <select class="wide border-0" id="pagesorting" name ="pagesorting" wire:model="sorting">
                                         <option value ="default" selected="selected">Default</option>
                                         <option value="date">Sort by newness</option>
 								        <option value="price">Sort by price: low to high</option>
@@ -357,7 +357,7 @@
 
 @push('scripts')
 	<script>
-		
+	
         var nonLinearSlider = $('.range-slider');
         var startMin = parseInt(nonLinearSlider.data('start-min'));
         var startMax = parseInt(nonLinearSlider.data('start-max'));
@@ -368,7 +368,6 @@
 			@this.set('min_price',startMin['0']);
 			@this.set('max_price',startMin['1']);
 		})
-	
 	</script>
      <script>
         

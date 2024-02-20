@@ -166,7 +166,12 @@
         if ($(this).hasClass('less')) {
             val = val - 1;
         } else if ($(this).hasClass('more')) {
-            val = val + 1;
+            if(val <= 20 )
+            {
+                val = val + 1;
+
+            }
+            
         }
 
         if (val < 1) {

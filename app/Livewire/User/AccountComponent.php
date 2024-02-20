@@ -56,14 +56,14 @@ class AccountComponent extends Component
         ]);
         if(Hash::check($this->old_password, Auth::user()->password)) {
             User::where('id',Auth::user()->id)->update(['password' => Hash::make($this->password) ]);
-             session()->flash('message', 'Password has been updated successfully');
+             session()->flash('password_message', 'Password has been updated successfully');
             // Session::flush();
-            // Auth::logout();
-            Auth::guard('web')->logoutOtherDevices($request->old_password);
+            Auth::guard('web')->logout();
+            // Auth::guard('web')->logoutOtherDevices($request->old_password);
             //For hide modal after add post added successfully
             // $this->dispatch('close-modal');
         }else{
-            session()->flash('message', 'Old Password not match');
+            session()->flash('password_message', 'Old Password not match');
 
             //For hide modal after add post added successfully
             // $this->dispatch('close-modal');
@@ -101,11 +101,11 @@ class AccountComponent extends Component
         if($this->newprofile){
             if($user->profile)
             {
-                unlink('admin/profiles'.'/'.$user->profile);
+                unlink('admin/profilespic'.'/'.$user->profile);
             }
 
             $imageName= Carbon::now()->timestamp.'.'.$this->newprofile->extension();
-            $this->newprofile->storeAs('profiles',$imageName);
+            $this->newprofile->storeAs('profilespic',$imageName);
             $user->profile = $imageName;
         }
         

@@ -22,7 +22,7 @@ class EditAttributeComponent extends Component
         $this->validateonly($fields,[
              
              'status'=>'required',
-             'name' => 'required|unique:attributes,medtype_slug,'.$this->attribute_id
+             'name' => 'required|unique:attributes,name,'.$this->attribute_id
         ]);
     }
     public function updateAttribute()

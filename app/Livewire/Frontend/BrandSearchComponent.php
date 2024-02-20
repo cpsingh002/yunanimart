@@ -36,7 +36,7 @@ class BrandSearchComponent extends Component
             $brand_id = $brand->id;
             $brand_name=$brand->brand_name;
         }
-        $query = Product2::where('brand_id',$brand_id)->whereBetween('sale_price',[$this->min_price,$this->max_price]);
+        $query = Product2::where('brand_id',$brand_id)->whereBetween('sale_price',[$this->min_price,$this->max_price])->where('status',1);
         if($this->sorting=="date"){
          $query=$query->orderBy('products.created_at','DESC');
         }
@@ -62,11 +62,11 @@ class BrandSearchComponent extends Component
         
         
 
-        $categorys = Category::all();
-        $brands = Brand::all();
+        $categorys = Category::where('status',1)->get();
+        $brands = Brand::where('status',1)->get();
         // $products =Product2::where('brand_id',$brand_id)->whereBetween('sale_price',[$this->min_price,$this->max_price])->get();
 
-        return view('livewire.frontend.brand-search-component',['categorys'=>$categorys,'brand_name'=>$brand_name,'products'=>$products])->layout('layouts.main');
+        return view('livewire.frontend.brand-search-component',['brands'=>$brands,'categorys'=>$categorys,'brand_name'=>$brand_name,'products'=>$products])->layout('layouts.main');
     }
     public function brandseletc()
     {

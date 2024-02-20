@@ -9,7 +9,6 @@ use App\Models\Product;
 use App\Models\Product2;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
-use Cart;
 use Illuminate\Support\Facades\Auth;
 
 class ShopComponent extends Component
@@ -32,8 +31,8 @@ class ShopComponent extends Component
 
     public function render()
     {
-    //    dd($this->min_price);
-        $query = Product2::whereBetween('sale_price',[$this->min_price,$this->max_price]);
+      // dd($this->pagesize);
+        $query = Product2::whereBetween('sale_price',[$this->min_price,$this->max_price])->where('status',1);
        if($this->sorting=="date"){
         $query=$query->orderBy('product2s.created_at','DESC');
        }
@@ -59,8 +58,8 @@ class ShopComponent extends Component
        
         $products=$query->paginate($this->pagesize);
 // dd($products);
-        $categorys = Category::all();
-        $brands = Brand::all();
+        $categorys = Category::where('status',1)->get();
+        $brands = Brand::where('status',1)->get();
        
         return view('livewire.frontend.shop-component',['categorys'=>$categorys,'brands'=>$brands,'products'=>$products])->layout('layouts.main');
     }

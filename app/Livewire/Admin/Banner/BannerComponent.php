@@ -25,8 +25,8 @@ class BannerComponent extends Component
     public function deleteBanner($id)
     {
         $category = Banner::find($id);
-        $category->status=3;
-        $category->save();
+      
+        $category->delete();
         session()->flash('message','Banner has been deleted successfully!');
         $this->js('window.location.reload()');
     }

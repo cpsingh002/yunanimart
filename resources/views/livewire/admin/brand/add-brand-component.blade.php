@@ -85,7 +85,7 @@
                                                  <div class="input-group input-group--sa-slug">
 
                                                      <select class="form-select" wire:model="status">
-                                                         <option value="0">Inactive</option>
+                                                         <option value="0">Deactive</option>
                                                          <option value="1">Active</option>
                                                      </select>
                                                      @error('status') <p class="text-danger">{{$message}}</p> @enderror

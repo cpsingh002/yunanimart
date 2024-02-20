@@ -6,26 +6,37 @@
                 <div class="col-md-9">
                     <div class="card">
                         <div class="card-body">
-                            <div class="row pb-4">
-                                @if(isset($ships[0]))
+                            @if(isset($ships[0]))
+                                <div class="row">
                                     @foreach($ships as $ship)
-                                        <div class="card" style="width: 18rem;">
-                                            <div class="card-body">
-                                                <h5 class="card-title">{{$ship->name}}</h5>
-                                                <h6 class="card-subtitle mb-2 text-muted">{{$ship->mobile}}</h6>
-                                                <p class="card-text">{{$ship->line1}}.{{$ship->line2}}</p>
-                                                <p class="card-text">{{$ship->zipcode}}.</p>
-                                                <!-- <a href="#" class="card-link">Card link</a>
-                                                <a href="#" class="card-link">Another link</a> -->
+                                        <div class="col-lg-4">
+                                            <div class="address-block bg-light rounded p-3">
+                                                <!--<a href="#" class="edit_address" data-toggle="modal" data-dismiss="modal" data-target="#address_model">-->
+                                                <!--    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>-->
+                                                <!--</a>-->
+                                                <!--<a href="#" class="delete_address">-->
+                                                <!--    <i class="fa fa-trash text-danger" aria-hidden="true"></i>-->
+                                                <!--</a>-->
+                                                <h6>My {{$ship->address_type}} Address</h6>
+                                                <span class="text-muted">{{$ship->name}}</span><br><span class="text-muted">{{$ship->mobile}}</span><br>
+                                                <span class="text-muted">{{$ship->line1}} {{$ship->line2}} - {{$ship->zipcode}}</span>
+                                                <br>
+                                                <input type="radio" name="selected_address" value="{{$ship->id}}"  wire:model="selected_address" @if($ship->default_address) checked  @endif>
+                                                <span>This address</span>
                                             </div>
-                                            <input type="radio" name="selected_address" value="{{$ship->id}}"  wire:model="selected_address" @if($ship->default_address) checked  @endif>This address
                                         </div>
                                     @endforeach
+                                    
+                                    
+                                </div>
+                                <div class="text-center mb-4">
                                     <a href="#" data-toggle="modal" data-dismiss="modal" data-target="#address_model" class="btn btn-primary btn-sm"> Add Another Address</a>
-                                @else
+                                </div>
+                            @else
+                                <div class="text-center mb-4">
                                     <a href="#" data-toggle="modal" data-dismiss="modal" data-target="#address_model" class="btn btn-primary btn-sm"> Add Your First Addres</a>
-                                @endif                             
-                            </div>
+                                </div>
+                            @endif 
                             
                             <div>
                                 <form   enctype="multipart/form-data"  wire:submit.prevent="UploadPresc">
@@ -138,26 +149,26 @@
                     </div>
                 </div>
                 <div class="col-lg-3 mt-lg-0 mt-6">
-                    <h6 class="font-weight-bold">Deliver to</h6>
-                    <div class="mb-4">
-                        <select class="form-control">
-                            <option value="s">Siliguri - 734001</option>
-                            <option value="s" selected>Delhi - 110002</option>
-                            <option value="s">Kolkata - 700027</option>
-                        </select>
-                    </div>
+                    <!--<h6 class="font-weight-bold">Deliver to</h6>-->
+                    <!--<div class="mb-4">-->
+                    <!--    <select class="form-control">-->
+                    <!--        <option value="s">Siliguri - 734001</option>-->
+                    <!--        <option value="s" selected>Delhi - 110002</option>-->
+                    <!--        <option value="s">Kolkata - 700027</option>-->
+                    <!--    </select>-->
+                    <!--</div>-->
                     <div class="cart-summary">
                         <div class="cart-summary-wrap">
                             <h4>Cart Summary</h4>
-                            <p>Sub Total <span>${{$subtotalfinal}}</span></p>
-                            <p>Shipping Cost <span>$00.00</span></p>
+                            <p>Sub Total <span>₹{{$subtotalfinal}}</span></p>
+                            <p>Shipping Cost <span>₹00.00</span></p>
                             @if($finaldiscount)
-                            <p>Discount <span>${{$finaldiscount}}</span></p>
+                            <p>Discount <span>₹{{$finaldiscount}}</span></p>
                             @endif
                             @if($payment_type == "cod")
-                                <p>Shipping COD <span>$50.00</span></p>
+                                <p>Shipping COD <span>₹50.00</span></p>
                             @endif
-                            <h2>Grand Total <span>${{$totalfinal}}</span></h2>
+                            <h2>Grand Total <span>₹{{$subtotalfinal}}</span></h2>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,6 @@
 
 <div>
+@include('flash-message')
     <style>
     .pros{
         font-size:25px;
@@ -52,8 +53,7 @@
                         <div class="col-lg-7">
                             <div class="single-product-content-description">
                                 <p class="single-info">Brand: <a href="{{route('brand-products',['brand_slug'=>$product->brand->brand_slug])}}">{{$product->brand->brand_name}}</a> </p>
-                                <h4 class="product-title">{{$product->name}}</h4> 
-                                
+                                <h4 class="product-title">{{$product->name}}</h4>
                                 <div class="rating">
                                     @php
                                     $ratingAvg=$product->reviews->avg('rating') 
@@ -114,7 +114,7 @@
 
                                 <div class="product-actions my-4 justify-content-between">
                                     <!-- Quantity -->
-                                    <div class="qty-input btn">
+                                    <div class="qty-input btn" wire:ignore.self>
                                         <i class="less quntiti" >-</i>
                                         <input type="text"  name="quntiti" id= "quntiti"  wire:model="quntiti"/>
                                         <i class="more quntiti">+</i>
@@ -290,13 +290,11 @@
                                         <em>Published 54 minutes ago</em>
                                     </div>
                                     @php
-                                        $images = explode(",",$review->images);
+                                        $rimages = explode(",",$review->images);
                                     @endphp
-                                    @foreach($images as $image)
-                                        @if($image)
-                                            <div class="single-image">
-                                                <img src="{{asset('admin/review')}}/{{$image}}" width="120" alt="slider">
-                                            </div>
+                                    @foreach($rimages as $rimage)
+                                        @if($rimage)
+                                                <img src="{{asset('admin/review')}}/{{$rimage}}" width="80" alt="slider">
                                         @endif
                                     @endforeach
                                     <p>{{$review->message}}</p>
@@ -306,7 +304,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="text-right"><a href="leave-review.html" class="btn btn-primary">Leave a
+                        <p class="text-right"><a href="#" class="btn btn-primary" wire:click.prevent="reviewOrder">Leave a
                                 review</a></p>
                                 
                                 <h2 class="entry-product-section-heading"> Questions and Answers </h2>

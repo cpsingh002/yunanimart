@@ -14,6 +14,16 @@
         href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800;900&amp;family=Poppins:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
         rel="stylesheet">
     @yield('page_css')
+    <style>
+.flashmessgae {
+   position: fixed;
+   left: 40%;
+   bottom: 10%;
+   width: 20%;
+   text-align: center;
+   z-index = '9999';
+}
+</style>
 
     @livewireStyles
     @livewireScripts
@@ -183,6 +193,7 @@
         </div>
         <div class="overlay"></div>
     </div>
+    
     {{$slot}}
 
     <footer class="site-footer footer-padding-lg bg-black">

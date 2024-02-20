@@ -37,6 +37,6 @@ class Product2 extends Model
     }
     public function reviews()
     {
-        return $this->hasMany(review::class,'product_id')->where('verified',1);
+        return $this->hasMany(review::class,'product_id')->where('verified',1)->where('status',1);
     }
 }

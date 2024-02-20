@@ -12,7 +12,7 @@
 
                     <div class="header-childrenItem-child-category-links">
                         <ul class="header-childrenItem-child-list">
-                            @foreach($category->subCategories as $scategory)
+                            @foreach($category->subCategories->where('statuts',1) as $scategory)
                                 <li>
                                     <a href="{{route('product.category',['category_slug'=>$category->slug,'scategory_slug'=>$scategory->slug])}}" class="childItem-level-2">
                                         <span class="header-childrenItem-link-text">{{$scategory->name}}</span>

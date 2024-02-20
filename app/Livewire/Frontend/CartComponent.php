@@ -29,7 +29,7 @@ class CartComponent extends Component
     public $taxvalue;
     public $totalamount;
     public $shippingcost;
-   
+    
 
     
     public function render(Request $request)
@@ -41,6 +41,7 @@ class CartComponent extends Component
         $taxtotalc = 0;
         $savelater = [];
         $uploadper = 0;
+        $pricesoff = 0;
         if(Auth::check())
         {
             $cartlsit = Cart::where('user_id', Auth::user()->id)->pluck('product_id')->toArray();
@@ -53,20 +54,21 @@ class CartComponent extends Component
                 $item['qty'] = $dffg->quantity;
                 $subtotalc = $subtotalc + $item->sale_price * $dffg->quantity;
                 $taxtotalc = $taxtotalc + (($item->taxslab->value * $item->sale_price)*($dffg->quantity)/100);
-                if($item->prescription)
+                $pricesoff = $pricesoff + (($item->regular_price - $item->sale_price)*($dffg->quantity));
+               if($item->prescription)
                 {
                     $uploadper = $uploadper + 1;
                     
                 }
-               
-            }
+                }
             //dd($subtotalc,$taxtotalc);
             $this->taxvalue = $taxtotalc;
             $this->subtotal = $subtotalc;
             $this->totalamount = $taxtotalc + $subtotalc;
+            
             $savelater = SaveForLater::where('user_id', Auth::user()->id)->get();
 
-
+// dd($pricesoff);
         }else{
             if (Session::has('cart')){
                 $cartlist = $request->session()->get('cart');
@@ -76,11 +78,13 @@ class CartComponent extends Component
                 $count = $cart->count();
                 $subtotalc = 0;
                 $taxtotalc = 0;
+                
                     foreach($cart as $item){
                         //dd($cartlist[$item->id]['quantity']);
                         $subtotalc = $subtotalc + $item->sale_price*$cartlist[$item->id]['quantity'];
                         $taxtotalc = $taxtotalc + (($item->taxslab->value * $item->sale_price)*($cartlist[$item->id]['quantity'])/100);
                         $item['qty'] = $cartlist[$item->id]['quantity'];
+                        $pricesoff = $pricesoff + (($item->regular_price - $item->sale_price)* $cartlist[$item->id]['quantity']);
                         if($item->prescription)
                         {
                             $uploadper = $uploadper + 1;
@@ -116,7 +120,7 @@ class CartComponent extends Component
         $this->setAmountForCheckout();
         }
         
-        return view('livewire.frontend.cart-component',['uploadper'=>$uploadper,'cart'=>$cart,'count'=>$count,'subtotalc'=>$subtotalc,'taxtotalc'=>$taxtotalc,'savelater'=>$savelater])->layout('layouts.main');
+        return view('livewire.frontend.cart-component',['uploadper'=>$uploadper,'cart'=>$cart,'count'=>$count,'subtotalc'=>$subtotalc,'taxtotalc'=>$taxtotalc,'savelater'=>$savelater,'pricesoff'=>$pricesoff])->layout('layouts.main');
     }
 
    
@@ -187,9 +191,11 @@ class CartComponent extends Component
                 $cart->user_id = Auth::user()->id;
                 $cart->product_id = $wishlist->product_id;
                 $cart->save();
+                
                 $wishlist->delete();
+                
                 session()->flash('message','product move to SAve to later  from Cart');
-               
+               // $this->dispatch('wishlist-count-component','refreshComponent');
                $this->dispatch('cart_add');
                 return;
             }    
@@ -338,14 +344,13 @@ class CartComponent extends Component
             session()->forget('checkout');
             return;
         }
-       // dd($this->reqper);
+        
         if(session()->has('coupon')){
             session()->put('checkout',[
                 'discount'=>$this->discount,
                 'subtotal'=>$this->subtotalAfterDiscount,
                 'tax'=>$this->taxAfterDiscount,
                 'total'=>$this->totalAfterDiscount
-                
             ]);
         }else{
             session()->put('checkout',[
@@ -353,7 +358,6 @@ class CartComponent extends Component
                 'subtotal'=> $this->subtotal,
                 'tax'=>$this->taxvalue,
                 'total'=>$this->totalamount
-                
             ]);
 
             // $this->taxvalue = $taxtotal;
@@ -367,12 +371,7 @@ class CartComponent extends Component
         $this->validate([
             'CouponCode'=>'required',
             ]);
-           // dd($this->subtotal);
-        if($this->subtotal >= 0)
-        {
-            session()->flash('message','No Item in Cart');
-            return;
-        }
+
         $coupon = Coupon::where('code',$this->CouponCode)->where('status',1)->first();
         if(!$coupon)
         {
@@ -382,9 +381,12 @@ class CartComponent extends Component
         //category code
         if($coupon->category_id != '')
         {
-            $catlist = Cart::where('user_id',Auth::user()->id)->pluck('category_id')->toArray();
-            if(count($catlist) == 1){
-                $cat_id = array_unique($catlist);
+            $catlist = Cart::where('user_id',Auth::user()->id)->pluck('product_id')->toArray();
+            $cat = Product2::whereIn('id',$catlist)->pluck('category_id')->toArray();
+            // dd($cat);
+            $cat = array_unique($cat);
+            if(count($cat) == 1){
+                // $cat_id = array_unique($cat);
                 if($cat_id[0] == $coupon->category_id)
                 {
                     //with cart value
@@ -439,6 +441,7 @@ class CartComponent extends Component
 
         }
 //flat discount
+// dd('sf');
         session()->put('coupon',[
             'code' =>$coupon->code,
             'type' =>$coupon->type,
@@ -475,8 +478,7 @@ class CartComponent extends Component
         $this->discount = '';
         return;
     }
-
-    public function prcheckout()
+     public function prcheckout()
     {
         if(Auth::check())
         { //dd($this->out_of_stock, $this->out_of_qty);

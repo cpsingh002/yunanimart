@@ -109,10 +109,19 @@
                         </div>
                         <div class="sidebar-wrapper mt-5 mt-md-0">
                             <div class="sidebar-widget widget_categories">
-                                <h6 class="widget-title">{{$brand_name}}</h6>
+                                <h6 class="widget-title">Brands</h6>
                                 <ul class="widget-list widget-filter-list list-unstyled pt-1" style="max-height: 11rem;"
                                     data-simplebar data-simplebar-auto-hide="false">
-                                   
+                                    @foreach($brands as $brand)
+                                        <li
+                                            class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="brand-1" wire:model="brandtype" value="{{$brand->id}}"  wire:click="brandseletc">
+                                                <label class="form-check-label widget-filter-item-text" for="brand-1"><a href="{{route('brand-products',['brand_slug'=>$brand->brand_slug])}}">{{$brand->brand_name}}
+                                                    one</a></label>
+                                            </div><span class="fs-xs text-muted">{{$brand->productcount->count()}}</span>
+                                        </li>
+                                    @endforeach
                                     
                                 </ul>
                             </div>
@@ -346,8 +355,7 @@
 
 @push('scripts')
 	<script>
-		
-        var nonLinearSlider = $('.range-slider');
+		var nonLinearSlider = $('.range-slider');
         var startMin = parseInt(nonLinearSlider.data('start-min'));
         var startMax = parseInt(nonLinearSlider.data('start-max'));
 		var slider = document.getElementById('nouislider');
@@ -359,7 +367,7 @@
 		})
 	
 	</script>
-        <script>
+	    <script>
         
         $('#pagewsize').on('change',function(ev){
             //alert('gfhfgh');

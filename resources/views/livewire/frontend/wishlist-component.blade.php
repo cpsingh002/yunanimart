@@ -21,7 +21,6 @@
                         @foreach($wishlist as $item)
                             <div class="cart_item">
                                 <div class="cart_item_image">
-                                    
                                     <img src="{{asset('admin/product/feat')}}/{{$item->image}}" alt="shop">
                                 </div>
                                 <div class="c-item-body mt-4 mt-md-0">
@@ -30,7 +29,6 @@
                                         <h4>{{$item->name}}</h4> </a>
                                         <div>@if($item->prescription)<span class="text-danger">Prescription Required for this Med</span> @endif</div>
                                         <p class="small mb-0 text-muted">{{$item->varaint_detail}}</p>
-                        
                                         <div class="cart_item_price">
                                             <div class="product-price">
                                                 <span>
@@ -38,9 +36,7 @@
                                                     <del>₹{{$item->regular_price}}</del>
                                                     <small class="product-discountPercentage">({{$item->discount_value}}% OFF)</small>
                                                 </span>
-                                                
                                             </div>
-                                            
                                             <div class="cart_product_remove">
                                                 <a href="#" wire:click.prevent="removeFromWishlist({{$item->id}})">
                                                     <i class="ti-trash"></i> Remove</a>

@@ -183,10 +183,10 @@ class CheckOutComponent extends Component
        if($ship){
         $order = new Order();
         $order->user_id = Auth::user()->id;
-        $order->subtotal = '230';//session()->get('checkout')['subtotal'];
-        $order->discount = '0'; //session()->get('checkout')['discount'];
-        $order->tax =  '24'; //session()->get('checkout')['tax'];
-        $order->total = '230'; //session()->get('checkout')['total'];
+        $order->subtotal = session()->get('checkout')['subtotal'];
+        $order->discount = session()->get('checkout')['discount'];
+        $order->tax =  session()->get('checkout')['tax'];
+        $order->total = session()->get('checkout')['subtotal']; //session()->get('checkout')['total'];
         $order->name=$ship->name;
         $order->mobile=$ship->mobile;
         $order->mobile_optional=$ship->mobile_optional;
@@ -210,7 +210,7 @@ class CheckOutComponent extends Component
             $orderItem->quantity = $item->quantity;
             $orderItem->save();
         }
-        $this->makeTransaction($order->id,'pending','cod');
+        $this->makeTransaction($order->id,'pending','cod',null,'0');
         $this->resetCart();
         $this->sendOrderConfirmationMail($order);
 
@@ -236,16 +236,16 @@ class CheckOutComponent extends Component
         'card_no'=>'required|numeric',
         'card_name' =>'required',
         ]);
-    dd($this->cvc, $this->card_no,$this->card_name,$this->exp_year,$this->exp_month);
+dd($this->cvc, $this->card_no,$this->card_name,$this->exp_year,$this->exp_month);
 
         $ship = ShippingAddress::find($this->selected_address);
        if($ship){
             $order = new Order();
             $order->user_id = Auth::user()->id;
-            $order->subtotal = '230';//session()->get('checkout')['subtotal'];
-            $order->discount = '0'; //session()->get('checkout')['discount'];
-            $order->tax =  '24'; //session()->get('checkout')['tax'];
-            $order->total = '230'; //session()->get('checkout')['total'];
+            $order->subtotal = session()->get('checkout')['subtotal'];
+            $order->discount = session()->get('checkout')['discount'];
+            $order->tax =  session()->get('checkout')['tax'];
+            $order->total = session()->get('checkout')['subtotal']; //session()->get('checkout')['total'];
             $order->name=$ship->name;
             $order->mobile=$ship->mobile;
             $order->mobile_optional=$ship->mobile_optional;
@@ -335,7 +335,7 @@ class CheckOutComponent extends Component
 
     }
 
-    public function makeTransaction($order_id, $status,$mode,$tran_id,$amount)
+     public function makeTransaction($order_id, $status,$mode,$tran_id,$amount)
     {
         $transaction = new Transaction();
         $transaction->user_id = Auth::user()->id;

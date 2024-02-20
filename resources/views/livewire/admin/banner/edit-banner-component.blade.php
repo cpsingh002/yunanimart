@@ -88,7 +88,7 @@
                                                      class="form-label">Status</label>
 
                                                  <select class="form-control input-md" wire:model="status">
-                                                     <option value="0">Inactive</option>
+                                                     <option value="0">Deactive</option>
                                                      <option value="1">Active</option>
                                                  </select>
 

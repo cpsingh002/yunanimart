@@ -62,7 +62,7 @@ class CategorySearchComponent extends Component
             $category_name =$category->name;
             $filter= "";
         }
-        $query = Product2::whereBetween('sale_price',[$this->min_price,$this->max_price]);
+        $query = Product2::whereBetween('sale_price',[$this->min_price,$this->max_price])->where('status',1);
         if($this->category_slug){
             $query=$query->where('category_id',$category->id);
         }
@@ -90,8 +90,8 @@ class CategorySearchComponent extends Component
         
         $products=$query->paginate($this->pagesize);
 
-        $categorys = Subcategory::where('category_id',$category_id)->get();
-        $brands = Brand::all();
+        $categorys = Subcategory::where('category_id',$category_id)->where('statuts',1)->get();
+        $brands = Brand::where('status',1)->get();
 
 
         return view('livewire.frontend.category-search-component',['categorys'=>$categorys,'brands'=>$brands,

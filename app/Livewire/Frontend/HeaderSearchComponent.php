@@ -8,16 +8,16 @@ use App\Models\Product2;
 class HeaderSearchComponent extends Component
 {
     public $searchj;
-    public $prodhjhjucts =[];
+    public $products =[];
 
     public function mount()
     {
-        $this->fill(request()->only($this->searchj));
+       // $this->fill(request()->only($this->searchj));
     }
 
     public function productcheck()
     {
-        $this->prodhjhjucts = Product2::where('name','like','%'.$this->searchj .'%')->get();
+        $this->products = Product2::where('name','like','%'.$this->searchj .'%')->where('status',1)->get();
 
        // dd($this->products);
     }

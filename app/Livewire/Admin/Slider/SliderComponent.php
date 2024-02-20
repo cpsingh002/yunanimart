@@ -26,8 +26,8 @@ class SliderComponent extends Component
     public function deleteSlider($id)
     {
         $category = Slider::find($id);
-        $category->status=3;
-        $category->save();
+       // $category->status=3;
+        $category->delete();
         session()->flash('message','Slider has been deleted successfully!');
         $this->js('window.location.reload()');
     }

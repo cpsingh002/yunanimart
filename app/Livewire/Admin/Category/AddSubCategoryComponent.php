@@ -30,7 +30,9 @@ class AddSubCategoryComponent extends Component
             'name'=>'required',
             'slug'=>'required|unique:categories',
             'category_id'=>'required',
-            'is_home'=>'required'
+            'is_home'=>'required',
+            'categorythum'=>'required|mimes:jpeg,jpg,png',
+            'icon'=>'required|mimes:jpeg,jpg,png',
         ]);
     }
     public function storeCategory()
@@ -39,7 +41,9 @@ class AddSubCategoryComponent extends Component
             'name'=>'required',
             'slug' => 'required|unique:categories',
             'category_id'=>'required',
-            'is_home'=>'required'
+            'is_home'=>'required',
+            'categorythum'=>'required|mimes:jpeg,jpg,png',
+            'icon'=>'required|mimes:jpeg,jpg,png',
         ]);
         
         if($this->category_id){

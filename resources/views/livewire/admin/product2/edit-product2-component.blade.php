@@ -375,10 +375,7 @@
                                                                 @error('brand_id') <p class="text-danger">{{$message}}</p> @enderror
                                                             </div>
                                                         </div>
-                                                    </div>            
-                                                    
-                                                                                                        
-                                                    
+                                                    </div>    
                                                             
                                                     <div class="mb-4">
                                                         <label for="formFile-1" class="form-label">Thumbnail Images</label>

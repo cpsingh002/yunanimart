@@ -13,7 +13,7 @@ class DiseaseComponent extends Component
 {
     use WithFileUPloads;
     public $name, $slug, $image, $description, $status,$bodypart_id;
-    public $disease_id, $newimage;
+    public $disease_id, $newimage,$eimage;
     
     public function generateslug()
     {
@@ -88,6 +88,7 @@ class DiseaseComponent extends Component
         $this->status = '';
         $this->bodypart_id = '';
         $this->disease_id = '';
+        $this->eimage = '';
     }
     public function close()
     {
@@ -103,7 +104,7 @@ class DiseaseComponent extends Component
         $this->description = $post->description;
         $this->status= $post->status;
         $this->bodypart_id = $post->bodypart_id;
-        $this->image = $post->image;
+        $this->eimage = $post->image;
         
 //dd($this->coupon_id);
         $this->dispatch('show-edit-post-modal');
@@ -119,7 +120,7 @@ class DiseaseComponent extends Component
             'description'=>'required',
             'status' => 'required',
             'bodypart_id'=>'required',
-            'image'=>'required|mimes:jpeg,jpg,png'
+            
         ]);
         if($this->newimage)
         {

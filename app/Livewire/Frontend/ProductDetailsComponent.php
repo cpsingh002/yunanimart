@@ -32,7 +32,8 @@ class ProductDetailsComponent extends Component
         $this->slug = $slug;
         $this->quntiti = 1; 
     }
-     public function checkout(Request $request,$id,$sale_price){
+     public function checkout(Request $request,$id,$sale_price)
+     {
         if(!Auth::check())
         {
             $this->dispatch('show-edit-post-modal');
@@ -43,7 +44,19 @@ class ProductDetailsComponent extends Component
             return $this->redirect('/check-out');
         }
     }
-    public function askQuestion($id){
+    public function reviewOrder()
+    {
+        if(!Auth::check())
+        {
+            $this->dispatch('show-edit-post-modal');
+            return;
+        }
+        else{
+            return redirect('user/orders');
+        }
+    }
+    public function askQuestion($id)
+    {
         if(!Auth::check())
         {
             $this->dispatch('show-edit-post-modal');
@@ -54,7 +67,8 @@ class ProductDetailsComponent extends Component
             $this->dispatch('openquestionModal');
         }
     }
-    public function storeQuestion(){
+    public function storeQuestion()
+    {
         $this->validate([
             'question'=>'required',
         ]);
@@ -63,7 +77,7 @@ class ProductDetailsComponent extends Component
         $question->quser_id=Auth::id();
         $question->question= $this->question;
         $question->save();
-        Session()->flash('message','Question has been Submited Successfully');
+        Session()->flash('success','Question has been Submited Successfully');
     }
 
     public function addToWishlist(Request $request,$product_id,$product_price)
@@ -73,7 +87,7 @@ class ProductDetailsComponent extends Component
         {
             $wproduct = Wishlist::where('product_id',$product_id)->first();
             if($wproduct){
-                session()->flash('message','product alreday added to wishlist');
+                session()->flash('info','product alreday added to wishlist');
                 return;
             }else{
                 $product = Product2::where('id', $product_id)->first();
@@ -85,7 +99,7 @@ class ProductDetailsComponent extends Component
                 $wishlist->price = $product->sale_price;
                 $wishlist->quantity = $this->quntiti;
                 $wishlist->save();
-                session()->flash('message','product added to wishlist');
+                session()->flash('success','product added to wishlist');
                 // $this->dispatch('wishlist-count-component');
                 $this->dispatch('wishlist_add');
                 return;
@@ -103,7 +117,8 @@ class ProductDetailsComponent extends Component
                         'price' => $product->regular_price
                     ];
                     $request->Session()->put('wishlist', $wishlist);
-                    return response::json(['success' => 'Successfully Added to wishlist']);
+                    
+                    return session()->flash('success', 'Successfully Added to wishlist');
 
                 } else {
                     $wishlist[$id] = [
@@ -115,10 +130,10 @@ class ProductDetailsComponent extends Component
                     ];
                     Session()->put('wishlist', $wishlist);
                    
-                    session()->flash('message','product adde dto wishlist');
+                    session()->flash('success','product adde dto wishlist');
 
                 }
-            session()->flash('message','product alre adde dto wishlist');
+            session()->flash('info','product alre adde dto wishlist');
             $this->dispatch('wishlist_add');
 
         }
@@ -133,7 +148,7 @@ class ProductDetailsComponent extends Component
                 $wishlist = Wishlist::where('product_id',$product_id)->where('user_id',Auth::user()->id)->first();
                 if($wishlist){
                     $wishlist->delete();
-                    session()->flash('message','product remove from wishlist');
+                    session()->flash('warning','product remove from wishlist');
                     // $this->dispatch('wishlist-count-component','refreshComponent');
                     $this->wish = '';
                     $this->dispatch('wishlist_add');
@@ -146,7 +161,7 @@ class ProductDetailsComponent extends Component
                 unset($wishlistdf[$product_id]);
                 Session()->put('wishlist', $wishlistdf);
             // dd($wishlistdf);
-            session()->flash('message','product remove from wishlist');
+            session()->flash('warning','product remove from wishlist');
             // $this->dispatch('wishlist-count-component','refreshComponent');
              $this->wish = '';
             $this->dispatch('wishlist_add');
@@ -165,13 +180,13 @@ class ProductDetailsComponent extends Component
             $wproduct = Cart::where('product_id',$product_id)->where('user_id', Auth::user()->id)->first();
             if($wproduct){
                 
-                session()->flash('message','product alreday added to Cart');
+                session()->flash('info','product alreday added to Cart');
                 return;
             }else{
                 $product = Product2::where('id', $product_id)->first();
                 if($this->quntiti >= $product->quantity)
                 {
-                    session()->flash('message','Item Quantity is not perest');
+                    session()->flash('warning','Item Quantity is not perest');
                     return;
                 }else{
                 $cart = new Cart();
@@ -182,7 +197,7 @@ class ProductDetailsComponent extends Component
                 $cart->price = $product->sale_price;
                 $cart->quantity = $this->quntiti;
                 $cart->save();
-                session()->flash('message','product added to wishlist');
+                session()->flash('success','product added to wishlist');
                 // $this->dispatch('wishlist-count-component','refreshComponent');
                 $this->dispatch('cart_add');
                 return;
@@ -201,7 +216,7 @@ class ProductDetailsComponent extends Component
                         'price' => $product->regular_price
                     ];
                     $request->Session()->put('cart', $cart);
-                    return response::json(['success' => 'Successfully Added to Cart']);
+                    return session()->flash('success', 'Successfully Added to Cart');
 
                 } else {
                     $cart[$id] = [
@@ -213,10 +228,10 @@ class ProductDetailsComponent extends Component
                     ];
                     Session()->put('cart', $cart);
                    
-                    session()->flash('message','product adde dto CArt');
+                    session()->flash('success','product adde dto CArt');
 
                 }
-            session()->flash('message','product already add to Cart');
+            session()->flash('info','product already add to Cart');
             $this->dispatch('cart_add');
         }
       
@@ -265,9 +280,9 @@ class ProductDetailsComponent extends Component
                 } 
             }
         }
-        $reviews=review::where('product_id',$product->id)->where('verified',1)->get();
-        $questions = Question::where('product_id',$product->id)->get();
-        $rproducts = Product2::where('category_id', $product->category_id)->inRandomOrder()->limit(8)->get();
+        $reviews=review::where('product_id',$product->id)->where('verified',1)->where('status',1)->get();
+        $questions = Question::where('product_id',$product->id)->where('status',1)->get();
+        $rproducts = Product2::where('category_id', $product->category_id)->where('status',1)->inRandomOrder()->limit(8)->get();
         $shareButtons = \Share::page(route('product-details',['slug'=>$product->slug]))->facebook()->twitter()->linkedin()->telegram()->whatsapp()->reddit();
         
         return view('livewire.frontend.product-details-component',['attribute'=>$attribute,'product'=>$product,'varaiants'=>$varaiants,'reviews'=>$reviews,'questions'=>$questions,'rproducts'=>$rproducts,'shareButtons'=>$shareButtons])->layout('layouts.main');

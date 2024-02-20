@@ -70,7 +70,7 @@ Route::post('/adminlogin',[LoginController::class,'adminloginauth'])->name('admi
 
 Route::get('/search', SearchComponent::class)->name('searchs');
 
-Route::middleware(['auth:sanctum','verified'])->group(function(){
+Route::middleware(['auth:sanctum','verified','userauth'])->group(function(){
     Route::get('/upload-prescription',UploadPrescriptionComponent::class)->name('upload-prescription');
     Route::get('/user/account', AccountComponent::class)->name('user.account');
     Route::get('/user/address', AddressComponent::class)->name('user.address');

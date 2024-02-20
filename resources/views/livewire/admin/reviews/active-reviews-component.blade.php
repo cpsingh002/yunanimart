@@ -48,10 +48,14 @@
                                         <td>{{$review->product->name}}</td>
                                         <td>{{$review->user->name}}</td>
                                         <td>{{$review->rating}}</td>
-                                        <td>@if($review->images)
-                                                  <img src="{{asset('admin/review')}}/{{$review->images}}" width="60" /> 
-                                                
-                                            @endif
+                                        <td>@php
+                                                $images = explode(",",$review->images);
+                                            @endphp
+                                            @foreach($images as $image)
+                                                @if($image)
+                                                        <img src="{{asset('admin/review')}}/{{$image}}" width="50" alt="slider">
+                                                @endif
+                                            @endforeach
                                         </td>
                                         <td>{{$review->message}}</td>
                                         <td><a href="{{route('admin.change-active',['id'=> $review->id])}}">Active </a></td>

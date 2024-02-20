@@ -10,8 +10,8 @@ class NavBarComponent extends Component
 {
     public function render()
     {
-        $categorys = Category::all();
-        $subcategorys = SubCategory::all();
-        return view('livewire.nav-bar-component',['categorys'=>$categorys,'subcategorys'=>$subcategorys]);
+        $categorys = Category::where('status',1)->where('is_home',1)->get();
+        // $subcategorys = SubCategory::all();
+        return view('livewire.nav-bar-component',['categorys'=>$categorys]);
     }
 }
